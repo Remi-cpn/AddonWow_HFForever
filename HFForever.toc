@@ -16,6 +16,11 @@ Core\Init.lua
 Locales\frFR.lua
 Core\Log.lua
 Core\Database.lua
+Data\Categories.lua
+Data\Achievements.lua
+Core\CriteriaTypes.lua
+Core\Registry.lua
+Core\API.lua
 UI\MainWindow.lua
 UI\MinimapButton.lua
 Core\Commands.lua

@@ -21,7 +21,8 @@ local DEFAULTS = {
 		hide = false,
 		showInCompartment = true,
 	},
-	-- [achievementID] = { date = horodatage }, rempli par le moteur (étape 5)
+	-- [achievementID] = { date = horodatage, character = "Nom" },
+	-- rempli par le moteur (étape 5)
 	completed = {},
 }
 
@@ -75,6 +76,16 @@ end
 
 function Database:GetSchemaVersion()
 	return data.schemaVersion
+end
+
+-- Enregistrement d'un haut fait obtenu ({ date, character }), ou nil.
+function Database:GetCompletion(achievementID)
+	return data.completed[achievementID]
+end
+
+-- Toute la table des hauts faits obtenus. À lire seulement, jamais modifier.
+function Database:GetAllCompletions()
+	return data.completed
 end
 
 -- Nombre de hauts faits obtenus enregistrés.

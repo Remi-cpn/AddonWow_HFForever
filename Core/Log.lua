@@ -6,10 +6,17 @@ ns.Log = Log
 
 local PREFIX = "|cffffd100HF Forever|r : "
 local DEBUG_PREFIX = "|cff66ccff[HFF debug]|r "
+local ERROR_PREFIX = "|cffff4040HF Forever erreur|r : "
 
 -- Message normal, toujours affiché. Utilise string.format comme printf en C.
 function Log.Info(fmt, ...)
 	print(PREFIX .. fmt:format(...))
+end
+
+-- Erreur, toujours affichée en rouge. Les arguments sont convertis en texte
+-- avant le format : utiliser %s dans fmt, même pour les nombres.
+function Log.Error(fmt, ...)
+	print(ERROR_PREFIX .. fmt:format(tostringall(...)))
 end
 
 -- Log de debug, affiché seulement si le mode debug est actif.

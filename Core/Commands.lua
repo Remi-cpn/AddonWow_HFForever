@@ -14,7 +14,42 @@ handlers.aide = function()
 	Log.Info(L.CMD_HELP_DEBUG)
 	Log.Info(L.CMD_HELP_MINIMAP)
 	Log.Info(L.CMD_HELP_STATUS)
+	Log.Info(L.CMD_HELP_TEST)
 	Log.Info(L.CMD_HELP_HELP)
+end
+
+-- Joint toutes les valeurs (même nil) avec " | " pour les afficher.
+local function JoinValues(...)
+	return strjoin(" | ", tostringall(...))
+end
+
+-- Affiche tout ce que renvoie ns.API, catégorie par catégorie.
+handlers.test = function()
+	local API = ns.API
+	local categories = API.GetCategoryList()
+	Log.Info(L.TEST_CATEGORY_LIST, JoinValues(unpack(categories)))
+
+	for _, categoryID in ipairs(categories) do
+		local name, parent = API.GetCategoryInfo(categoryID)
+		local total, completed = API.GetCategoryNumAchievements(categoryID)
+		Log.Info(L.TEST_CATEGORY, categoryID, name, parent, total, completed)
+
+		for index = 1, total do
+			local id = API.GetAchievementInfo(categoryID, index)
+			Log.Info(L.TEST_ACHIEVEMENT, JoinValues(API.GetAchievementInfo(categoryID, index)))
+			for criteriaIndex = 1, API.GetAchievementNumCriteria(id) do
+				Log.Info(L.TEST_CRITERIA, criteriaIndex,
+					JoinValues(API.GetAchievementCriteriaInfo(id, criteriaIndex)))
+			end
+			Log.Info(L.TEST_SERIES, tostring(API.GetPreviousAchievement(id)),
+				tostring((API.GetNextAchievement(id))))
+		end
+	end
+
+	local total, completed = API.GetNumCompletedAchievements()
+	Log.Info(L.TEST_TOTALS, completed, total, API.GetTotalAchievementPoints())
+	local latest = { API.GetLatestCompletedAchievements() }
+	Log.Info(L.TEST_LATEST, #latest > 0 and JoinValues(unpack(latest)) or L.TEST_NONE)
 end
 
 handlers.debug = function()
