@@ -1,0 +1,13 @@
+## Interface: 16001
+## Title: HF Forever
+## Notes: Hauts faits à l'échelle du compte, dans l'esprit de WotLK, adaptés à WoW: Forever.
+## Version: 0.1.0
+## SavedVariables: HFForeverDB
+
+# Ordre de chargement : namespace, textes, outils, données, commandes, démarrage.
+Core\Init.lua
+Locales\frFR.lua
+Core\Log.lua
+Core\Database.lua
+Core\Commands.lua
+Core\Bootstrap.lua

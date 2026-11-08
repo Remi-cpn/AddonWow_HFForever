@@ -1,0 +1,4 @@
+# Fichiers d'éditeur et du système
+.vscode/
+*.swp
+.DS_Store
