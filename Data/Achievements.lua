@@ -408,13 +408,9 @@ ns.Data.achievements = {
 		description = "Révéler toute la carte du cratère d'Un'Goro.",
 		criteria = { { type = "explore", mapID = 1449 } },
 	},
-	{
-		id = 3116, category = 32, points = 10,
-		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Reflet-de-Lune",
-		description = "Révéler toute la carte de Reflet-de-Lune.",
-		criteria = { { type = "explore", mapID = 1450 } },
-	},
+	-- 3116 Explorer Reflet-de-Lune : retiré. Sa carte n'a qu'un morceau,
+	-- affiché d'office par le jeu : impossible de savoir si la zone a été
+	-- explorée. Id réservé, ne pas réutiliser.
 	{
 		id = 3117, category = 32, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
@@ -456,9 +452,9 @@ ns.Data.achievements = {
 			{ type = "achievement", id = 3109 }, { type = "achievement", id = 3110 },
 			{ type = "achievement", id = 3111 }, { type = "achievement", id = 3112 },
 			{ type = "achievement", id = 3113 }, { type = "achievement", id = 3114 },
-			{ type = "achievement", id = 3115 }, { type = "achievement", id = 3116 },
-			{ type = "achievement", id = 3117 }, { type = "achievement", id = 3118 },
-			{ type = "achievement", id = 3119 }, { type = "achievement", id = 3120 },
+			{ type = "achievement", id = 3115 }, { type = "achievement", id = 3117 },
+			{ type = "achievement", id = 3118 }, { type = "achievement", id = 3119 },
+			{ type = "achievement", id = 3120 },
 		},
 	},
 
@@ -588,13 +584,9 @@ ns.Data.achievements = {
 	-- Donjons classiques : statistique « Morts de <boss> » >= 1
 	-- (text = nom du boss affiché dans le critère)
 	---------------------------------------------------------------------------
-	{
-		id = 5001, category = 51, points = 10,
-		icon = ICONS .. "Spell_Fire_Incinerate",
-		name = "Gouffre de Ragefeu",
-		description = "Vaincre Bazzalan dans le gouffre de Ragefeu.",
-		criteria = { { type = "statistic", id = 15027, value = 1, text = "Bazzalan" } },
-	},
+	-- 5001 Gouffre de Ragefeu : retiré. Sur Forever, la statistique 15027
+	-- (Bazzalan) augmente aussi en finissant la salle des Thanes : on ne peut
+	-- pas savoir lequel des deux donjons a été fait. Id réservé.
 	{
 		id = 5002, category = 51, points = 10,
 		icon = ICONS .. "Achievement_Boss_EdwinVancleef",
@@ -739,13 +731,9 @@ ns.Data.achievements = {
 	---------------------------------------------------------------------------
 	-- Donjons de Forever : statistique « Morts de <boss> » >= 1
 	---------------------------------------------------------------------------
-	{
-		id = 5101, category = 52, points = 10,
-		icon = ICONS .. "INV_Misc_Head_Dwarf_01",
-		name = "Salle des Thanes",
-		description = "Vaincre Durgen Mornemartel dans la salle des Thanes.",
-		criteria = { { type = "statistic", id = 63573, value = 1, text = "Durgen Mornemartel" } },
-	},
+	-- 5101 Salle des Thanes : retiré. Sa statistique 63573 (Durgen) reste à 0
+	-- après le donjon terminé ; la victoire est comptée dans la statistique de
+	-- Ragefeu (15027). Id réservé.
 	{
 		id = 5102, category = 52, points = 10,
 		icon = ICONS .. "INV_Misc_Head_Undead_01",

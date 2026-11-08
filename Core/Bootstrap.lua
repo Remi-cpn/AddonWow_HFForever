@@ -21,6 +21,7 @@ end
 local function OnPlayerLogin()
 	Log.Info(L.LOADED, ns.version)
 	Log.Debug("Bootstrap: PLAYER_LOGIN reçu")
+	ns.Engine:Start()
 end
 
 eventFrame:SetScript("OnEvent", function(_, event, ...)

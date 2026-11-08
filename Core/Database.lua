@@ -21,9 +21,13 @@ local DEFAULTS = {
 		hide = false,
 		showInCompartment = true,
 	},
-	-- [achievementID] = { date = horodatage, character = "Nom" },
-	-- rempli par le moteur (étape 5)
+	-- [achievementID] = { date = horodatage, character = "Nom-Royaume",
+	--                     retroactive = true si détecté à la connexion,
+	--                     donc accompli avant, date réelle inconnue }
 	completed = {},
+	-- Meilleure progression vue, tous personnages confondus :
+	-- [achievementID] = { [criteriaIndex] = quantité }
+	progress = {},
 }
 
 -- Ajoute dans target les clés de defaults qui manquent, récursivement.
@@ -86,6 +90,45 @@ end
 -- Toute la table des hauts faits obtenus. À lire seulement, jamais modifier.
 function Database:GetAllCompletions()
 	return data.completed
+end
+
+-- Enregistre un haut fait obtenu. Ne fait rien s'il l'est déjà.
+function Database:SetCompleted(achievementID, character, retroactive)
+	if data.completed[achievementID] then
+		return
+	end
+	data.completed[achievementID] = {
+		date = time(),
+		character = character,
+		retroactive = retroactive or nil,
+	}
+end
+
+-- Meilleure progression enregistrée pour un critère (0 si aucune).
+function Database:GetProgress(achievementID, criteriaIndex)
+	local entry = data.progress[achievementID]
+	return entry and entry[criteriaIndex] or 0
+end
+
+-- Enregistre une progression si elle dépasse la meilleure connue.
+-- Renvoie la meilleure valeur après mise à jour.
+function Database:UpdateProgress(achievementID, criteriaIndex, quantity)
+	local entry = data.progress[achievementID]
+	if not entry then
+		entry = {}
+		data.progress[achievementID] = entry
+	end
+	if quantity > (entry[criteriaIndex] or 0) then
+		entry[criteriaIndex] = quantity
+	end
+	return entry[criteriaIndex] or 0
+end
+
+-- Efface hauts faits obtenus et progression (pour tester la détection
+-- rétroactive). Les réglages (debug, minimap) sont conservés.
+function Database:ResetAchievements()
+	data.completed = {}
+	data.progress = {}
 end
 
 -- Nombre de hauts faits obtenus enregistrés.

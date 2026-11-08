@@ -21,7 +21,18 @@ L.CMD_HELP_DEBUG = "/hff debug : active ou désactive le mode debug"
 L.CMD_HELP_MINIMAP = "/hff minimap : affiche ou masque le bouton de la minimap"
 L.CMD_HELP_STATUS = "/hff etat : affiche l'état de la sauvegarde"
 L.CMD_HELP_TEST = "/hff test [catégorie] : résumé des données, ou détail d'une catégorie (ex. /hff test 51)"
+L.CMD_HELP_SCAN = "/hff scan : relance la détection des hauts faits"
+L.CMD_HELP_RESET = "/hff reset confirmer : efface les hauts faits obtenus et relance la détection"
 L.CMD_HELP_HELP = "/hff aide : affiche cette aide"
+L.SCAN_REQUESTED = "détection relancée."
+L.RESET_CONFIRM_NEEDED = "ceci efface tous les hauts faits obtenus. Tape /hff reset confirmer pour continuer."
+L.RESET_DONE = "hauts faits effacés, nouvelle détection en cours..."
+
+-- Moteur de détection (Core/Engine.lua)
+L.ENGINE_EARNED = "|cffffff00Haut fait obtenu : %s|r (%d points)"
+L.ENGINE_RETRO_SUMMARY = "%d haut(s) fait(s) déjà accompli(s) détecté(s)."
+L.ENGINE_CRITERIA_ERROR = "haut fait %s, critère %s : erreur de lecture (%s)"
+L.ENGINE_LISTENER_ERROR = "erreur dans un abonné du moteur : %s"
 L.CMD_UNKNOWN = "commande inconnue : « %s ». Tape /hff aide."
 L.WINDOW_NOT_READY = "la fenêtre n'existe pas encore (étape 7)."
 

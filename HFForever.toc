@@ -22,6 +22,7 @@ Data\ExplorationTotals.lua
 Core\CriteriaTypes.lua
 Core\Registry.lua
 Core\API.lua
+Core\Engine.lua
 UI\MainWindow.lua
 UI\MinimapButton.lua
 Core\Commands.lua

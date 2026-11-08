@@ -6,7 +6,9 @@
 --   goal(c)      : quantité à atteindre (pour la barre et le texte x / y)
 --   validate(c)  : (facultatif) contrôle au chargement. Renvoie un message
 --                  d'erreur si le critère est inutilisable, nil sinon.
--- La détection (savoir si le critère est rempli) arrive à l'étape 5.
+--   current(c)   : progression actuelle du personnage connecté (un nombre).
+--                  Le critère est rempli quand current(c) >= goal(c).
+--                  Appelée par le moteur (Core/Engine.lua), jamais en combat.
 local _, ns = ...
 
 local L = ns.L
@@ -26,6 +28,39 @@ local function GetExplorationTotal(mapID)
 	return artID and ns.Data.explorationTotals[artID]
 end
 
+-- Valeur d'une statistique sous forme de nombre. GetStatistic renvoie du
+-- texte : "--" quand la valeur est nulle, et peut-être des séparateurs de
+-- milliers pour les grands nombres. On ne garde que les chiffres.
+local function GetStatisticNumber(statisticID)
+	local text = GetStatistic(statisticID)
+	if type(text) ~= "string" then
+		return 0
+	end
+	return tonumber((text:gsub("%D", ""))) or 0
+end
+
+-- Rang d'un métier du personnage. skillLine = nil : meilleur des deux
+-- métiers principaux. GetProfessions renvoie les index des métiers
+-- (2 principaux puis les secondaires), nil pour un emplacement vide.
+local function GetProfessionRank(skillLine)
+	local prof1, prof2, sec1, sec2, sec3, sec4, sec5 = GetProfessions()
+	local best = 0
+	if skillLine == nil then
+		for _, index in pairs({ prof1, prof2 }) do
+			local rank = select(3, GetProfessionInfo(index))
+			best = math.max(best, rank or 0)
+		end
+		return best
+	end
+	for _, index in pairs({ prof1, prof2, sec1, sec2, sec3, sec4, sec5 }) do
+		local _, _, rank, _, _, _, line = GetProfessionInfo(index)
+		if line == skillLine then
+			return rank or 0
+		end
+	end
+	return 0
+end
+
 -- Atteindre un niveau. Exemple : { type = "level", value = 10 }
 CriteriaTypes.level = {
 	fields = { "value" },
@@ -35,6 +70,9 @@ CriteriaTypes.level = {
 	end,
 	goal = function(criterion)
 		return criterion.value
+	end,
+	current = function()
+		return UnitLevel("player") or 0
 	end,
 }
 
@@ -56,6 +94,9 @@ CriteriaTypes.statistic = {
 		if not GetStatisticName(criterion.id) then
 			return L.DATA_ERR_STATISTIC:format(tostring(criterion.id))
 		end
+	end,
+	current = function(criterion)
+		return GetStatisticNumber(criterion.id)
 	end,
 }
 
@@ -79,6 +120,11 @@ CriteriaTypes.explore = {
 				tostring(C_Map.GetMapArtID(criterion.mapID)))
 		end
 	end,
+	-- Nombre de morceaux de carte déjà découverts dans la zone.
+	current = function(criterion)
+		local explored = C_MapExplorationInfo.GetExploredMapTextures(criterion.mapID)
+		return explored and #explored or 0
+	end,
 }
 
 -- Rang dans un métier. skillLine = id du métier (voir L.PROFESSION_NAMES).
@@ -98,6 +144,9 @@ CriteriaTypes.profession = {
 	goal = function(criterion)
 		return criterion.value
 	end,
+	current = function(criterion)
+		return GetProfessionRank(criterion.skillLine)
+	end,
 }
 
 -- Obtenir un autre haut fait de l'addon (pour les métas).
@@ -113,5 +162,8 @@ CriteriaTypes.achievement = {
 	end,
 	goal = function()
 		return 1
+	end,
+	current = function(criterion)
+		return ns.Database:GetCompletion(criterion.id) and 1 or 0
 	end,
 }

@@ -102,10 +102,14 @@ function API.GetAchievementCriteriaInfo(achievementID, criteriaIndex)
 
 	local criteriaType = ns.CriteriaTypes[criterion.type]
 	local reqQuantity = criteriaType.goal and criteriaType.goal(criterion) or 1
-	-- Tant que le moteur (étape 5) n'existe pas, un critère est rempli
-	-- seulement si tout le haut fait est obtenu.
-	local completed = Database:GetCompletion(achievementID) ~= nil
-	local quantity = completed and reqQuantity or 0
+	-- Meilleure progression enregistrée par le moteur, plafonnée à l'objectif
+	-- pour l'affichage (179 quêtes pour un objectif de 50 -> 50 / 50).
+	local quantity = Database:GetProgress(achievementID, criteriaIndex)
+	if Database:GetCompletion(achievementID) then
+		quantity = reqQuantity
+	end
+	quantity = math.min(quantity, reqQuantity)
+	local completed = quantity >= reqQuantity
 	-- progressBar peut être un booléen ou une fonction du critère.
 	local progressBar = criteriaType.progressBar
 	if type(progressBar) == "function" then

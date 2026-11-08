@@ -160,6 +160,16 @@ Les statistiques contiennent aussi Onyxia (1098), le roi sauvage (Sommet d'Hyjal
 
 ## Total
 
-6 + 5 + 46 + 15 + 26 = **98 HF**.
+6 + 5 + 45 + 15 + 24 = **95 HF** (98 au départ, 3 retirés après les tests en jeu, voir ci-dessous).
+
+## 🔴 Retirés après les tests en jeu
+
+| id | HF | Raison |
+|---|---|---|
+| 3116 | Explorer Reflet-de-Lune | Sa carte (art 2175) n'a qu'un morceau, que le jeu considère découvert sans y être allé. Retiré aussi du méta Kalimdor. Piste future : `C_MapExplorationInfo.GetExploredAreaIDsAtPosition`. |
+| 5001 | Gouffre de Ragefeu | La statistique 15027 (Bazzalan) est passée à 1 en finissant la salle des Thanes, sans jamais faire Ragefeu. Hypothèse : Forever compte le premier donjon de l'Alliance dans le compteur de celui de la Horde. |
+| 5101 | Salle des Thanes | Sa statistique 63573 (Durgen) reste à 0 après le donjon terminé. |
+
+Ces id sont réservés et ne doivent pas être réutilisés.
 
 Nouveaux types de critères à créer : `statistic` (quêtes, donjons), `explore`, `profession`, `achievement` (métas).

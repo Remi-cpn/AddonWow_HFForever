@@ -15,7 +15,27 @@ handlers.aide = function()
 	Log.Info(L.CMD_HELP_MINIMAP)
 	Log.Info(L.CMD_HELP_STATUS)
 	Log.Info(L.CMD_HELP_TEST)
+	Log.Info(L.CMD_HELP_SCAN)
+	Log.Info(L.CMD_HELP_RESET)
 	Log.Info(L.CMD_HELP_HELP)
+end
+
+-- Force une évaluation de tous les critères.
+handlers.scan = function()
+	Log.Info(L.SCAN_REQUESTED)
+	ns.Engine:RequestEvaluation("commande /hff scan")
+end
+
+-- Efface les hauts faits obtenus puis relance une détection rétroactive.
+-- Demande une confirmation explicite, car c'est irréversible.
+handlers.reset = function(argument)
+	if argument ~= "confirmer" then
+		Log.Info(L.RESET_CONFIRM_NEEDED)
+		return
+	end
+	ns.Database:ResetAchievements()
+	Log.Info(L.RESET_DONE)
+	ns.Engine:RequestRetroactiveScan()
 end
 
 -- Joint toutes les valeurs (même nil) avec " | " pour les afficher.
