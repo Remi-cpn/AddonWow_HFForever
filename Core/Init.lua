@@ -5,3 +5,5 @@ local addonName, ns = ...
 
 ns.name = addonName
 ns.version = C_AddOns.GetAddOnMetadata(addonName, "Version") or "?"
+-- Icône de l'addon (bouton minimap, compartiment). Même valeur que IconTexture du .toc.
+ns.icon = "Interface\\Icons\\Achievement_General"

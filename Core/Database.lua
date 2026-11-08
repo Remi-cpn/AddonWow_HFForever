@@ -15,6 +15,12 @@ local SCHEMA_VERSION = 1
 local DEFAULTS = {
 	schemaVersion = SCHEMA_VERSION,
 	debug = false,
+	-- Réglages du bouton de minimap, lus et écrits par LibDBIcon :
+	-- hide (masqué), minimapPos (angle en degrés), showInCompartment.
+	minimap = {
+		hide = false,
+		showInCompartment = true,
+	},
 	-- [achievementID] = { date = horodatage }, rempli par le moteur (étape 5)
 	completed = {},
 }
@@ -59,6 +65,12 @@ end
 
 function Database:SetDebug(enabled)
 	data.debug = enabled and true or false
+end
+
+-- Table des réglages du bouton de minimap. On la donne telle quelle à
+-- LibDBIcon, qui y sauvegarde lui-même la position quand on déplace le bouton.
+function Database:GetMinimapSettings()
+	return data.minimap
 end
 
 function Database:GetSchemaVersion()

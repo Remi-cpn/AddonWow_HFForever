@@ -14,6 +14,7 @@ local function OnAddonLoaded(loadedName)
 	end
 	eventFrame:UnregisterEvent("ADDON_LOADED")
 	ns.Database:Init()
+	ns.MinimapButton:Init()
 end
 
 local function OnPlayerLogin()
