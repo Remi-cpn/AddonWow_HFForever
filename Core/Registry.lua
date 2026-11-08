@@ -72,6 +72,14 @@ local function ValidateCriterion(achievementID, index, criterion)
 			return false
 		end
 	end
+	-- Contrôle propre au type (statistique existante, carte connue...).
+	if criteriaType.validate then
+		local message = criteriaType.validate(criterion)
+		if message then
+			ReportError(L.DATA_ERR_CRITERIA_INVALID, achievementID, index, message)
+			return false
+		end
+	end
 	return true
 end
 
@@ -129,6 +137,29 @@ local function BuildAchievements()
 			list[#list + 1] = achievement
 			achievementCount = achievementCount + 1
 		end
+	end
+
+	-- Métas : un critère « achievement » doit viser un haut fait chargé.
+	-- Sinon le méta est retiré (il ne pourrait jamais être obtenu).
+	local invalid = {}
+	for id, achievement in pairs(achievementsById) do
+		for index, criterion in ipairs(achievement.criteria) do
+			if criterion.type == "achievement" and not achievementsById[criterion.id] then
+				ReportError(L.DATA_ERR_META_TARGET, id, index, criterion.id)
+				invalid[id] = true
+			end
+		end
+	end
+	for id in pairs(invalid) do
+		local achievement = achievementsById[id]
+		achievementsById[id] = nil
+		local list = achievementsByCategory[achievement.category]
+		for i = #list, 1, -1 do
+			if list[i] == achievement then
+				table.remove(list, i)
+			end
+		end
+		achievementCount = achievementCount - 1
 	end
 
 	-- Séries : vérifiées à la fin, comme les parents de catégories.

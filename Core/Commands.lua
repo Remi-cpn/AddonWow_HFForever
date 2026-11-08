@@ -23,27 +23,46 @@ local function JoinValues(...)
 	return strjoin(" | ", tostringall(...))
 end
 
--- Affiche tout ce que renvoie ns.API, catégorie par catégorie.
-handlers.test = function()
+-- Détail d'une catégorie : chaque haut fait, ses critères et sa série.
+local function PrintCategoryDetails(categoryID)
 	local API = ns.API
+	local total = API.GetCategoryNumAchievements(categoryID)
+	for index = 1, total do
+		local id = API.GetAchievementInfo(categoryID, index)
+		Log.Info(L.TEST_ACHIEVEMENT, JoinValues(API.GetAchievementInfo(categoryID, index)))
+		for criteriaIndex = 1, API.GetAchievementNumCriteria(id) do
+			Log.Info(L.TEST_CRITERIA, criteriaIndex,
+				JoinValues(API.GetAchievementCriteriaInfo(id, criteriaIndex)))
+		end
+		Log.Info(L.TEST_SERIES, tostring(API.GetPreviousAchievement(id)),
+			tostring((API.GetNextAchievement(id))))
+	end
+end
+
+-- Sans argument : une ligne par catégorie et les totaux.
+-- Avec un id de catégorie : le détail de cette catégorie.
+handlers.test = function(argument)
+	local API = ns.API
+
+	if argument ~= "" then
+		local categoryID = tonumber(argument)
+		local name, parent = API.GetCategoryInfo(categoryID)
+		if not name then
+			Log.Info(L.TEST_UNKNOWN_CATEGORY, argument)
+			return
+		end
+		local total, completed = API.GetCategoryNumAchievements(categoryID)
+		Log.Info(L.TEST_CATEGORY, categoryID, name, parent, total, completed)
+		PrintCategoryDetails(categoryID)
+		return
+	end
+
 	local categories = API.GetCategoryList()
 	Log.Info(L.TEST_CATEGORY_LIST, JoinValues(unpack(categories)))
-
 	for _, categoryID in ipairs(categories) do
 		local name, parent = API.GetCategoryInfo(categoryID)
 		local total, completed = API.GetCategoryNumAchievements(categoryID)
 		Log.Info(L.TEST_CATEGORY, categoryID, name, parent, total, completed)
-
-		for index = 1, total do
-			local id = API.GetAchievementInfo(categoryID, index)
-			Log.Info(L.TEST_ACHIEVEMENT, JoinValues(API.GetAchievementInfo(categoryID, index)))
-			for criteriaIndex = 1, API.GetAchievementNumCriteria(id) do
-				Log.Info(L.TEST_CRITERIA, criteriaIndex,
-					JoinValues(API.GetAchievementCriteriaInfo(id, criteriaIndex)))
-			end
-			Log.Info(L.TEST_SERIES, tostring(API.GetPreviousAchievement(id)),
-				tostring((API.GetNextAchievement(id))))
-		end
 	end
 
 	local total, completed = API.GetNumCompletedAchievements()
@@ -80,13 +99,14 @@ handlers[""] = function()
 end
 
 local function OnSlashCommand(msg)
-	-- Premier mot en minuscules, espaces retirés.
-	local command = strtrim(msg or ""):match("^(%S*)"):lower()
-	Log.Debug("Commands: reçu", "'" .. command .. "'")
+	-- Premier mot en minuscules = la commande, le reste = l'argument.
+	local command, argument = strtrim(msg or ""):match("^(%S*)%s*(.-)$")
+	command = command:lower()
+	Log.Debug("Commands: reçu", "'" .. command .. "'", "argument", "'" .. argument .. "'")
 
 	local handler = handlers[command]
 	if handler then
-		handler()
+		handler(argument)
 	else
 		Log.Info(L.CMD_UNKNOWN, command)
 	end

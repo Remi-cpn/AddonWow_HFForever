@@ -106,7 +106,12 @@ function API.GetAchievementCriteriaInfo(achievementID, criteriaIndex)
 	-- seulement si tout le haut fait est obtenu.
 	local completed = Database:GetCompletion(achievementID) ~= nil
 	local quantity = completed and reqQuantity or 0
-	local flags = criteriaType.progressBar and CRITERIA_FLAG_PROGRESS_BAR or 0
+	-- progressBar peut être un booléen ou une fonction du critère.
+	local progressBar = criteriaType.progressBar
+	if type(progressBar) == "function" then
+		progressBar = progressBar(criterion)
+	end
+	local flags = progressBar and CRITERIA_FLAG_PROGRESS_BAR or 0
 
 	return criteriaType.describe(criterion), criterion.type, completed,
 		quantity, reqQuantity, nil, flags, nil,
