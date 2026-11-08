@@ -42,8 +42,9 @@ local pendingReason = nil      -- évaluation programmée, avec sa raison
 local forceRetroactive = false -- demandé par /hff reset
 local listeners = {}
 
--- Les autres modules (toasts, UI) s'abonnent ici pour être prévenus :
--- callback(achievementID, retroactive)
+-- Les autres modules (toasts, UI) s'abonnent ici pour être prévenus, une
+-- fois par évaluation qui a obtenu au moins un haut fait :
+-- callback(achievementIDs, retroactive), achievementIDs = liste d'id
 function Engine:RegisterListener(callback)
 	listeners[#listeners + 1] = callback
 end
@@ -80,16 +81,16 @@ local function EvaluateAchievement(achievement)
 	return allDone
 end
 
-local function NotifyListeners(achievementID, retroactive)
+local function NotifyListeners(achievementIDs, retroactive)
 	for _, callback in ipairs(listeners) do
-		local ok, message = pcall(callback, achievementID, retroactive)
+		local ok, message = pcall(callback, achievementIDs, retroactive)
 		if not ok then
 			Log.Error(L.ENGINE_LISTENER_ERROR, message)
 		end
 	end
 end
 
--- Annonce dans le chat. Les toasts (étape 6) s'ajouteront par un listener.
+-- Annonce dans le chat (les toasts passent par RegisterListener).
 local function AnnounceEarned(achievement)
 	Log.Info(L.ENGINE_EARNED, achievement.name, achievement.points)
 end
@@ -134,8 +135,12 @@ local function RunEvaluation(reason)
 			AnnounceEarned(achievement)
 		end
 	end
-	for _, achievement in ipairs(earned) do
-		NotifyListeners(achievement.id, retroactive)
+	if #earned > 0 then
+		local ids = {}
+		for index, achievement in ipairs(earned) do
+			ids[index] = achievement.id
+		end
+		NotifyListeners(ids, retroactive)
 	end
 
 	forceRetroactive = false

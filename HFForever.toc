@@ -25,5 +25,7 @@ Core\API.lua
 Core\Engine.lua
 UI\MainWindow.lua
 UI\MinimapButton.lua
+UI\Toasts.xml
+UI\Toasts.lua
 Core\Commands.lua
 Core\Bootstrap.lua

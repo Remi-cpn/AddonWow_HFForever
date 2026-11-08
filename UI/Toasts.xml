@@ -1,0 +1,118 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<!--
+		Modèle de toast de haut fait.
+		Cloné de AchievementAlertFrameTemplate (Blizzard_FrameXML/Mainline/
+		AlertFrameSystems.xml, export du client Forever 1.60.1), renommé avec
+		le préfixe HFF. Retiré : la partie Guilde et le branchement sur le
+		système AlertFrame de Blizzard (notre file d'attente est dans
+		UI/Toasts.lua, pour ne toucher à aucune table de Blizzard).
+		Le comportement (textes, survol, clic) est réglé dans UI/Toasts.lua.
+	-->
+	<Button name="HFFAchievementToastTemplate" toplevel="true" hidden="true" virtual="true" registerForClicks="LeftButtonUp,RightButtonUp">
+		<Size x="300" y="101"/>
+		<Animations>
+			<AnimationGroup parentKey="animIn">
+				<Alpha fromAlpha="1" toAlpha="0" duration="0" order="1"/>
+				<Alpha fromAlpha="0" toAlpha="1" duration="0.2" order="2"/>
+			</AnimationGroup>
+			<AnimationGroup parentKey="waitAndAnimOut">
+				<Alpha startDelay="4.05" fromAlpha="1" toAlpha="0" duration="1.5" parentKey="animOut"/>
+			</AnimationGroup>
+		</Animations>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Background" atlas="ui-achievement-alert-background" useAtlasSize="true">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+				<FontString parentKey="Unlocked" inherits="GameFontBlackTiny">
+					<Size x="200" y="12"/>
+					<Anchors>
+						<Anchor point="TOP" x="7" y="-23"/>
+					</Anchors>
+				</FontString>
+				<FontString parentKey="Name" inherits="GameFontHighlight" maxLines="2" justifyH="CENTER" justifyV="MIDDLE">
+					<Size x="155" y="36"/>
+					<Anchors>
+						<Anchor point="TOP" relativeKey="$parent.Unlocked" relativePoint="BOTTOM"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="OVERLAY">
+				<!-- Atlas « alert-glow » : les variantes « ui-achievement-glow-* »
+				     du code Lua de Blizzard n'existent pas dans le client Forever. -->
+				<Texture parentKey="glow" atlas="ui-achievement-alert-glow-glow" useAtlasSize="true" alphaMode="ADD" hidden="true">
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0"/>
+					</Anchors>
+					<Animations>
+						<AnimationGroup parentKey="animIn">
+							<Alpha fromAlpha="0" toAlpha="1" duration="0.2" order="1"/>
+							<Alpha fromAlpha="1" toAlpha="0" duration="0.5" order="2"/>
+						</AnimationGroup>
+					</Animations>
+				</Texture>
+				<Texture parentKey="shine" atlas="ui-achievement-alert-glow-shine" useAtlasSize="true" alphaMode="ADD" hidden="true">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" x="0" y="8"/>
+					</Anchors>
+					<Animations>
+						<AnimationGroup parentKey="animIn">
+							<Alpha fromAlpha="0" toAlpha="1" duration="0.2" order="1"/>
+							<Translation offsetX="240" offsetY="0" duration="0.85" order="2"/>
+							<Alpha startDelay="0.35" fromAlpha="1" toAlpha="0" duration="0.5" order="2"/>
+						</AnimationGroup>
+					</Animations>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame parentKey="Icon">
+				<Size x="78" y="75"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="-4" y="-15"/>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<Texture parentKey="Texture">
+							<Size x="52" y="52"/>
+							<Anchors>
+								<Anchor point="CENTER" x="0" y="0"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="OVERLAY">
+						<Texture parentKey="Overlay" atlas="ui-achievement-iconframe" useAtlasSize="true">
+							<Anchors>
+								<Anchor point="CENTER" x="-1" y="1"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+			<Frame parentKey="Shield">
+				<Size x="64" y="64"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-8" y="-15"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture parentKey="Icon" atlas="ui-achievement-shield-2" useAtlasSize="true">
+							<Anchors>
+								<Anchor point="TOPRIGHT" x="1" y="-6"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="OVERLAY">
+						<FontString parentKey="Points" inherits="GameFontNormal">
+							<Anchors>
+								<Anchor point="CENTER" x="2" y="-2"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Frame>
+		</Frames>
+	</Button>
+</Ui>

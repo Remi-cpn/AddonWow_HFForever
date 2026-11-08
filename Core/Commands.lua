@@ -15,9 +15,29 @@ handlers.aide = function()
 	Log.Info(L.CMD_HELP_MINIMAP)
 	Log.Info(L.CMD_HELP_STATUS)
 	Log.Info(L.CMD_HELP_TEST)
+	Log.Info(L.CMD_HELP_TOAST)
 	Log.Info(L.CMD_HELP_SCAN)
 	Log.Info(L.CMD_HELP_RESET)
 	Log.Info(L.CMD_HELP_HELP)
+end
+
+-- Toasts de test : /hff toast [nombre] ou /hff toast resume
+handlers.toast = function(argument)
+	if argument == "resume" then
+		ns.Toasts:ShowSummary(7, 70)
+		return
+	end
+	local count = math.max(1, math.min(tonumber(argument) or 1, 10))
+	local shown = 0
+	for _, categoryID in ipairs(ns.API.GetCategoryList()) do
+		for index = 1, ns.API.GetCategoryNumAchievements(categoryID) do
+			if shown >= count then
+				return
+			end
+			ns.Toasts:ShowAchievement((ns.API.GetAchievementInfo(categoryID, index)))
+			shown = shown + 1
+		end
+	end
 end
 
 -- Force une évaluation de tous les critères.
