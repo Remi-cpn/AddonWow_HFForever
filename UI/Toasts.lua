@@ -19,8 +19,11 @@ local TOAST_HEIGHT = 101
 local SPACING = 4
 -- Au-dessus de la zone des alertes Blizzard (butin, etc.), qui commence à 128.
 local ANCHOR_Y = 250
--- Son de haut fait de retail. Id à confirmer à l'oreille en jeu.
-local ACHIEVEMENT_SOUND_KIT = 12891
+-- Son de haut fait : fichier sound/spells/achievmentsound1.ogg (FileDataID
+-- trouvé dans la listfile communautaire wowdev/wow-listfile).
+-- Sur Forever, le kit de son retail 12891 n'existe pas, et un fichier hors
+-- du dossier Interface ne se joue que par son numéro, pas par son chemin.
+local ACHIEVEMENT_SOUND_FILE = 569143
 
 -- Atlas utilisés par le modèle : vérifiés au démarrage.
 local REQUIRED_ATLASES = {
@@ -129,7 +132,9 @@ local function Display(entry)
 	frame.shine:Show()
 	frame.shine.animIn:Play()
 	frame.waitAndAnimOut:Play()
-	PlaySound(ACHIEVEMENT_SOUND_KIT)
+	if ns.Database:IsToastSoundEnabled() then
+		PlaySoundFile(ACHIEVEMENT_SOUND_FILE)
+	end
 	Log.Debug("Toasts: affiché", entry.name)
 end
 

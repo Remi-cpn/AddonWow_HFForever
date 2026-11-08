@@ -21,6 +21,10 @@ local DEFAULTS = {
 		hide = false,
 		showInCompartment = true,
 	},
+	-- Réglages des toasts
+	toasts = {
+		sound = true,
+	},
 	-- [achievementID] = { date = horodatage, character = "Nom-Royaume",
 	--                     retroactive = true si détecté à la connexion,
 	--                     donc accompli avant, date réelle inconnue }
@@ -76,6 +80,14 @@ end
 -- LibDBIcon, qui y sauvegarde lui-même la position quand on déplace le bouton.
 function Database:GetMinimapSettings()
 	return data.minimap
+end
+
+function Database:IsToastSoundEnabled()
+	return data.toasts.sound == true
+end
+
+function Database:SetToastSoundEnabled(enabled)
+	data.toasts.sound = enabled and true or false
 end
 
 function Database:GetSchemaVersion()

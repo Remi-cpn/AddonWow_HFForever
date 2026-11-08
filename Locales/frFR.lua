@@ -22,6 +22,9 @@ L.CMD_HELP_MINIMAP = "/hff minimap : affiche ou masque le bouton de la minimap"
 L.CMD_HELP_STATUS = "/hff etat : affiche l'état de la sauvegarde"
 L.CMD_HELP_TEST = "/hff test [catégorie] : résumé des données, ou détail d'une catégorie (ex. /hff test 51)"
 L.CMD_HELP_TOAST = "/hff toast [nombre|resume] : affiche des toasts de test"
+L.CMD_HELP_SOUND = "/hff son : active ou coupe le son des toasts"
+L.SOUND_ON = "son des toasts activé."
+L.SOUND_OFF = "son des toasts coupé."
 L.CMD_HELP_SCAN = "/hff scan : relance la détection des hauts faits"
 
 -- Toasts (UI/Toasts.lua)

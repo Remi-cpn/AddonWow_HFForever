@@ -16,9 +16,17 @@ handlers.aide = function()
 	Log.Info(L.CMD_HELP_STATUS)
 	Log.Info(L.CMD_HELP_TEST)
 	Log.Info(L.CMD_HELP_TOAST)
+	Log.Info(L.CMD_HELP_SOUND)
 	Log.Info(L.CMD_HELP_SCAN)
 	Log.Info(L.CMD_HELP_RESET)
 	Log.Info(L.CMD_HELP_HELP)
+end
+
+-- Active ou coupe le son des toasts.
+handlers.son = function()
+	local enabled = not ns.Database:IsToastSoundEnabled()
+	ns.Database:SetToastSoundEnabled(enabled)
+	Log.Info(enabled and L.SOUND_ON or L.SOUND_OFF)
 end
 
 -- Toasts de test : /hff toast [nombre] ou /hff toast resume
