@@ -24,6 +24,10 @@ local ANCHOR_Y = 250
 -- Sur Forever, le kit de son retail 12891 n'existe pas, et un fichier hors
 -- du dossier Interface ne se joue que par son numéro, pas par son chemin.
 local ACHIEVEMENT_SOUND_FILE = 569143
+-- Plusieurs toasts affichés en même temps ne jouent le son qu'une fois
+-- (sinon les sons s'additionnent et le volume explose).
+local MIN_SOUND_INTERVAL = 1
+local lastSoundTime = 0
 
 -- Atlas utilisés par le modèle : vérifiés au démarrage.
 local REQUIRED_ATLASES = {
@@ -132,8 +136,10 @@ local function Display(entry)
 	frame.shine:Show()
 	frame.shine.animIn:Play()
 	frame.waitAndAnimOut:Play()
-	if ns.Database:IsToastSoundEnabled() then
+	local now = GetTime()
+	if ns.Database:IsToastSoundEnabled() and now - lastSoundTime >= MIN_SOUND_INTERVAL then
 		PlaySoundFile(ACHIEVEMENT_SOUND_FILE)
+		lastSoundTime = now
 	end
 	Log.Debug("Toasts: affiché", entry.name)
 end
