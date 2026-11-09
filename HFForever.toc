@@ -23,6 +23,7 @@ Core\CriteriaTypes.lua
 Core\Registry.lua
 Core\API.lua
 Core\Engine.lua
+UI\MainWindow.xml
 UI\MainWindow.lua
 UI\MinimapButton.lua
 UI\Toasts.xml

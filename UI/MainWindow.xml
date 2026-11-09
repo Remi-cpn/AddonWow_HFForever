@@ -1,0 +1,409 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<!--
+		Fenêtre principale des hauts faits.
+		Clonée du cadre AchievementFrame (Blizzard_AchievementUI/Mainline/
+		Blizzard_AchievementUI.xml, export du client Forever 1.60.1), renommée
+		avec le préfixe HFF. Retiré : comparaison, statistiques, guilde, filtre,
+		bouton Retour, et la gestion UIPanelWindows de Blizzard (on gère
+		nous-mêmes l'affichage, pour ne modifier aucune table de Blizzard sauf
+		UISpecialFrames, voir UI/MainWindow.lua).
+		Le comportement est dans UI/MainWindow.lua.
+	-->
+
+	<!-- Bordure dorée des zones de contenu (clone de AchivementGoldBorderBackdrop). -->
+	<Frame name="HFFGoldBorderBackdropTemplate" inherits="TooltipBackdropTemplate" virtual="true">
+		<KeyValues>
+			<KeyValue key="backdropColorAlpha" value="0" type="number"/>
+		</KeyValues>
+		<Scripts>
+			<OnLoad inherit="append">
+				-- Couleur ACHIEVEMENT_GOLD_BORDER_COLOR de Blizzard : 1, 0.675, 0.125
+				self:SetBackdropBorderColor(1, 0.675, 0.125);
+				self:SetFrameLevel(self:GetFrameLevel() + 1);
+			</OnLoad>
+		</Scripts>
+	</Frame>
+
+	<!-- Onglet du bas (clone de AchievementFrameTabButtonTemplate). -->
+	<Button name="HFFTabButtonTemplate" virtual="true">
+		<Size x="115" y="32"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="LeftActive" file="Interface\AchievementFrame\UI-Achievement-Header">
+					<Size x="21" y="59"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="-4"/>
+					</Anchors>
+					<TexCoords left="0.47265625" right="0.513671875" top="0.76953125" bottom="1.0"/>
+				</Texture>
+				<Texture parentKey="RightActive" file="Interface\AchievementFrame\UI-Achievement-Header">
+					<Size x="18" y="59"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="4"/>
+					</Anchors>
+					<TexCoords left="0.685546875" right="0.720703125" top="0.76953125" bottom="1.0"/>
+				</Texture>
+				<Texture parentKey="MiddleActive" file="Interface\AchievementFrame\UI-Achievement-Header">
+					<Size x="88" y="59"/>
+					<Anchors>
+						<Anchor point="LEFT" relativeKey="$parent.LeftActive" relativePoint="RIGHT"/>
+						<Anchor point="RIGHT" relativeKey="$parent.RightActive" relativePoint="LEFT"/>
+					</Anchors>
+					<TexCoords left="0.513671875" right="0.685546875" top="0.76953125" bottom="1.0"/>
+				</Texture>
+				<Texture parentKey="Left" file="Interface\AchievementFrame\UI-Achievement-Header">
+					<Size x="21" y="49"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="-4"/>
+					</Anchors>
+					<TexCoords left="0.47265625" right="0.513671875" top="0.76953125" bottom="1.0"/>
+				</Texture>
+				<Texture parentKey="Right" file="Interface\AchievementFrame\UI-Achievement-Header">
+					<Size x="18" y="49"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="4"/>
+					</Anchors>
+					<TexCoords left="0.685546875" right="0.720703125" top="0.76953125" bottom="1.0"/>
+				</Texture>
+				<Texture parentKey="Middle" file="Interface\AchievementFrame\UI-Achievement-Header">
+					<Size x="88" y="49"/>
+					<Anchors>
+						<Anchor point="LEFT" relativeKey="$parent.Left" relativePoint="RIGHT"/>
+						<Anchor point="RIGHT" relativeKey="$parent.Right" relativePoint="LEFT"/>
+					</Anchors>
+					<TexCoords left="0.513671875" right="0.685546875" top="0.76953125" bottom="1.0"/>
+				</Texture>
+			</Layer>
+			<Layer level="HIGHLIGHT">
+				<Texture parentKey="LeftHighlight" file="Interface\AchievementFrame\UI-Achievement-Header" alphaMode="ADD">
+					<Size x="32" y="49"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.Left" x="-3"/>
+					</Anchors>
+					<TexCoords left="0.720703125" right="0.783203125" top="0.76953125" bottom="1.0"/>
+				</Texture>
+				<Texture parentKey="RightHighlight" file="Interface\AchievementFrame\UI-Achievement-Header" alphaMode="ADD">
+					<Size x="18" y="49"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT" relativeKey="$parent.Right"/>
+					</Anchors>
+					<TexCoords left="0.923828125" right="0.986328125" top="0.76953125" bottom="1.0"/>
+				</Texture>
+				<Texture parentKey="MiddleHighlight" file="Interface\AchievementFrame\UI-Achievement-Header" alphaMode="ADD">
+					<Size x="88" y="49"/>
+					<Anchors>
+						<Anchor point="LEFT" relativeKey="$parent.LeftHighlight" relativePoint="RIGHT"/>
+						<Anchor point="RIGHT" relativeKey="$parent.RightHighlight" relativePoint="LEFT"/>
+					</Anchors>
+					<TexCoords left="0.783203125" right="0.923828125" top="0.76953125" bottom="1.0"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				self.Left:SetVertexColor(0.6, 0.6, 0.6);
+				self.Middle:SetVertexColor(0.6, 0.6, 0.6);
+				self.Right:SetVertexColor(0.6, 0.6, 0.6);
+			</OnLoad>
+			<OnShow>
+				PanelTemplates_TabResize(self, 30);
+			</OnShow>
+		</Scripts>
+		<ButtonText parentKey="Text">
+			<Anchors>
+				<Anchor point="CENTER" x="0" y="-3"/>
+			</Anchors>
+		</ButtonText>
+		<NormalFont style="GameFontNormalSmall"/>
+		<HighlightFont style="GameFontHighlightSmall"/>
+		<DisabledFont style="GameFontHighlightSmall"/>
+	</Button>
+
+	<!-- La fenêtre. Nom global obligatoire pour la fermeture par Échap
+	     (UISpecialFrames) ; préfixe HFF pour ne rien remplacer. -->
+	<Frame name="HFFAchievementFrame" toplevel="true" parent="UIParent" frameStrata="MEDIUM" hidden="true" enableMouse="true" movable="true" clampedToScreen="true" inherits="BackdropTemplate">
+		<Size x="768" y="500"/>
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="BACKDROP_ACHIEVEMENTS_0_64" type="global"/>
+		</KeyValues>
+		<Anchors>
+			<Anchor point="CENTER" x="0" y="-20"/>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND" textureSubLevel="0">
+				<Texture parentKey="Background" atlas="UI-Background-Rock-Brown">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="16" y="-16"/>
+						<Anchor point="BOTTOMRIGHT" x="-16" y="16"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture parentKey="MetalBorderLeft" file="Interface\AchievementFrame\UI-Achievement-MetalBorder-Left">
+					<Size x="16" y="436"/>
+					<Anchors>
+						<Anchor point="LEFT" x="14" y="0"/>
+					</Anchors>
+					<TexCoords left="0" right="1" top="0" bottom=".87"/>
+				</Texture>
+				<Texture parentKey="MetalBorderRight" file="Interface\AchievementFrame\UI-Achievement-MetalBorder-Left">
+					<Size x="16" y="436"/>
+					<Anchors>
+						<Anchor point="RIGHT" x="-13" y="0"/>
+					</Anchors>
+					<TexCoords left="1" right="0" top=".87" bottom="0"/>
+				</Texture>
+				<Texture parentKey="MetalBorderBottom" file="Interface\AchievementFrame\UI-Achievement-MetalBorder-Top">
+					<Size x="450" y="16"/>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" x="28" y="13"/>
+						<Anchor point="BOTTOMRIGHT" x="-28" y="13"/>
+					</Anchors>
+					<TexCoords left="0" right=".87" top="1.0" bottom="0"/>
+				</Texture>
+				<Texture parentKey="MetalBorderTop" file="Interface\AchievementFrame\UI-Achievement-MetalBorder-Top">
+					<Size x="450" y="16"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="28" y="-12"/>
+						<Anchor point="TOPRIGHT" x="-28" y="-12"/>
+					</Anchors>
+					<TexCoords left=".87" right="0" top="0" bottom="1"/>
+				</Texture>
+				<Texture parentKey="CategoriesBG" file="Interface\AchievementFrame\UI-Achievement-Parchment">
+					<Size x="195" y="0"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="25" y="-23"/>
+						<Anchor point="BOTTOMLEFT" x="25" y="23"/>
+					</Anchors>
+					<TexCoords left="0" right="0.5" top="0" bottom="1"/>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture parentKey="WaterMark" file="Interface\AchievementFrame\UI-Achievement-AchievementWatermark">
+					<Size x="256" y="256"/>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativeKey="$parent.CategoriesBG" x="0" y="0"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="MetalBorderTopLeft" file="Interface\AchievementFrame\UI-Achievement-MetalBorder-Joint">
+					<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="9" y="-7"/>
+					</Anchors>
+					<TexCoords left="1" right="0" top="1" bottom="0"/>
+				</Texture>
+				<Texture parentKey="MetalBorderTopRight" file="Interface\AchievementFrame\UI-Achievement-MetalBorder-Joint">
+					<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="-8" y="-7"/>
+					</Anchors>
+					<TexCoords left="0" right="1" top="1" bottom="0"/>
+				</Texture>
+				<Texture parentKey="MetalBorderBottomLeft" file="Interface\AchievementFrame\UI-Achievement-MetalBorder-Joint">
+					<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" x="9" y="8"/>
+					</Anchors>
+					<TexCoords left="1" right="0" top="0" bottom="1"/>
+				</Texture>
+				<Texture parentKey="MetalBorderBottomRight" file="Interface\AchievementFrame\UI-Achievement-MetalBorder-Joint">
+					<Size x="32" y="32"/>
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" x="-8" y="8"/>
+					</Anchors>
+					<TexCoords left="0" right="1" top="0" bottom="1"/>
+				</Texture>
+				<Texture parentKey="WoodBorderTopLeft" file="Interface\AchievementFrame\UI-Achievement-WoodBorder-Corner">
+					<Size x="64" y="64"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="4" y="-2"/>
+					</Anchors>
+					<TexCoords left="0" right="1" top="0" bottom="1"/>
+				</Texture>
+				<Texture parentKey="WoodBorderTopRight" file="Interface\AchievementFrame\UI-Achievement-WoodBorder-Corner">
+					<Size x="64" y="64"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="-4" y="-2"/>
+					</Anchors>
+					<TexCoords left="1" right="0" top="0" bottom="1"/>
+				</Texture>
+				<Texture parentKey="WoodBorderBottomLeft" file="Interface\AchievementFrame\UI-Achievement-WoodBorder-Corner">
+					<Size x="64" y="64"/>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" x="4" y="3"/>
+					</Anchors>
+					<TexCoords left="0" right="1" top="1" bottom="0"/>
+				</Texture>
+				<Texture parentKey="WoodBorderBottomRight" file="Interface\AchievementFrame\UI-Achievement-WoodBorder-Corner">
+					<Size x="64" y="64"/>
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" x="-4" y="3"/>
+					</Anchors>
+					<TexCoords left="1" right="0" top="1" bottom="0"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<!-- Liste des catégories (remplie à l'étape 7b). -->
+			<Frame parentKey="Categories" inherits="HFFGoldBorderBackdropTemplate">
+				<Size x="175" y="0"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="21" y="-19"/>
+					<Anchor point="BOTTOMLEFT" x="21" y="20"/>
+				</Anchors>
+			</Frame>
+
+			<!-- Bandeau au-dessus du contenu : la case de recherche. -->
+			<Frame parentKey="HeaderDetails">
+				<Size x="529" y="38"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.Categories" relativePoint="TOPRIGHT" x="23" y="0"/>
+					<Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT" x="-23" y="-57"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND" textureSubLevel="-1">
+						<Texture parentKey="TopTileStreaks" inherits="_UI-Frame-TopTileStreaks" setAllPoints="true"/>
+					</Layer>
+				</Layers>
+				<Frames>
+					<EditBox parentKey="SearchBox" inherits="SearchBoxTemplate" letters="40" autoFocus="false">
+						<Size x="107" y="30"/>
+						<Anchors>
+							<Anchor point="TOPRIGHT" x="-8" y="-6"/>
+						</Anchors>
+					</EditBox>
+				</Frames>
+			</Frame>
+
+			<!-- En-tête au-dessus de la fenêtre : titre et total de points.
+			     On déplace la fenêtre en le faisant glisser. -->
+			<Frame parentKey="Header" enableMouse="true">
+				<Size x="726" y="106"/>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="26" y="-38"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture parentKey="Left" file="Interface\AchievementFrame\UI-Achievement-Header">
+							<Size x="512" y="106"/>
+							<Anchors>
+								<Anchor point="BOTTOMLEFT"/>
+							</Anchors>
+							<TexCoords left="0" right="1" top="0" bottom="0.4140625"/>
+						</Texture>
+						<Texture parentKey="Right" file="Interface\AchievementFrame\UI-Achievement-Header">
+							<Size x="215" y="100"/>
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" relativeKey="$parent.Left" relativePoint="BOTTOMRIGHT" x="0" y="-6"/>
+							</Anchors>
+							<TexCoords left="0" right="0.419921875" top="0.4140625" bottom="0.8046875"/>
+						</Texture>
+					</Layer>
+					<Layer level="BORDER">
+						<Texture parentKey="PointBorder" file="Interface\AchievementFrame\UI-Achievement-Header">
+							<Size x="133" y="39"/>
+							<Anchors>
+								<Anchor point="BOTTOM" x="20" y="16"/>
+							</Anchors>
+							<TexCoords left="0.419921875" right="0.6796875" top="0.4140625" bottom="0.56640625"/>
+						</Texture>
+						<FontString parentKey="Title" inherits="GameFontNormalSmall" maxLines="2">
+							<Size x="150" y="20"/>
+							<Anchors>
+								<Anchor point="TOP" relativeKey="$parent.PointBorder" relativePoint="TOP" x="0" y="12"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+					<Layer level="ARTWORK">
+						<FontString parentKey="Points" inherits="GameFontHighlight">
+							<Size x="0" y="12"/>
+							<Anchors>
+								<Anchor point="TOP" relativeKey="$parent.PointBorder" relativePoint="TOP" x="0" y="-13"/>
+							</Anchors>
+						</FontString>
+						<Texture parentKey="Shield" file="Interface\AchievementFrame\UI-Achievement-TinyShield">
+							<Size x="20" y="20"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeKey="$parent.Points" relativePoint="RIGHT" x="3" y="-1"/>
+							</Anchors>
+							<TexCoords left="0" right="0.625" top="0" bottom="0.625"/>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+
+			<!-- Contenu de l'onglet Hauts faits (rempli à l'étape 7b). -->
+			<Frame parentKey="Achievements" hidden="true">
+				<Size x="504" y="440"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.Categories" relativePoint="TOPRIGHT" x="22" y="-36"/>
+					<Anchor point="BOTTOM" relativeKey="$parent.Categories" relativePoint="BOTTOM"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture parentKey="Background" file="Interface\AchievementFrame\UI-Achievement-AchievementBackground">
+							<Anchors>
+								<Anchor point="TOPLEFT" x="3" y="-3"/>
+								<Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+							</Anchors>
+							<TexCoords left="0" right="1" top="0" bottom="0.5"/>
+						</Texture>
+					</Layer>
+					<Layer level="ARTWORK">
+						<Texture>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeKey="$parent.Background" x="0" y="0"/>
+								<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+							</Anchors>
+							<Color r="0" g="0" b="0" a="0.75"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Frame setAllPoints="true" inherits="HFFGoldBorderBackdropTemplate"/>
+				</Frames>
+			</Frame>
+
+			<!-- Contenu de l'onglet Résumé (rempli à l'étape 7c). -->
+			<Frame parentKey="Summary" hidden="true">
+				<Size x="529" y="461"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="218" y="-55"/>
+					<Anchor point="BOTTOM" relativeKey="$parent.Categories" relativePoint="BOTTOM"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture parentKey="Background" file="Interface\AchievementFrame\UI-Achievement-AchievementBackground">
+							<Anchors>
+								<Anchor point="TOPLEFT" x="3" y="-3"/>
+								<Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+							</Anchors>
+							<TexCoords left="0" right="1" top="0" bottom="0.5"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Frame setAllPoints="true" inherits="HFFGoldBorderBackdropTemplate"/>
+				</Frames>
+			</Frame>
+
+			<Button parentKey="CloseButton" inherits="UIPanelCloseButton">
+				<Anchors>
+					<Anchor point="TOPRIGHT"/>
+				</Anchors>
+			</Button>
+
+			<!-- Onglets du bas. Texte et clic réglés dans UI/MainWindow.lua. -->
+			<Button parentKey="Tab1" inherits="HFFTabButtonTemplate" id="1">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" x="17" y="3"/>
+				</Anchors>
+			</Button>
+			<Button parentKey="Tab2" inherits="HFFTabButtonTemplate" id="2">
+				<Anchors>
+					<Anchor point="LEFT" relativeKey="$parent.Tab1" relativePoint="RIGHT" x="-5" y="0"/>
+				</Anchors>
+			</Button>
+		</Frames>
+	</Frame>
+</Ui>

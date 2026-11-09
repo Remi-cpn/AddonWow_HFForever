@@ -17,6 +17,7 @@ local function OnAddonLoaded(loadedName)
 	ns.Registry:Build()
 	ns.MinimapButton:Init()
 	ns.Toasts:Init()
+	ns.MainWindow:Init()
 end
 
 local function OnPlayerLogin()

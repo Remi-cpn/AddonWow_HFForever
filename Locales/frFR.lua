@@ -44,7 +44,13 @@ L.ENGINE_RETRO_SUMMARY = "%d haut(s) fait(s) déjà accompli(s) détecté(s)."
 L.ENGINE_CRITERIA_ERROR = "haut fait %s, critère %s : erreur de lecture (%s)"
 L.ENGINE_LISTENER_ERROR = "erreur dans un abonné du moteur : %s"
 L.CMD_UNKNOWN = "commande inconnue : « %s ». Tape /hff aide."
-L.WINDOW_NOT_READY = "la fenêtre n'existe pas encore (étape 7)."
+
+-- Fenêtre principale (UI/MainWindow.lua)
+L.WINDOW_HEADER_TITLE = "Points de hauts faits du compte"
+L.TAB_SUMMARY = "Résumé"
+L.TAB_ACHIEVEMENTS = "Hauts faits"
+L.WINDOW_FILE_MISSING = "texture de la fenêtre introuvable : %s"
+L.WINDOW_ATLAS_MISSING = "atlas de la fenêtre introuvable : %s"
 
 -- Mode debug
 L.DEBUG_ON = "mode debug activé."
