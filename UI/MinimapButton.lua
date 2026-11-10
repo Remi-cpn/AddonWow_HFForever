@@ -16,17 +16,36 @@ ns.MinimapButton = MinimapButton
 -- dans le compartiment d'addons.
 local BUTTON_NAME = "HF Forever"
 
+-- Menu du clic droit (API officielle MenuUtil). Il s'ouvre sous le curseur,
+-- accroché à UIParent : dans le compartiment d'addons, le cadre cliqué se
+-- ferme tout de suite et fermerait le menu avec lui.
+local function ShowContextMenu()
+	MenuUtil.CreateContextMenu(UIParent, function(_, rootDescription)
+		rootDescription:CreateTitle(L.ADDON_TITLE)
+		rootDescription:CreateButton(L.MENU_OPEN, function()
+			ns.MainWindow:Toggle()
+		end)
+		rootDescription:CreateButton(L.MENU_OPTIONS, function()
+			ns.Options:Open()
+		end)
+	end)
+end
+
+-- Clic gauche : la fenêtre. Clic droit : le menu. Même chose depuis le
+-- compartiment d'addons (LibDBIcon y transmet le bouton de souris).
 local function OnClick(_, mouseButton)
 	Log.Debug("MinimapButton: clic", mouseButton)
 	if mouseButton == "LeftButton" then
 		ns.MainWindow:Toggle()
+	elseif mouseButton == "RightButton" then
+		ShowContextMenu()
 	end
 end
 
 local function OnTooltipShow(tooltip)
 	tooltip:AddLine(L.ADDON_TITLE)
 	tooltip:AddLine(L.MINIMAP_TOOLTIP_CLICK, 1, 1, 1)
-	tooltip:AddLine(L.MINIMAP_TOOLTIP_DRAG, 1, 1, 1)
+	tooltip:AddLine(L.MINIMAP_TOOLTIP_RIGHTCLICK, 1, 1, 1)
 end
 
 -- À appeler une fois la sauvegarde chargée (ADDON_LOADED), car LibDBIcon

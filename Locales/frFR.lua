@@ -87,7 +87,10 @@ L.DEBUG_OFF = "mode debug désactivé."
 
 -- Bouton de minimap
 L.MINIMAP_TOOLTIP_CLICK = "Clic gauche : ouvrir les hauts faits"
-L.MINIMAP_TOOLTIP_DRAG = "Glisser : déplacer autour de la minimap"
+L.MINIMAP_TOOLTIP_RIGHTCLICK = "Clic droit : menu"
+-- Menu du clic droit (UI/MinimapButton.lua)
+L.MENU_OPEN = "Ouvrir les hauts faits"
+L.MENU_OPTIONS = "Options"
 L.MINIMAP_SHOWN = "bouton de la minimap affiché."
 L.MINIMAP_HIDDEN = "bouton de la minimap masqué. Tape /hff minimap pour le réafficher."
 
