@@ -453,7 +453,9 @@ local function CalculateSelectedHeight(elementData)
 		textCheckWidth = placeholder:GetStringWidth()
 	end
 
-	local id, _, _, completed, _, _, _, description, _, _, rewardText = API.GetAchievementInfo(elementData.category, elementData.index)
+	-- Par id et pas par index : l'index d'un haut fait change quand il est
+	-- obtenu (les obtenus passent en tête de la catégorie).
+	local id, _, _, completed, _, _, _, description, _, _, rewardText = API.GetAchievementInfo(elementData.id)
 	if completed and API.GetPreviousAchievement(id) then
 		local count = 1
 		local previous = API.GetPreviousAchievement(id)
@@ -753,7 +755,7 @@ function Button:Init(elementData)
 	self.completed = nil
 
 	local id, name, points, completed, month, day, year, description, flags, icon, rewardText, _, _, earnedBy =
-		API.GetAchievementInfo(elementData.category, elementData.index)
+		API.GetAchievementInfo(elementData.id) -- par id, voir CalculateSelectedHeight
 
 	local saturatedStyle
 	if hasAccountHeader and bit.band(flags, FLAG_ACCOUNT) == FLAG_ACCOUNT then

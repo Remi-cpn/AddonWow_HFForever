@@ -4,6 +4,19 @@
 ## Version: 0.1.0
 ## SavedVariables: HFForeverDB
 ## IconTexture: Interface\Icons\Achievement_General
+# Rangé avec les addons de collection dans la liste des addons (mêmes
+# libellés que RareScanner, un par langue du client).
+## Category: Collections
+## Category-deDE: Kriegsmeutesammlungen
+## Category-esES: Colecciones de banda guerrera
+## Category-esMX: Colecciones de tropa
+## Category-frFR: Collections du bataillon
+## Category-itIT: Collezioni della Brigata
+## Category-koKR: 수집
+## Category-ptBR: Coleções do Bando de Guerra
+## Category-ruRU: Коллекции отряда
+## Category-zhCN: 战团藏品
+## Category-zhTW: 戰隊收藏
 
 # Librairies externes (LibStub en premier, les autres en dépendent).
 Libs\LibStub\LibStub.lua

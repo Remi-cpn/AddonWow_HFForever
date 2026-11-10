@@ -72,6 +72,10 @@ Méta : **Explorateur de Kalimdor**. 25 points.
 
 Île de Zephras (2521). Zone de départ des Skyborne, **accessible uniquement avec un personnage Skyborne** : ce HF n'est obtenable que si tu en crées un. Il ne compte dans aucun méta.
 
+### Méta global (1), ajouté le 2026-11-10
+
+**Explorateur** (3300) : obtenir Explorateur des Royaumes de l'Est et Explorateur de Kalimdor. 50 points, comme « Explorateur » de WotLK. Sans l'île de Zéphras, pour rester obtenable par tous. Icône `INV_Misc_Map09` (celle de « Exploration d'Azeroth » sur Forever).
+
 Les noms français exacts seront lus en jeu avec `C_Map.GetMapInfo(id).name` pour être identiques à ceux de ta carte.
 
 Nouveau type de critère : `achievement` (« obtenir le HF n° X »), pour les métas. 🟢 (lecture de notre propre sauvegarde).

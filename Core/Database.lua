@@ -109,8 +109,13 @@ function Database:SetCompleted(achievementID, character, retroactive)
 	if data.completed[achievementID] then
 		return
 	end
+	-- Numéro d'ordre croissant : départage les hauts faits obtenus dans la
+	-- même seconde (time() n'a qu'une seconde de précision), par exemple
+	-- pendant la détection rétroactive.
+	data.completionCounter = (data.completionCounter or 0) + 1
 	data.completed[achievementID] = {
 		date = time(),
+		order = data.completionCounter,
 		character = character,
 		retroactive = retroactive or nil,
 	}

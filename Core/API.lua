@@ -22,10 +22,33 @@ local ACHIEVEMENT_FLAG_ACCOUNT = 0x00020000
 -- Nombre de hauts faits renvoyés par GetLatestCompletedAchievements.
 local MAX_LATEST = 5
 
--- GetAchievementInfo accepte (achievementID) ou (categoryID, index).
+-- Hauts faits d'une catégorie dans l'ordre d'affichage, comme sur retail :
+-- d'abord les obtenus, puis ceux à faire, chaque groupe dans l'ordre de
+-- Data/Achievements.lua.
+local function GetDisplayOrder(categoryID)
+	local list = Registry:GetCategoryAchievements(categoryID)
+	if not list then
+		return nil
+	end
+	local completed, incomplete = {}, {}
+	for _, achievement in ipairs(list) do
+		if Database:GetCompletion(achievement.id) then
+			completed[#completed + 1] = achievement
+		else
+			incomplete[#incomplete + 1] = achievement
+		end
+	end
+	for _, achievement in ipairs(incomplete) do
+		completed[#completed + 1] = achievement
+	end
+	return completed
+end
+
+-- GetAchievementInfo accepte (achievementID) ou (categoryID, index) ;
+-- index suit l'ordre d'affichage (obtenus d'abord).
 local function ResolveAchievement(idOrCategory, index)
 	if index then
-		local list = Registry:GetCategoryAchievements(idOrCategory)
+		local list = GetDisplayOrder(idOrCategory)
 		return list and list[index]
 	end
 	return Registry:GetAchievement(idOrCategory)
@@ -149,11 +172,20 @@ function API.GetLatestCompletedAchievements()
 	for id, record in pairs(Database:GetAllCompletions()) do
 		-- Un haut fait retiré de Data/ peut rester dans la sauvegarde : on l'ignore.
 		if Registry:GetAchievement(id) then
-			entries[#entries + 1] = { id = id, date = record.date }
+			entries[#entries + 1] = { id = id, date = record.date, order = record.order or 0 }
 		end
 	end
+	-- Du plus récent au plus ancien ; à date égale, le dernier enregistré
+	-- d'abord (les sauvegardes d'avant ce numéro d'ordre valent 0) ; enfin
+	-- l'id, pour que l'ordre ne change jamais d'un affichage à l'autre.
 	table.sort(entries, function(a, b)
-		return a.date > b.date
+		if a.date ~= b.date then
+			return a.date > b.date
+		end
+		if a.order ~= b.order then
+			return a.order > b.order
+		end
+		return a.id > b.id
 	end)
 
 	local ids = {}

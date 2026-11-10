@@ -470,6 +470,21 @@ ns.Data.achievements = {
 	},
 
 	---------------------------------------------------------------------------
+	-- Exploration : méta global (comme « Explorateur » de WotLK, 50 points).
+	-- Sans l'île de Zéphras (personnages Skyborne uniquement) : obtenable par tous.
+	---------------------------------------------------------------------------
+	{
+		id = 3300, category = 3, points = 50,
+		icon = ICONS .. "INV_Misc_Map09",
+		name = "Explorateur",
+		description = "Explorer les Royaumes de l'Est et Kalimdor.",
+		criteria = {
+			{ type = "achievement", id = 3050 },
+			{ type = "achievement", id = 3150 },
+		},
+	},
+
+	---------------------------------------------------------------------------
 	-- Métiers (skillLine = id de la ligne de compétence du métier)
 	---------------------------------------------------------------------------
 	{

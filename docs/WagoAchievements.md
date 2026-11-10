@@ -104,10 +104,12 @@ Ce que la table Forever peut nous apporter, sans rien importer :
 - **Id des sous-zones** de chaque exploration (critère de type 43) : une autre
   façon de détecter, qui réglerait Reflet-de-Lune.
 
-## Questions ouvertes
+## Décision (2026-11-10)
 
-- [ ] Garde-t-on nos HF d'exploration alors que Forever les a déjà, ou les
-  remplaçons-nous par autre chose ?
-- [ ] `GetAchievementInfo(62031)` répond-il en jeu ? Si oui, nos métas
-  pourraient s'appuyer sur les HF Blizzard déjà obtenus.
-- [ ] Laquelle des deux copies est affichée en jeu, et pourquoi deux copies ?
+On garde nos hauts faits, exploration comprise, et on ne tient pas compte de
+ceux de Forever : pas de lien entre les deux, pas de métas appuyés sur les
+hauts faits Blizzard. Les questions sur `GetAchievementInfo(62031)` et sur
+les deux copies sont donc sans objet.
+
+Ce document reste une source de noms, d'icônes (`IconFileID`) et d'id de
+PNJ pour nos propres hauts faits.
