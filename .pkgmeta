@@ -1,0 +1,8 @@
+# Configuration du packager BigWigs (zip publié sur CurseForge).
+# Le dossier de l'addon dans le zip :
+package-as: HFForever
+
+# Pas dans le zip publié : documentation de développement. Les fichiers qui
+# commencent par un point (.git, .github, .pkgmeta) sont exclus d'office.
+ignore:
+  - docs

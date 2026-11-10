@@ -6,9 +6,14 @@
 local addonName, ns = ...
 
 ns.name = addonName
+-- Hors zip publié, le packager n'a pas remplacé @project-version@.
 ns.version = C_AddOns.GetAddOnMetadata(addonName, "Version") or "?"
--- Même valeur que IconTexture dans le .toc.
-ns.icon = "Interface\\Icons\\Achievement_General"
+if ns.version:find("@", 1, true) then
+	ns.version = "dev"
+end
+-- Logo de l'addon (bouton de minimap, compartiment, toast résumé). Même
+-- valeur que IconTexture dans le .toc. Source en grand : docs/HFForever_Logo.png.
+ns.icon = "Interface\\AddOns\\HFForever\\Media\\HFForever_Icon"
 -- Remplace une icône introuvable dans le client.
 ns.fallbackIcon = "Interface\\Icons\\INV_Misc_QuestionMark"
 

@@ -1,9 +1,13 @@
 ## Interface: 16001
 ## Title: HF Forever
-## Notes: Hauts faits à l'échelle du compte, dans l'esprit de WotLK, adaptés à WoW: Forever.
-## Version: 0.1.0
+## Notes: Account-wide achievements in the spirit of WotLK, adapted to WoW: Forever.
+## Notes-frFR: Hauts faits à l'échelle du compte, dans l'esprit de WotLK, adaptés à WoW: Forever.
+## Author: Pahouf
+# Remplacé par le nom du tag (v1.0.0...) dans le zip publié par le packager.
+## Version: @project-version@
+## X-License: MIT
 ## SavedVariables: HFForeverDB
-## IconTexture: Interface\Icons\Achievement_General
+## IconTexture: Interface\AddOns\HFForever\Media\HFForever_Icon
 # Rangé avec les addons de collection dans la liste des addons (mêmes
 # libellés que RareScanner, un par langue du client).
 ## Category: Collections
@@ -26,7 +30,9 @@ Libs\LibDBIcon-1.0\lib.xml
 
 # Ordre de chargement : namespace, textes, outils, données, UI, commandes, démarrage.
 Core\Init.lua
+Locales\enUS.lua
 Locales\frFR.lua
+Locales\Achievements_enUS.lua
 Core\Log.lua
 Core\Database.lua
 Data\Categories.lua

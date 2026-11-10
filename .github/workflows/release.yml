@@ -1,0 +1,24 @@
+# Publication : pousser un tag (par exemple v1.0.0) fabrique le zip avec le
+# packager BigWigs et l'envoie sur CurseForge, plus une release GitHub.
+# Secret à créer dans le dépôt : CF_API_TOKEN (jeton CurseForge).
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # pour créer la release GitHub
+    env:
+      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # historique complet, pour le changelog
+
+      - uses: BigWigsMods/packager@v2
