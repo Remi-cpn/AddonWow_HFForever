@@ -21,8 +21,10 @@ local DEFAULTS = {
 		hide = false,
 		showInCompartment = true,
 	},
-	-- Réglages des toasts
+	-- Réglages des toasts : enabled (afficher les toasts de déblocage ; le
+	-- message dans le chat reste toujours), sound (son de haut fait).
 	toasts = {
+		enabled = true,
 		sound = true,
 	},
 	-- [achievementID] = { date = horodatage, character = "Nom-Royaume",
@@ -88,6 +90,14 @@ end
 
 function Database:SetToastSoundEnabled(enabled)
 	data.toasts.sound = enabled and true or false
+end
+
+function Database:IsToastEnabled()
+	return data.toasts.enabled == true
+end
+
+function Database:SetToastEnabled(enabled)
+	data.toasts.enabled = enabled and true or false
 end
 
 function Database:GetSchemaVersion()

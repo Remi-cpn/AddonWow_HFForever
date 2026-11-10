@@ -73,6 +73,14 @@ L.SEARCH_INCOMPLETE = ACHIEVEMENTFRAME_FILTER_INCOMPLETE or "Non accomplis"
 L.WINDOW_FILE_MISSING = "texture de la fenêtre introuvable : %s"
 L.WINDOW_ATLAS_MISSING = "atlas de la fenêtre introuvable : %s"
 
+-- Panneau d'options (UI/Options.lua)
+L.OPTION_MINIMAP = "Bouton de la minimap"
+L.OPTION_MINIMAP_TOOLTIP = "Affiche le bouton de HF Forever autour de la minimap. L'entrée du compartiment d'addons reste toujours disponible."
+L.OPTION_TOASTS = "Afficher les toasts"
+L.OPTION_TOASTS_TOOLTIP = "Affiche une alerte à l'écran quand un haut fait est obtenu. Le message dans le chat reste toujours affiché."
+L.OPTION_SOUND = "Son des toasts"
+L.OPTION_SOUND_TOOLTIP = "Joue le son de haut fait avec chaque toast."
+
 -- Mode debug
 L.DEBUG_ON = "mode debug activé."
 L.DEBUG_OFF = "mode debug désactivé."

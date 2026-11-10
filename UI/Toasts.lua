@@ -182,8 +182,13 @@ function Toasts:ShowSummary(count, points)
 end
 
 -- Abonné du moteur : un toast par haut fait obtenu en direct, un seul
--- toast de résumé pour une détection rétroactive.
+-- toast de résumé pour une détection rétroactive. Rien si les toasts sont
+-- désactivés dans les options (le moteur écrit toujours dans le chat ;
+-- /hff toast, commande de dev, passe outre).
 local function OnAchievementsEarned(achievementIDs, retroactive)
+	if not ns.Database:IsToastEnabled() then
+		return
+	end
 	if retroactive then
 		local points = 0
 		for _, id in ipairs(achievementIDs) do

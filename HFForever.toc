@@ -48,5 +48,6 @@ UI\MainWindow.lua
 UI\MinimapButton.lua
 UI\Toasts.xml
 UI\Toasts.lua
+UI\Options.lua
 Core\Commands.lua
 Core\Bootstrap.lua
