@@ -47,8 +47,27 @@ L.CMD_UNKNOWN = "commande inconnue : « %s ». Tape /hff aide."
 
 -- Fenêtre principale (UI/MainWindow.lua)
 L.WINDOW_HEADER_TITLE = "Points de hauts faits du compte"
-L.TAB_SUMMARY = "Résumé"
 L.TAB_ACHIEVEMENTS = "Hauts faits"
+L.CATEGORY_SUMMARY = "Résumé"
+L.BACK = "Retour"
+-- Lignes de hauts faits (UI/AchievementList.lua). Quand Blizzard a le même
+-- texte, on reprend le sien (déjà traduit par le jeu), avec un texte de secours.
+L.ACCOUNT_WIDE = ACCOUNT_WIDE_ACHIEVEMENT or "Haut fait de compte"
+L.ACCOUNT_WIDE_COMPLETED = ACCOUNT_WIDE_ACHIEVEMENT_COMPLETED or "Haut fait de compte obtenu"
+L.EARNED_BY = "Obtenu par %s"
+L.META_COMPLETED_DATE = ACHIEVEMENT_META_COMPLETED_DATE or "Obtenu le %s"
+-- Panneau Résumé (UI/Summary.lua), mêmes textes que Blizzard quand ils existent.
+L.SUMMARY_LATEST = LATEST_UNLOCKED_ACHIEVEMENTS or "Derniers hauts faits obtenus"
+L.SUMMARY_EMPTY = NO_COMPLETED_ACHIEVEMENTS or "Aucun haut fait obtenu"
+L.SUMMARY_PROGRESS = ACHIEVEMENT_CATEGORY_PROGRESS or "Aperçu de la progression"
+L.SUMMARY_COMPLETED = ACHIEVEMENTS_COMPLETED or "Hauts faits accomplis"
+L.SUMMARY_INCOMPLETE = SUMMARY_ACHIEVEMENT_INCOMPLETE or "Haut fait suggéré"
+L.SUMMARY_INCOMPLETE_TEXT = SUMMARY_ACHIEVEMENT_INCOMPLETE_TEXT or "Vous n'avez pas encore obtenu ce haut fait."
+-- Recherche (UI/Search.lua), mêmes textes que Blizzard quand ils existent.
+L.SEARCH_SHOW_ALL = ENCOUNTER_JOURNAL_SHOW_SEARCH_RESULTS or "Afficher les %d résultats"
+L.SEARCH_RESULTS_TITLE = ENCOUNTER_JOURNAL_SEARCH_RESULTS or "Résultats de recherche pour « %s » (%d)"
+L.SEARCH_COMPLETED = ACHIEVEMENTFRAME_FILTER_COMPLETED or "Accomplis"
+L.SEARCH_INCOMPLETE = ACHIEVEMENTFRAME_FILTER_INCOMPLETE or "Non accomplis"
 L.WINDOW_FILE_MISSING = "texture de la fenêtre introuvable : %s"
 L.WINDOW_ATLAS_MISSING = "atlas de la fenêtre introuvable : %s"
 

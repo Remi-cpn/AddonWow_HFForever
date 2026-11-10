@@ -4,6 +4,8 @@
 --                  de progression dans l'UI
 --   describe(c)  : texte du critère affiché au joueur
 --   goal(c)      : quantité à atteindre (pour la barre et le texte x / y)
+--   asset(c)     : (facultatif) id de l'objet visé, renvoyé comme assetID par
+--                  ns.API.GetAchievementCriteriaInfo (ex. le haut fait d'un méta)
 --   validate(c)  : (facultatif) contrôle au chargement. Renvoie un message
 --                  d'erreur si le critère est inutilisable, nil sinon.
 --   current(c)   : progression actuelle du personnage connecté (un nombre).
@@ -156,6 +158,10 @@ CriteriaTypes.profession = {
 CriteriaTypes.achievement = {
 	fields = { "id" },
 	progressBar = false,
+	-- Haut fait visé, renvoyé comme assetID par GetAchievementCriteriaInfo.
+	asset = function(criterion)
+		return criterion.id
+	end,
 	describe = function(criterion)
 		local achievement = ns.Registry:GetAchievement(criterion.id)
 		return achievement and achievement.name or tostring(criterion.id)

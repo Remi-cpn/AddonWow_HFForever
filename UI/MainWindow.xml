@@ -4,7 +4,7 @@
 		Clonée du cadre AchievementFrame (Blizzard_AchievementUI/Mainline/
 		Blizzard_AchievementUI.xml, export du client Forever 1.60.1), renommée
 		avec le préfixe HFF. Retiré : comparaison, statistiques, guilde, filtre,
-		bouton Retour, et la gestion UIPanelWindows de Blizzard (on gère
+		barre d'attente de la recherche, et la gestion UIPanelWindows de Blizzard (on gère
 		nous-mêmes l'affichage, pour ne modifier aucune table de Blizzard sauf
 		UISpecialFrames, voir UI/MainWindow.lua).
 		Le comportement est dans UI/MainWindow.lua.
@@ -118,6 +118,47 @@
 		<HighlightFont style="GameFontHighlightSmall"/>
 		<DisabledFont style="GameFontHighlightSmall"/>
 	</Button>
+
+	<!-- Bouton de catégorie (clone de AchievementCategoryTemplate).
+	     Rempli par UI/CategoryList.lua. -->
+	<Frame name="HFFCategoryTemplate" virtual="true">
+		<Size x="158" y="24"/>
+		<Frames>
+			<Button parentKey="Button">
+				<Size x="158" y="24"/>
+				<Anchors>
+					<Anchor point="TOP"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture parentKey="Background" file="Interface\AchievementFrame\UI-Achievement-Category-Background">
+							<Size x="170" y="32"/>
+							<Anchors>
+								<Anchor point="TOPLEFT"/>
+								<Anchor point="TOPRIGHT"/>
+							</Anchors>
+							<TexCoords left="0" right="0.6640625" top="0" bottom="1"/>
+						</Texture>
+					</Layer>
+					<Layer level="ARTWORK">
+						<FontString parentKey="Label" inherits="GameFontNormalLeftBottom" wordwrap="false">
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" x="16" y="4"/>
+								<Anchor point="TOPRIGHT" x="-8" y="-4"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<HighlightTexture file="Interface\AchievementFrame\UI-Achievement-Category-Highlight" alphaMode="ADD">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="-1" y="-7"/>
+					</Anchors>
+					<TexCoords left="0" right="0.6640625" top="0" bottom="1"/>
+				</HighlightTexture>
+			</Button>
+		</Frames>
+	</Frame>
 
 	<!-- La fenêtre. Nom global obligatoire pour la fermeture par Échap
 	     (UISpecialFrames) ; préfixe HFF pour ne rien remplacer. -->
@@ -244,13 +285,27 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<!-- Liste des catégories (remplie à l'étape 7b). -->
+			<!-- Liste des catégories, remplie par UI/CategoryList.lua. -->
 			<Frame parentKey="Categories" inherits="HFFGoldBorderBackdropTemplate">
 				<Size x="175" y="0"/>
 				<Anchors>
 					<Anchor point="TOPLEFT" x="21" y="-19"/>
 					<Anchor point="BOTTOMLEFT" x="21" y="20"/>
 				</Anchors>
+				<Frames>
+					<Frame parentKey="ScrollBox" inherits="WowScrollBoxList" frameStrata="HIGH">
+						<Anchors>
+							<Anchor point="TOPLEFT" x="0" y="-5"/>
+							<Anchor point="BOTTOMRIGHT" x="0" y="5"/>
+						</Anchors>
+					</Frame>
+					<EventFrame parentKey="ScrollBar" inherits="MinimalScrollBar" frameStrata="HIGH">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" x="6" y="-8"/>
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="6" y="6"/>
+						</Anchors>
+					</EventFrame>
+				</Frames>
 			</Frame>
 
 			<!-- Bandeau au-dessus du contenu : la case de recherche. -->
@@ -266,11 +321,142 @@
 					</Layer>
 				</Layers>
 				<Frames>
+					<!-- Bouton Retour : texte et état réglés dans UI/MainWindow.lua.
+					     Grisé tant qu'il n'y a pas d'historique de navigation. -->
+					<Button parentKey="Back" inherits="UIPanelButtonTemplate">
+						<Size x="100" y="22"/>
+						<Anchors>
+							<Anchor point="TOPLEFT" x="6" y="-10"/>
+						</Anchors>
+					</Button>
+					<!-- Case de recherche et son aperçu (5 résultats et « tous les
+					     résultats »), comportement dans UI/Search.lua. -->
 					<EditBox parentKey="SearchBox" inherits="SearchBoxTemplate" letters="40" autoFocus="false">
 						<Size x="107" y="30"/>
 						<Anchors>
 							<Anchor point="TOPRIGHT" x="-8" y="-6"/>
 						</Anchors>
+						<Frames>
+							<Frame parentKey="SearchPreviewContainer" hidden="true" frameStrata="DIALOG">
+								<Size x="206" y="27"/>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" x="-4" y="3"/>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<Texture parentKey="Background" atlas="_search-rowbg">
+											<Anchors>
+												<Anchor point="TOPLEFT"/>
+												<Anchor point="BOTTOMRIGHT"/>
+											</Anchors>
+										</Texture>
+									</Layer>
+									<Layer level="OVERLAY">
+										<Texture parentKey="BorderAnchor" inherits="UI-Frame-BotCornerLeft">
+											<Anchors>
+												<Anchor point="LEFT" x="-7" y="0"/>
+												<Anchor point="BOTTOM" x="0" y="-5"/>
+											</Anchors>
+										</Texture>
+										<Texture parentKey="BotRightCorner" inherits="UI-Frame-BotCornerRight">
+											<Anchors>
+												<Anchor point="BOTTOM" relativeKey="$parent.BorderAnchor" x="0" y="0"/>
+												<Anchor point="RIGHT" x="4" y="0"/>
+											</Anchors>
+										</Texture>
+										<Texture parentKey="BottomBorder" inherits="_UI-Frame-Bot">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeKey="$parent.BorderAnchor" relativePoint="BOTTOMRIGHT" y="0"/>
+												<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BotRightCorner" relativePoint="BOTTOMLEFT" y="0"/>
+											</Anchors>
+										</Texture>
+										<Texture parentKey="LeftBorder" inherits="!UI-Frame-LeftTile">
+											<Anchors>
+												<Anchor point="TOP" x="0" y="1"/>
+												<Anchor point="BOTTOMLEFT" relativeKey="$parent.BorderAnchor" relativePoint="TOPLEFT"/>
+											</Anchors>
+										</Texture>
+										<Texture parentKey="RightBorder" inherits="!UI-Frame-RightTile">
+											<Anchors>
+												<Anchor point="TOP" x="0" y="1"/>
+												<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BotRightCorner" relativePoint="TOPRIGHT" x="1" y="0"/>
+											</Anchors>
+										</Texture>
+										<Texture parentKey="TopBorder" inherits="_UI-Frame-Bot">
+											<Anchors>
+												<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="-2" y="3"/>
+												<Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT" x="2" y="-3"/>
+											</Anchors>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Frames>
+									<Button parentKey="SearchPreview1" inherits="HFFSearchPreviewButtonTemplate" hidden="true">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="0" y="0"/>
+										</Anchors>
+									</Button>
+									<Button parentKey="SearchPreview2" inherits="HFFSearchPreviewButtonTemplate" hidden="true">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeKey="$parent.SearchPreview1" relativePoint="BOTTOMLEFT"/>
+										</Anchors>
+									</Button>
+									<Button parentKey="SearchPreview3" inherits="HFFSearchPreviewButtonTemplate" hidden="true">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeKey="$parent.SearchPreview2" relativePoint="BOTTOMLEFT"/>
+										</Anchors>
+									</Button>
+									<Button parentKey="SearchPreview4" inherits="HFFSearchPreviewButtonTemplate" hidden="true">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeKey="$parent.SearchPreview3" relativePoint="BOTTOMLEFT"/>
+										</Anchors>
+									</Button>
+									<Button parentKey="SearchPreview5" inherits="HFFSearchPreviewButtonTemplate" hidden="true">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeKey="$parent.SearchPreview4" relativePoint="BOTTOMLEFT"/>
+										</Anchors>
+									</Button>
+									<Button parentKey="ShowAllSearchResults" hidden="true">
+										<Size x="275" y="24"/>
+										<Anchors>
+											<Anchor point="LEFT" relativeKey="$parent.SearchPreview1" x="0" y="0"/>
+											<Anchor point="RIGHT" relativeKey="$parent.SearchPreview1" x="0" y="0"/>
+											<Anchor point="TOP" relativeKey="$parent.SearchPreview5" relativePoint="BOTTOM" x="0" y="0"/>
+										</Anchors>
+										<Layers>
+											<Layer level="OVERLAY" textureSubLevel="2">
+												<Texture parentKey="SelectedTexture" atlas="search-highlight">
+													<Anchors>
+														<Anchor point="TOPLEFT"/>
+														<Anchor point="BOTTOMRIGHT"/>
+													</Anchors>
+												</Texture>
+											</Layer>
+											<Layer level="OVERLAY">
+												<FontString parentKey="Text" inherits="GameFontNormal" justifyH="LEFT">
+													<Size x="0" y="0"/>
+													<Anchors>
+														<Anchor point="CENTER" x="0" y="0"/>
+													</Anchors>
+												</FontString>
+											</Layer>
+										</Layers>
+										<NormalTexture atlas="_search-rowbg"/>
+										<PushedTexture atlas="_search-rowbg"/>
+										<Scripts>
+											<OnShow>
+												self:SetFrameLevel(self:GetParent():GetFrameLevel() + 10);
+											</OnShow>
+										</Scripts>
+									</Button>
+								</Frames>
+								<Scripts>
+									<OnShow>
+										self:SetFrameLevel(self:GetParent():GetFrameLevel() + 11);
+									</OnShow>
+								</Scripts>
+							</Frame>
+						</Frames>
 					</EditBox>
 				</Frames>
 			</Frame>
@@ -332,7 +518,8 @@
 				</Layers>
 			</Frame>
 
-			<!-- Contenu de l'onglet Hauts faits (rempli à l'étape 7b). -->
+			<!-- Liste des hauts faits d'une catégorie, remplie par
+			     UI/AchievementList.lua (lignes : UI/AchievementList.xml). -->
 			<Frame parentKey="Achievements" hidden="true">
 				<Size x="504" y="440"/>
 				<Anchors>
@@ -340,6 +527,15 @@
 					<Anchor point="BOTTOM" relativeKey="$parent.Categories" relativePoint="BOTTOM"/>
 				</Anchors>
 				<Layers>
+					<!-- Textes témoins, jamais affichés : servent à mesurer la
+					     hauteur d'une ligne dépliée avant de l'afficher (comme
+					     PlaceholderName et PlaceholderHiddenDescription chez Blizzard). -->
+					<Layer level="OVERLAY">
+						<FontString parentKey="PlaceholderName" inherits="AchievementCriteriaFont" hidden="true">
+							<Size x="0" y="15"/>
+						</FontString>
+						<FontString parentKey="PlaceholderHiddenDescription" inherits="AchievementDescriptionFont" hidden="true"/>
+					</Layer>
 					<Layer level="BACKGROUND">
 						<Texture parentKey="Background" file="Interface\AchievementFrame\UI-Achievement-AchievementBackground">
 							<Anchors>
@@ -360,11 +556,25 @@
 					</Layer>
 				</Layers>
 				<Frames>
+					<Frame parentKey="ScrollBox" inherits="WowScrollBoxList" frameStrata="HIGH">
+						<Anchors>
+							<Anchor point="TOPLEFT" x="4" y="-3"/>
+							<Anchor point="BOTTOMRIGHT" x="0" y="5"/>
+						</Anchors>
+					</Frame>
+					<EventFrame parentKey="ScrollBar" inherits="MinimalScrollBar" frameStrata="HIGH">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" x="6" y="-8"/>
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="6" y="6"/>
+						</Anchors>
+					</EventFrame>
 					<Frame setAllPoints="true" inherits="HFFGoldBorderBackdropTemplate"/>
 				</Frames>
 			</Frame>
 
-			<!-- Contenu de l'onglet Résumé (rempli à l'étape 7c). -->
+			<!-- Résumé, affiché quand la catégorie « Résumé » est sélectionnée.
+			     Derniers hauts faits et barres par catégorie : créés et remplis
+			     par UI/Summary.lua (modèles dans UI/Summary.xml). -->
 			<Frame parentKey="Summary" hidden="true">
 				<Size x="529" y="461"/>
 				<Anchors>
@@ -384,6 +594,135 @@
 				</Layers>
 				<Frames>
 					<Frame setAllPoints="true" inherits="HFFGoldBorderBackdropTemplate"/>
+					<!-- Derniers hauts faits obtenus. Hauteur prévue pour 5 lignes
+					     (Blizzard Mainline : 210 pour 3). -->
+					<Frame parentKey="Achievements">
+						<Size x="0" y="250"/>
+						<Anchors>
+							<Anchor point="TOPLEFT" x="5" y="-10"/>
+							<Anchor point="TOPRIGHT" x="-5" y="-10"/>
+						</Anchors>
+						<Layers>
+							<Layer level="BACKGROUND">
+								<FontString parentKey="EmptyText" inherits="GameFontHighlight">
+									<Anchors>
+										<Anchor point="TOP" x="0" y="-30"/>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Frames>
+							<Frame parentKey="Header">
+								<Size x="0" y="20"/>
+								<Anchors>
+									<Anchor point="TOPLEFT" x="0" y="0"/>
+									<Anchor point="TOPRIGHT" x="0" y="0"/>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<Texture parentKey="Texture" file="Interface\AchievementFrame\UI-Achievement-RecentHeader">
+											<Anchors>
+												<Anchor point="TOPLEFT" x="-20" y="0"/>
+												<Anchor point="BOTTOMRIGHT" x="20" y="0"/>
+											</Anchors>
+											<TexCoords left="0" right="1" top="0" bottom="0.71875"/>
+										</Texture>
+										<FontString parentKey="Title" inherits="GameFontNormal">
+											<Size x="0" y="20"/>
+											<Anchors>
+												<Anchor point="CENTER" x="0" y="0"/>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</Frame>
+						</Frames>
+					</Frame>
+					<!-- Progression : total, puis une barre par catégorie. -->
+					<Frame parentKey="Categories">
+						<Size x="0" y="190"/>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeKey="$parent.Achievements" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+							<Anchor point="TOPRIGHT" relativeKey="$parent.Achievements" relativePoint="BOTTOMRIGHT" x="0" y="0"/>
+						</Anchors>
+						<Frames>
+							<Frame parentKey="Header">
+								<Size x="0" y="20"/>
+								<Anchors>
+									<Anchor point="TOPLEFT" x="0" y="0"/>
+									<Anchor point="TOPRIGHT" x="0" y="0"/>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<Texture parentKey="Texture" file="Interface\AchievementFrame\UI-Achievement-RecentHeader">
+											<Anchors>
+												<Anchor point="TOPLEFT" x="-20" y="0"/>
+												<Anchor point="BOTTOMRIGHT" x="20" y="0"/>
+											</Anchors>
+											<TexCoords left="0" right="1" top="0" bottom="0.71875"/>
+										</Texture>
+										<FontString parentKey="Title" inherits="GameFontNormal">
+											<Size x="0" y="20"/>
+											<Anchors>
+												<Anchor point="CENTER" x="0" y="0"/>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</Frame>
+							<StatusBar parentKey="StatusBar" drawLayer="BORDER">
+								<Size x="488" y="21"/>
+								<Anchors>
+									<Anchor point="TOP" relativeKey="$parent.Header" relativePoint="BOTTOM" x="0" y="-6"/>
+								</Anchors>
+								<Layers>
+									<Layer level="OVERLAY">
+										<FontString parentKey="Title" inherits="GameFontNormal">
+											<Anchors>
+												<Anchor point="LEFT" x="6" y="4"/>
+											</Anchors>
+										</FontString>
+										<FontString parentKey="Text" inherits="GameFontHighlight">
+											<Size x="0" y="14"/>
+											<Anchors>
+												<Anchor point="RIGHT" x="-5" y="3"/>
+											</Anchors>
+										</FontString>
+										<Texture parentKey="Left" file="Interface\AchievementFrame\UI-Achievement-Header">
+											<Size x="32" y="48"/>
+											<Anchors>
+												<Anchor point="TOPLEFT" x="-15" y="16"/>
+											</Anchors>
+											<TexCoords left="0.423828125" right="0.486" top="0.56640625" bottom="0.75"/>
+										</Texture>
+										<Texture parentKey="Right" file="Interface\AchievementFrame\UI-Achievement-Header">
+											<Size x="32" y="48"/>
+											<Anchors>
+												<Anchor point="TOPRIGHT" x="15" y="16"/>
+											</Anchors>
+											<TexCoords right="0.423828125" left="0.486" bottom="0.75" top="0.56640625"/>
+										</Texture>
+										<Texture parentKey="Middle" file="Interface\AchievementFrame\UI-Achievement-Header">
+											<Size x="218" y="48"/>
+											<Anchors>
+												<Anchor point="TOPLEFT" relativeKey="$parent.Left" relativePoint="TOPRIGHT"/>
+												<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Right" relativePoint="BOTTOMLEFT"/>
+											</Anchors>
+											<TexCoords right="0.486" left="0.889224609375" bottom="0.75" top="0.56640625"/>
+										</Texture>
+									</Layer>
+									<Layer level="BACKGROUND">
+										<Texture parentKey="FillBar">
+											<Size x="0" y="15"/>
+											<Color r="0" g="0" b="0" a="0.5"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<BarTexture file="Interface\PaperDollInfoFrame\UI-Character-Skills-Bar"/>
+								<BarColor r="0" g="1" b="0"/>
+							</StatusBar>
+						</Frames>
+					</Frame>
 				</Frames>
 			</Frame>
 
@@ -393,15 +732,134 @@
 				</Anchors>
 			</Button>
 
-			<!-- Onglets du bas. Texte et clic réglés dans UI/MainWindow.lua. -->
+			<!-- Fenêtre « tous les résultats » de la recherche (clone du cadre
+			     SearchResults de Blizzard), remplie par UI/Search.lua. -->
+			<Frame parentKey="SearchResults" hidden="true" frameStrata="DIALOG">
+				<Size x="600" y="382"/>
+				<Anchors>
+					<Anchor point="BOTTOM" x="0" y="7"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture file="Interface\FrameGeneral\UI-Background-Rock" horizTile="true" vertTile="true">
+							<Anchors>
+								<Anchor point="TOPLEFT" x="0" y="0"/>
+								<Anchor point="BOTTOMRIGHT" x="0" y="8"/>
+							</Anchors>
+							<Color r="0.9" g="0.8" b="0.7" a="1"/>
+						</Texture>
+					</Layer>
+					<Layer level="BORDER">
+						<FontString parentKey="TitleText" inherits="GameFontNormal">
+							<Anchors>
+								<Anchor point="TOP" x="0" y="-7"/>
+								<Anchor point="LEFT" x="60"/>
+								<Anchor point="RIGHT" x="-60"/>
+							</Anchors>
+						</FontString>
+						<Texture parentKey="TopLeftCorner" inherits="UI-Frame-TopCornerLeft">
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-7" y="4"/>
+							</Anchors>
+						</Texture>
+						<Texture parentKey="TopRightCorner" inherits="UI-Frame-TopCornerRightSimple">
+							<Anchors>
+								<Anchor point="TOPRIGHT" x="4" y="4"/>
+							</Anchors>
+						</Texture>
+						<Texture parentKey="TopBorder" inherits="_UI-Frame-Top">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeKey="$parent.TopLeftCorner" relativePoint="TOPRIGHT" y="0"/>
+								<Anchor point="TOPRIGHT" relativeKey="$parent.TopRightCorner" relativePoint="TOPLEFT" y="0"/>
+							</Anchors>
+						</Texture>
+						<Texture parentKey="BottomLeftCorner" inherits="UI-Frame-BotCornerLeft">
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" x="-7" y="4"/>
+							</Anchors>
+						</Texture>
+						<Texture parentKey="BottomRightCorner" inherits="UI-Frame-BotCornerRight">
+							<Anchors>
+								<Anchor point="BOTTOMRIGHT" x="4" y="4"/>
+							</Anchors>
+						</Texture>
+						<Texture parentKey="BottomBorder" inherits="_UI-Frame-Bot">
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" relativeKey="$parent.BottomLeftCorner" relativePoint="BOTTOMRIGHT" y="0"/>
+								<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRightCorner" relativePoint="BOTTOMLEFT" y="0"/>
+							</Anchors>
+						</Texture>
+						<Texture parentKey="LeftBorder" inherits="!UI-Frame-LeftTile">
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" relativeKey="$parent.BottomLeftCorner" relativePoint="TOPLEFT"/>
+								<Anchor point="TOPLEFT" relativeKey="$parent.TopLeftCorner" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+						</Texture>
+						<Texture parentKey="RightBorder" inherits="!UI-Frame-RightTile">
+							<Anchors>
+								<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRightCorner" relativePoint="TOPRIGHT"/>
+								<Anchor point="TOPRIGHT" relativeKey="$parent.TopRightCorner" relativePoint="BOTTOMRIGHT" x="1" y="0"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="BORDER" textureSubLevel="-1">
+						<Texture parentKey="TopTileStreaks" inherits="_UI-Frame-TopTileStreaks">
+							<Anchors>
+								<Anchor point="TOPLEFT" x="0" y="0"/>
+								<Anchor point="TOPRIGHT" x="0" y="0"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="BORDER" textureSubLevel="1">
+						<Texture parentKey="TopLeftCorner2" inherits="UI-Frame-TopCornerLeft">
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-7" y="-20"/>
+							</Anchors>
+						</Texture>
+						<Texture parentKey="TopRightCorner2" inherits="UI-Frame-TopCornerRightSimple">
+							<Anchors>
+								<Anchor point="TOPRIGHT" x="4" y="-20"/>
+							</Anchors>
+						</Texture>
+						<Texture parentKey="TopBorder2" inherits="_UI-Frame-Top">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeKey="$parent.TopLeftCorner2" relativePoint="TOPRIGHT" y="0"/>
+								<Anchor point="TOPRIGHT" relativeKey="$parent.TopRightCorner2" relativePoint="TOPLEFT" y="0"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button parentKey="CloseButton" inherits="UIPanelCloseButton">
+						<Anchors>
+							<Anchor point="TOPRIGHT" relativeKey="$parent.TopRightCorner" x="1" y="-4"/>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								self:GetParent():Hide();
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Frame parentKey="ScrollBox" inherits="WowScrollBoxList">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeKey="$parent.TopLeftCorner2" x="8" y="-8"/>
+							<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRightCorner" x="-24" y="8"/>
+						</Anchors>
+					</Frame>
+					<EventFrame parentKey="ScrollBar" inherits="MinimalScrollBar">
+						<Anchors>
+							<Anchor point="TOPRIGHT" x="-7" y="-33"/>
+							<Anchor point="BOTTOMRIGHT" x="-7" y="15"/>
+						</Anchors>
+					</EventFrame>
+				</Frames>
+			</Frame>
+
+			<!-- Onglet du bas (un seul, « Hauts faits », comme Forever sans
+			     Guilde ni Statistiques). Texte réglé dans UI/MainWindow.lua. -->
 			<Button parentKey="Tab1" inherits="HFFTabButtonTemplate" id="1">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" x="17" y="3"/>
-				</Anchors>
-			</Button>
-			<Button parentKey="Tab2" inherits="HFFTabButtonTemplate" id="2">
-				<Anchors>
-					<Anchor point="LEFT" relativeKey="$parent.Tab1" relativePoint="RIGHT" x="-5" y="0"/>
 				</Anchors>
 			</Button>
 		</Frames>

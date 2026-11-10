@@ -15,6 +15,9 @@ ns.API = API
 
 -- Même valeur que le drapeau Blizzard « afficher en barre de progression ».
 local CRITERIA_FLAG_PROGRESS_BAR = 0x00000001
+-- Même valeur que le drapeau Blizzard « haut fait de compte »
+-- (ACHIEVEMENT_FLAGS_ACCOUNT) : tous nos hauts faits sont à l'échelle du compte.
+local ACHIEVEMENT_FLAG_ACCOUNT = 0x00020000
 
 -- Nombre de hauts faits renvoyés par GetLatestCompletedAchievements.
 local MAX_LATEST = 5
@@ -80,7 +83,7 @@ function API.GetAchievementInfo(idOrCategory, index)
 	end
 
 	return achievement.id, achievement.name, achievement.points, completed,
-		month, day, year, achievement.description, 0, achievement.icon,
+		month, day, year, achievement.description, ACHIEVEMENT_FLAG_ACCOUNT, achievement.icon,
 		achievement.reward or "", false, completed, earnedBy, false
 end
 
@@ -93,6 +96,7 @@ end
 -- quantity, reqQuantity, charName, flags, assetID, quantityString,
 -- criteriaID, eligible.
 -- Différence : criteriaType est notre nom de type ("level"...), pas un nombre.
+-- assetID : id du haut fait visé pour un critère "achievement" (méta), nil sinon.
 function API.GetAchievementCriteriaInfo(achievementID, criteriaIndex)
 	local achievement = Registry:GetAchievement(achievementID)
 	local criterion = achievement and achievement.criteria[criteriaIndex]
@@ -116,9 +120,10 @@ function API.GetAchievementCriteriaInfo(achievementID, criteriaIndex)
 		progressBar = progressBar(criterion)
 	end
 	local flags = progressBar and CRITERIA_FLAG_PROGRESS_BAR or 0
+	local assetID = criteriaType.asset and criteriaType.asset(criterion) or nil
 
 	return criteriaType.describe(criterion), criterion.type, completed,
-		quantity, reqQuantity, nil, flags, nil,
+		quantity, reqQuantity, nil, flags, assetID,
 		("%d / %d"):format(quantity, reqQuantity), criteriaIndex, true
 end
 

@@ -1,0 +1,290 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<!--
+		Éléments du panneau Résumé.
+		Clones de Blizzard_AchievementUI/Mainline/Blizzard_AchievementUI.xml
+		(export Forever 1.60.1) : AchievementFrameSummaryCategoryTemplate et
+		SummaryAchievementTemplate (avec ComparisonPlayerTemplate, dont il
+		hérite), renommés avec le préfixe HFF, noms globaux ($parentXxx)
+		remplacés par des parentKey. Comportement dans UI/Summary.lua.
+	-->
+
+	<!-- Barre de progression d'une catégorie (clone de AchievementFrameSummaryCategoryTemplate). -->
+	<StatusBar name="HFFSummaryCategoryTemplate" drawLayer="BORDER" virtual="true">
+		<Size x="234" y="21"/>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString parentKey="Label" inherits="GameFontNormal">
+					<Anchors>
+						<Anchor point="LEFT" x="6" y="4"/>
+					</Anchors>
+				</FontString>
+				<FontString parentKey="Text" inherits="GameFontHighlight">
+					<Size x="0" y="14"/>
+					<Anchors>
+						<Anchor point="RIGHT" x="-5" y="3"/>
+					</Anchors>
+				</FontString>
+				<Texture parentKey="Left" file="Interface\AchievementFrame\UI-Achievement-Header">
+					<Size x="32" y="48"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="-15" y="16"/>
+					</Anchors>
+					<TexCoords left="0.423828125" right="0.486" top="0.56640625" bottom="0.75"/>
+				</Texture>
+				<Texture parentKey="Right" file="Interface\AchievementFrame\UI-Achievement-Header">
+					<Size x="32" y="48"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="15" y="16"/>
+					</Anchors>
+					<TexCoords right="0.423828125" left="0.486" bottom="0.75" top="0.56640625"/>
+				</Texture>
+				<Texture parentKey="Middle" file="Interface\AchievementFrame\UI-Achievement-Header">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.Left" relativePoint="TOPRIGHT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Right" relativePoint="BOTTOMLEFT"/>
+					</Anchors>
+					<TexCoords right="0.486" left="0.889224609375" bottom="0.75" top="0.56640625"/>
+				</Texture>
+			</Layer>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="FillBar">
+					<Size x="0" y="15"/>
+					<Color r="0" g="0" b="0" a="0.5"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<!-- Zone cliquable : ouvre la catégorie. Clic réglé dans UI/Summary.lua. -->
+			<Button parentKey="Button">
+				<Anchors>
+					<Anchor point="TOPLEFT"/>
+					<Anchor point="BOTTOMRIGHT"/>
+				</Anchors>
+				<Frames>
+					<Frame parentKey="Highlight" setAllPoints="true" hidden="true">
+						<Layers>
+							<Layer level="OVERLAY">
+								<Texture parentKey="Left" file="Interface\AchievementFrame\UI-Achievement-StatusBar-Highlight" alphaMode="ADD">
+									<Size x="32" y="32"/>
+									<Anchors>
+										<Anchor point="TOPLEFT" x="-7" y="8"/>
+									</Anchors>
+									<TexCoords left="0" right="1" top="0" bottom="1"/>
+								</Texture>
+								<Texture parentKey="Right" file="Interface\AchievementFrame\UI-Achievement-StatusBar-Highlight" alphaMode="ADD">
+									<Size x="32" y="32"/>
+									<Anchors>
+										<Anchor point="TOPRIGHT" x="7" y="8"/>
+									</Anchors>
+									<TexCoords right="0" left="1" top="0" bottom="1"/>
+								</Texture>
+								<Texture parentKey="Middle" file="Interface\AchievementFrame\UI-Achievement-StatusBar-Highlight" alphaMode="ADD">
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeKey="$parent.Left" relativePoint="TOPRIGHT"/>
+										<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Right" relativePoint="BOTTOMLEFT"/>
+									</Anchors>
+									<TexCoords right="1" left="0.5" top="0" bottom="1"/>
+								</Texture>
+							</Layer>
+						</Layers>
+					</Frame>
+				</Frames>
+				<Scripts>
+					<OnEnter>
+						self.Highlight:Show();
+					</OnEnter>
+					<OnLeave>
+						self.Highlight:Hide();
+					</OnLeave>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				self:SetMinMaxValues(0, 100);
+				self:SetValue(0);
+			</OnLoad>
+		</Scripts>
+		<BarTexture file="Interface\PaperDollInfoFrame\UI-Character-Skills-Bar"/>
+		<BarColor r="0" g="1" b="0"/>
+	</StatusBar>
+
+	<!-- Un haut fait récent (clone de SummaryAchievementTemplate et de
+	     ComparisonPlayerTemplate). Couleurs, clic et infobulle dans UI/Summary.lua. -->
+	<Button name="HFFSummaryAchievementTemplate" inherits="TooltipBorderBackdropTemplate" virtual="true">
+		<Size x="100" y="48"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Background" file="Interface\AchievementFrame\UI-Achievement-Parchment-Horizontal">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="3" y="-3"/>
+						<Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+					</Anchors>
+					<TexCoords left="0" right="1" top="0" bottom="0.25"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture parentKey="TitleBar" file="Interface\AchievementFrame\UI-Achievement-Borders">
+					<Size x="0" y="20"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="5" y="-4"/>
+						<Anchor point="TOPRIGHT" x="-5" y="-4"/>
+					</Anchors>
+					<TexCoords left="0" right="0.9765625" top="0.66015625" bottom="0.73828125"/>
+					<Color r="1" g="1" b="1" a=".8"/>
+				</Texture>
+				<Texture parentKey="Glow" file="Interface\AchievementFrame\UI-Achievement-Borders">
+					<Size x="10" y="64"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" relativePoint="BOTTOMLEFT" x="0" y="2"/>
+						<Anchor point="BOTTOMRIGHT" x="0" y="4"/>
+					</Anchors>
+					<TexCoords left="0" right="1" top="0.00390625" bottom="0.25390625"/>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString parentKey="Label" inherits="GameFontHighlightMedium">
+					<Size x="260" y="20"/>
+					<Anchors>
+						<Anchor point="TOP" relativeKey="$parent.TitleBar" relativePoint="TOP" x="0" y="0"/>
+					</Anchors>
+				</FontString>
+				<FontString parentKey="DateCompleted" inherits="AchievementDateFont">
+					<Size x="100" y="14"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="-63" y="-8"/>
+					</Anchors>
+				</FontString>
+				<FontString parentKey="Description" inherits="AchievementDescriptionFont">
+					<Size x="380" y="13"/>
+					<Anchors>
+						<Anchor point="TOP" x="0" y="-30"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame parentKey="Icon">
+				<Size x="48" y="48"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="3" y="-3"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BORDER">
+						<Texture parentKey="bling" file="Interface\AchievementFrame\UI-Achievement-Bling" hidden="true">
+							<Size x="84" y="84"/>
+							<Anchors>
+								<Anchor point="CENTER" x="-1" y="1"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="ARTWORK">
+						<Texture parentKey="texture">
+							<Size x="36" y="36"/>
+							<Anchors>
+								<Anchor point="CENTER" x="0" y="3"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="OVERLAY">
+						<Texture parentKey="frame" file="Interface\AchievementFrame\UI-Achievement-IconFrame">
+							<Size x="46" y="46"/>
+							<Anchors>
+								<Anchor point="CENTER" x="-1" y="2"/>
+							</Anchors>
+							<TexCoords left="0" right="0.5625" top="0" bottom="0.5625"/>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+			<Frame parentKey="Shield">
+				<Size x="48" y="48"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-10" y="-4"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture parentKey="Icon" file="Interface\AchievementFrame\UI-Achievement-Shields">
+							<Size x="48" y="48"/>
+							<Anchors>
+								<Anchor point="TOPRIGHT" x="0" y="0"/>
+							</Anchors>
+							<TexCoords left="0" right=".5" top="0" bottom="0.5"/>
+						</Texture>
+					</Layer>
+					<Layer level="OVERLAY">
+						<FontString parentKey="Points" inherits="GameFontNormal" justifyH="CENTER">
+							<Size x="40" y="26"/>
+							<Anchors>
+								<Anchor point="CENTER" x="0" y="3"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Frame>
+			<!-- Contour lumineux au survol. -->
+			<Frame parentKey="Highlight" setAllPoints="true" hidden="true" enableMouse="false">
+				<Layers>
+					<Layer level="OVERLAY">
+						<Texture parentKey="TopLeft" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+							<Size x="16" y="16"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-1" y="2"/>
+							</Anchors>
+							<TexCoords left="0.06640625" right="0" top="0.4375" bottom="0.65625"/>
+						</Texture>
+						<Texture parentKey="BottomLeft" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+							<Size x="16" y="16"/>
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" x="-1" y="-2"/>
+							</Anchors>
+							<TexCoords left="0.06640625" right="0" top="0.65625" bottom="0.4375"/>
+						</Texture>
+						<Texture parentKey="TopRight" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+							<Size x="16" y="16"/>
+							<Anchors>
+								<Anchor point="TOPRIGHT" x="1" y="2"/>
+							</Anchors>
+							<TexCoords left="0" right="0.06640625" top="0.4375" bottom="0.65625"/>
+						</Texture>
+						<Texture parentKey="BottomRight" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+							<Size x="16" y="16"/>
+							<Anchors>
+								<Anchor point="BOTTOMRIGHT" x="1" y="-2"/>
+							</Anchors>
+							<TexCoords left="0" right="0.06640625" top="0.65625" bottom="0.4375"/>
+						</Texture>
+						<Texture parentKey="Top" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeKey="$parent.TopLeft" relativePoint="TOPRIGHT"/>
+								<Anchor point="BOTTOMRIGHT" relativeKey="$parent.TopRight" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<TexCoords left="0" right="0.015" top="0.4375" bottom="0.65625"/>
+						</Texture>
+						<Texture parentKey="Bottom" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeKey="$parent.BottomLeft" relativePoint="TOPRIGHT"/>
+								<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRight" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<TexCoords left="0" right="0.015" top="0.65625" bottom="0.4375"/>
+						</Texture>
+						<Texture parentKey="Left" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeKey="$parent.TopLeft" relativePoint="BOTTOMLEFT"/>
+								<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomLeft" relativePoint="TOPRIGHT"/>
+							</Anchors>
+							<TexCoords left="0.06640625" right="0" top="0.65625" bottom="0.6"/>
+						</Texture>
+						<Texture parentKey="Right" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeKey="$parent.TopRight" relativePoint="BOTTOMLEFT"/>
+								<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRight" relativePoint="TOPRIGHT"/>
+							</Anchors>
+							<TexCoords left="0" right="0.06640625" top="0.65625" bottom="0.6"/>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+		</Frames>
+	</Button>
+</Ui>

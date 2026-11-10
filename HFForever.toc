@@ -23,7 +23,14 @@ Core\CriteriaTypes.lua
 Core\Registry.lua
 Core\API.lua
 Core\Engine.lua
+UI\AchievementList.xml
+UI\Summary.xml
+UI\Search.xml
 UI\MainWindow.xml
+UI\CategoryList.lua
+UI\AchievementList.lua
+UI\Summary.lua
+UI\Search.lua
 UI\MainWindow.lua
 UI\MinimapButton.lua
 UI\Toasts.xml

@@ -1,0 +1,103 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<!--
+		Boutons de la recherche.
+		Clones de Blizzard_AchievementUI/Mainline/Blizzard_AchievementUI.xml
+		(export Forever 1.60.1) : AchievementSearchPreviewButton et
+		AchievementFullSearchResultsButtonTemplate, renommés avec le préfixe
+		HFF, sans attribut mixin ni parentArray (pas de globale).
+		Comportement dans UI/Search.lua.
+	-->
+
+	<!-- Une ligne de l'aperçu sous la case de recherche (clone de AchievementSearchPreviewButton). -->
+	<Button name="HFFSearchPreviewButtonTemplate" virtual="true">
+		<Size x="206" y="27"/>
+		<Layers>
+			<Layer level="OVERLAY" textureSubLevel="3">
+				<Texture parentKey="SelectedTexture" atlas="search-highlight">
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY" textureSubLevel="2">
+				<Texture parentKey="IconFrame" atlas="search-iconframe-large">
+					<Size x="21" y="21"/>
+					<Anchors>
+						<Anchor point="LEFT" x="5" y="1"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture parentKey="Icon">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.IconFrame" x="1" y="-2"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.IconFrame" x="-1" y="1"/>
+					</Anchors>
+				</Texture>
+				<FontString parentKey="Name" inherits="GameFontNormalSmall" justifyH="LEFT">
+					<Size x="400" y="0"/>
+					<Anchors>
+						<Anchor point="LEFT" relativeKey="$parent.Icon" relativePoint="RIGHT" x="5" y="0"/>
+						<Anchor point="RIGHT" x="-5" y="0"/>
+					</Anchors>
+					<Color r="0.96875" g="0.8984375" b="0.578125" a="1"/>
+				</FontString>
+			</Layer>
+		</Layers>
+		<NormalTexture atlas="_search-rowbg"/>
+		<PushedTexture atlas="_search-rowbg"/>
+		<Scripts>
+			<OnShow>
+				self:SetFrameLevel(self:GetParent():GetFrameLevel() + 10);
+			</OnShow>
+		</Scripts>
+	</Button>
+
+	<!-- Une ligne de la fenêtre « tous les résultats » (clone de AchievementFullSearchResultsButtonTemplate). -->
+	<Button name="HFFFullSearchResultsButtonTemplate" virtual="true">
+		<Size x="575" y="49"/>
+		<Layers>
+			<Layer level="OVERLAY" textureSubLevel="2">
+				<Texture parentKey="IconFrame" atlas="search-iconframe-large">
+					<Size x="38" y="38"/>
+					<Anchors>
+						<Anchor point="LEFT" x="10" y="0"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture parentKey="Icon">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.IconFrame" x="1" y="-2"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.IconFrame" x="-1" y="1"/>
+					</Anchors>
+				</Texture>
+				<FontString parentKey="Name" inherits="GameFontNormalLarge" justifyH="LEFT">
+					<Size x="400" y="12"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.Icon" relativePoint="TOPRIGHT" x="10" y="0"/>
+					</Anchors>
+					<Color r="0.96875" g="0.8984375" b="0.578125" a="1"/>
+				</FontString>
+				<FontString parentKey="Path" inherits="GameFontNormal" justifyH="LEFT">
+					<Size x="400" y="0"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.Name" relativePoint="BOTTOMLEFT" x="0" y="-7"/>
+					</Anchors>
+					<Color r="0.66796875" g="0.51171875" b="0.3359375" a="1"/>
+				</FontString>
+				<FontString parentKey="ResultType" inherits="GameFontNormal" justifyH="RIGHT">
+					<Size x="140" y="0"/>
+					<Anchors>
+						<Anchor point="RIGHT" x="-14" y="0"/>
+					</Anchors>
+					<Color r="0.66796875" g="0.51171875" b="0.3359375" a="1"/>
+				</FontString>
+			</Layer>
+		</Layers>
+		<NormalTexture inherits="_SearchBarLg"/>
+		<PushedTexture inherits="_SearchBarLg"/>
+		<HighlightTexture atlas="search-highlight-large"/>
+	</Button>
+</Ui>
