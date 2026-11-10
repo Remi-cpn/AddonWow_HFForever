@@ -66,6 +66,12 @@ handlers[""] = function()
 	ns.MainWindow:Toggle()
 end
 
+-- Noms anglais : les deux formes marchent quelle que soit la langue du
+-- client ; l'aide montre celle de la langue.
+handlers.help = handlers.aide
+handlers.sound = handlers.son
+handlers.status = handlers.etat
+
 --@debug@
 -- ===== Commandes de développement (absentes de la version publiée) =====
 
@@ -78,7 +84,7 @@ devHelp = {
 
 -- Toasts de test : /hff toast [nombre] ou /hff toast resume
 handlers.toast = function(argument)
-	if argument == "resume" then
+	if argument == "resume" or argument == "summary" then
 		ns.Toasts:ShowSummary(7, 70)
 		return
 	end
@@ -98,7 +104,7 @@ end
 -- Efface les hauts faits obtenus puis relance une détection rétroactive.
 -- Irréversible : demande « confirmer » en argument.
 handlers.reset = function(argument)
-	if argument ~= "confirmer" then
+	if argument ~= "confirmer" and argument ~= "confirm" then
 		Log.Info(L.RESET_CONFIRM_NEEDED)
 		return
 	end

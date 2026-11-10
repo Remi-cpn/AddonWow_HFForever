@@ -2,9 +2,15 @@
 
 Ce qui a été décidé pour « plus tard » pendant le développement de la v1.
 
+## Entre joueurs
+Base commune : messages d'addon (`C_ChatInfo.SendAddonMessage`), avec un protocole versionné, un cache, le respect de la limite d'envoi et une option « partager mes hauts faits » (activée par défaut). À vérifier d'abord en jeu : les restrictions de Midnight sur les messages d'addon en combat et en instance.
+- v1.1 : points de hauts faits du joueur survolé dans son infobulle (`TooltipDataProcessor`), seulement s'il a l'addon.
+- v1.2 : « Voir les hauts faits » dans le menu du clic droit sur un joueur (`Menu.ModifyMenu`), avec un mode consultation de la fenêtre en lecture seule (ou une comparaison à deux colonnes, comme Blizzard).
+
 ## Interface
+- Logo à retravailler (`docs/HFForever_Logo.png`, `Media/HFForever_Icon.tga`) : acceptable pour la v1, pas parfait.
 - Toasts déplaçables (position sauvegardée), en plus de la position par défaut au-dessus des alertes Blizzard.
-- Traduction : `Locales/enUS.lua` pour l'interface, et un fichier de traduction par langue pour les noms et descriptions des HF (`[id] = { name = ..., description = ... }`), sans toucher à `Data/Achievements.lua`.
+- Autres langues que le français et l'anglais : un `Locales/xxXX.lua` sur le modèle de `frFR.lua` (interface), et un `Locales/Achievements_xxXX.lua` chargé après `Achievements_enUS.lua`, qui remplace `ns.Data.translation` sur ce client.
 
 ## Hauts faits
 - Donjons Forever sans statistique (Excavation Site, The Drowned City, Krol'dok Stronghold, Blackmaw Hold) : type de critère `encounter` sur l'événement `ENCOUNTER_END`, non rétroactif, à vérifier avec les restrictions Midnight.

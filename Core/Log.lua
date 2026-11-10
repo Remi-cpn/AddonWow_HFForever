@@ -4,9 +4,10 @@ local _, ns = ...
 local Log = {}
 ns.Log = Log
 
-local PREFIX = "|cffffd100HF Forever|r : "
+-- Chargé après Locales/ : ns.L existe déjà.
+local PREFIX = "|cffffd100HF Forever|r" .. ns.L.LOG_SEPARATOR
 local DEBUG_PREFIX = "|cff66ccff[HFF debug]|r "
-local ERROR_PREFIX = "|cffff4040HF Forever erreur|r : "
+local ERROR_PREFIX = "|cffff4040" .. ns.L.LOG_ERROR_PREFIX .. "|r" .. ns.L.LOG_SEPARATOR
 
 -- fmt suit la syntaxe de string.format.
 function Log.Info(fmt, ...)

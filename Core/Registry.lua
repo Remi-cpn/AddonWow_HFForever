@@ -171,8 +171,33 @@ local function BuildAchievements()
 	end
 end
 
+-- Data/ est en français. Sur un autre client, Locales/Achievements_enUS.lua
+-- fournit ns.Data.translation : appliqué avant les contrôles, le reste de
+-- l'addon ne voit que les textes traduits. Un texte absent reste en français.
+local function ApplyTranslation()
+	local translation = ns.Data.translation
+	if not translation then
+		return
+	end
+	for _, category in ipairs(ns.Data.categories or {}) do
+		category.name = translation.categories[category.id] or category.name
+	end
+	for _, achievement in ipairs(ns.Data.achievements or {}) do
+		local text = translation.achievements[achievement.id]
+		if text then
+			achievement.name = text.name or achievement.name
+			achievement.description = text.description or achievement.description
+			local criterion = type(achievement.criteria) == "table" and achievement.criteria[1]
+			if text.criteriaText and type(criterion) == "table" then
+				criterion.text = text.criteriaText
+			end
+		end
+	end
+end
+
 -- Appelé une fois à ADDON_LOADED, après Database:Init.
 function Registry:Build()
+	ApplyTranslation()
 	BuildCategories()
 	BuildAchievements()
 	Log.Debug("Registry:", #categoryOrder, "catégories,", achievementCount,
