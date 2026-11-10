@@ -1,10 +1,8 @@
--- Fonctions d'accès aux données, avec les mêmes noms, arguments et valeurs
--- de retour (dans le même ordre) que l'API de hauts faits de Blizzard.
--- L'UI ne lit les données que par ici : elle ne connaît ni le Registry, ni
--- la sauvegarde, ni le moteur.
---
--- Attention : ce sont des fonctions de ns.API, pas des globales. Les
--- fonctions de Blizzard du même nom ne sont jamais touchées.
+-- Accès aux données avec les mêmes noms, arguments et valeurs de retour que
+-- l'API de hauts faits de Blizzard. L'UI ne lit rien d'autre : ni le
+-- Registry, ni la sauvegarde, ni le moteur.
+-- Ce sont des fonctions de ns.API : les fonctions Blizzard du même nom ne
+-- sont pas touchées.
 local _, ns = ...
 
 local Registry = ns.Registry
@@ -13,18 +11,15 @@ local Database = ns.Database
 local API = {}
 ns.API = API
 
--- Même valeur que le drapeau Blizzard « afficher en barre de progression ».
+-- Valeurs des drapeaux Blizzard EVALUATION_TREE_FLAG_PROGRESS_BAR et
+-- ACHIEVEMENT_FLAGS_ACCOUNT. Tous nos hauts faits sont à l'échelle du compte.
 local CRITERIA_FLAG_PROGRESS_BAR = 0x00000001
--- Même valeur que le drapeau Blizzard « haut fait de compte »
--- (ACHIEVEMENT_FLAGS_ACCOUNT) : tous nos hauts faits sont à l'échelle du compte.
 local ACHIEVEMENT_FLAG_ACCOUNT = 0x00020000
 
--- Nombre de hauts faits renvoyés par GetLatestCompletedAchievements.
 local MAX_LATEST = 5
 
--- Hauts faits d'une catégorie dans l'ordre d'affichage, comme sur retail :
--- d'abord les obtenus, puis ceux à faire, chaque groupe dans l'ordre de
--- Data/Achievements.lua.
+-- Ordre d'affichage d'une catégorie, comme sur retail : les obtenus d'abord,
+-- puis les autres, chaque groupe dans l'ordre de Data/Achievements.lua.
 local function GetDisplayOrder(categoryID)
 	local list = Registry:GetCategoryAchievements(categoryID)
 	if not list then
@@ -44,8 +39,7 @@ local function GetDisplayOrder(categoryID)
 	return completed
 end
 
--- GetAchievementInfo accepte (achievementID) ou (categoryID, index) ;
--- index suit l'ordre d'affichage (obtenus d'abord).
+-- (achievementID) ou (categoryID, index), index dans l'ordre d'affichage.
 local function ResolveAchievement(idOrCategory, index)
 	if index then
 		local list = GetDisplayOrder(idOrCategory)
@@ -54,7 +48,7 @@ local function ResolveAchievement(idOrCategory, index)
 	return Registry:GetAchievement(idOrCategory)
 end
 
--- Liste des id de catégories (copie, l'appelant peut la modifier).
+-- Copie : l'appelant peut la modifier.
 function API.GetCategoryList()
 	local copy = {}
 	for i, id in ipairs(Registry:GetCategoryOrder()) do
@@ -63,7 +57,7 @@ function API.GetCategoryList()
 	return copy
 end
 
--- Renvoie : title, parentCategoryID (-1 si catégorie de premier niveau), flags
+-- title, parentCategoryID (-1 au premier niveau), flags
 function API.GetCategoryInfo(categoryID)
 	local category = Registry:GetCategory(categoryID)
 	if not category then
@@ -72,7 +66,7 @@ function API.GetCategoryInfo(categoryID)
 	return category.name, category.parent or -1, 0
 end
 
--- Renvoie : numItems, numCompleted, numIncomplete
+-- numItems, numCompleted, numIncomplete
 function API.GetCategoryNumAchievements(categoryID)
 	local list = Registry:GetCategoryAchievements(categoryID)
 	if not list then
@@ -87,9 +81,30 @@ function API.GetCategoryNumAchievements(categoryID)
 	return #list, completed, #list - completed
 end
 
--- Renvoie, comme Blizzard : id, name, points, completed, month, day, year,
--- description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy,
--- isStatistic. L'année est sur 2 chiffres (24 pour 2024), comme chez Blizzard.
+-- total, completed, sous-catégories comprises. Chez Blizzard, c'est une
+-- fonction de l'UI (AchievementFrame_GetCategoryTotalNumAchievements) ; elle
+-- est ici parce que la liste des catégories et le Résumé en ont besoin.
+function API.GetCategoryTotalNumAchievements(categoryID)
+	local total, completed = API.GetCategoryNumAchievements(categoryID)
+	for _, id in ipairs(Registry:GetCategoryOrder()) do
+		if Registry:GetCategory(id).parent == categoryID then
+			local childTotal, childCompleted = API.GetCategoryNumAchievements(id)
+			total = total + childTotal
+			completed = completed + childCompleted
+		end
+	end
+	return total, completed
+end
+
+-- id de la catégorie du haut fait, ou nil.
+function API.GetAchievementCategory(achievementID)
+	local achievement = Registry:GetAchievement(achievementID)
+	return achievement and achievement.category
+end
+
+-- id, name, points, completed, month, day, year, description, flags, icon,
+-- rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic.
+-- L'année est sur 2 chiffres, comme chez Blizzard.
 function API.GetAchievementInfo(idOrCategory, index)
 	local achievement = ResolveAchievement(idOrCategory, index)
 	if not achievement then
@@ -115,11 +130,10 @@ function API.GetAchievementNumCriteria(achievementID)
 	return achievement and #achievement.criteria or 0
 end
 
--- Renvoie, comme Blizzard : criteriaString, criteriaType, completed,
--- quantity, reqQuantity, charName, flags, assetID, quantityString,
--- criteriaID, eligible.
--- Différence : criteriaType est notre nom de type ("level"...), pas un nombre.
--- assetID : id du haut fait visé pour un critère "achievement" (méta), nil sinon.
+-- criteriaString, criteriaType, completed, quantity, reqQuantity, charName,
+-- flags, assetID, quantityString, criteriaID, eligible.
+-- Différences avec Blizzard : criteriaType est notre nom de type ("level"),
+-- pas un nombre ; assetID n'est renseigné que pour un critère de méta.
 function API.GetAchievementCriteriaInfo(achievementID, criteriaIndex)
 	local achievement = Registry:GetAchievement(achievementID)
 	local criterion = achievement and achievement.criteria[criteriaIndex]
@@ -129,15 +143,13 @@ function API.GetAchievementCriteriaInfo(achievementID, criteriaIndex)
 
 	local criteriaType = ns.CriteriaTypes[criterion.type]
 	local reqQuantity = criteriaType.goal and criteriaType.goal(criterion) or 1
-	-- Meilleure progression enregistrée par le moteur, plafonnée à l'objectif
-	-- pour l'affichage (179 quêtes pour un objectif de 50 -> 50 / 50).
+	-- Plafonnée à l'objectif : 179 quêtes pour un objectif de 50 donne 50 / 50.
 	local quantity = Database:GetProgress(achievementID, criteriaIndex)
 	if Database:GetCompletion(achievementID) then
 		quantity = reqQuantity
 	end
 	quantity = math.min(quantity, reqQuantity)
 	local completed = quantity >= reqQuantity
-	-- progressBar peut être un booléen ou une fonction du critère.
 	local progressBar = criteriaType.progressBar
 	if type(progressBar) == "function" then
 		progressBar = progressBar(criterion)
@@ -150,13 +162,13 @@ function API.GetAchievementCriteriaInfo(achievementID, criteriaIndex)
 		("%d / %d"):format(quantity, reqQuantity), criteriaIndex, true
 end
 
--- Renvoie : id du haut fait précédent de la série, ou nil
+-- id du haut fait précédent dans la série, ou nil.
 function API.GetPreviousAchievement(achievementID)
 	local achievement = Registry:GetAchievement(achievementID)
 	return achievement and achievement.previous
 end
 
--- Renvoie : id du haut fait suivant de la série, completed ; ou nil
+-- id du suivant dans la série et s'il est obtenu, ou nil.
 function API.GetNextAchievement(achievementID)
 	local nextID = Registry:GetNextInSeries(achievementID)
 	if not nextID then
@@ -165,19 +177,18 @@ function API.GetNextAchievement(achievementID)
 	return nextID, Database:GetCompletion(nextID) ~= nil
 end
 
--- Renvoie jusqu'à 5 id, du plus récent au plus ancien (plusieurs valeurs,
--- comme Blizzard, pas une table).
+-- Jusqu'à 5 id, du plus récent au plus ancien, en valeurs multiples comme
+-- chez Blizzard.
 function API.GetLatestCompletedAchievements()
 	local entries = {}
 	for id, record in pairs(Database:GetAllCompletions()) do
-		-- Un haut fait retiré de Data/ peut rester dans la sauvegarde : on l'ignore.
+		-- Un haut fait retiré de Data/ peut rester dans la sauvegarde.
 		if Registry:GetAchievement(id) then
 			entries[#entries + 1] = { id = id, date = record.date, order = record.order or 0 }
 		end
 	end
-	-- Du plus récent au plus ancien ; à date égale, le dernier enregistré
-	-- d'abord (les sauvegardes d'avant ce numéro d'ordre valent 0) ; enfin
-	-- l'id, pour que l'ordre ne change jamais d'un affichage à l'autre.
+	-- À date égale, le dernier enregistré passe d'abord (order vaut 0 dans
+	-- les sauvegardes plus anciennes), puis l'id, pour un ordre stable.
 	table.sort(entries, function(a, b)
 		if a.date ~= b.date then
 			return a.date > b.date
@@ -195,7 +206,7 @@ function API.GetLatestCompletedAchievements()
 	return unpack(ids)
 end
 
--- Renvoie : total, completed
+-- total, completed
 function API.GetNumCompletedAchievements()
 	local completed = 0
 	for id in Registry:Iterate() do

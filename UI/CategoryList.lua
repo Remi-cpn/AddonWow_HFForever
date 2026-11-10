@@ -1,18 +1,16 @@
--- Colonne des catégories de la fenêtre (à gauche).
--- Clone de la logique de Blizzard_AchievementUI/Mainline (export Forever) :
--- AchievementFrameCategories_MakeCategoryList, _SelectElementData,
--- _UpdateDataProvider et AchievementCategoryTemplateMixin:Init.
--- Les données viennent uniquement de ns.API.
+-- Colonne des catégories, à gauche de la fenêtre.
+-- Clone de Blizzard_AchievementUI/Mainline : AchievementFrameCategories_
+-- MakeCategoryList, _SelectElementData, _UpdateDataProvider et
+-- AchievementCategoryTemplateMixin:Init.
 --
--- Une catégorie est un « élément » :
---   { id, parent, isChild, collapsed, hidden, selected }
---   id = SUMMARY_ID pour le Résumé (en tête de liste, comme chez Blizzard)
---   parent = true pour une catégorie qui a des sous-catégories,
---            ou l'id de la catégorie mère pour une sous-catégorie
+-- Élément de la liste : { id, parent, isChild, collapsed, hidden, selected }
+--   id = SUMMARY_ID pour le Résumé, toujours en tête
+--   parent = true pour une catégorie qui a des filles, id de la mère pour une fille
 local _, ns = ...
 
 local L = ns.L
 local Log = ns.Log
+local API = ns.API
 
 local CategoryList = {}
 ns.CategoryList = CategoryList
@@ -21,31 +19,30 @@ CategoryList.SUMMARY_ID = "summary"
 local SUMMARY_ID = CategoryList.SUMMARY_ID
 
 local TEMPLATE = "HFFCategoryTemplate"
--- Largeur de la colonne (ACHIEVEMENTUI_CATEGORIESWIDTH de Blizzard).
-local CATEGORIES_WIDTH = 175
+local CATEGORIES_WIDTH = 175 -- ACHIEVEMENTUI_CATEGORIESWIDTH
 
-local categoriesFrame = nil  -- HFFAchievementFrame.Categories
-local elements = {}          -- tous les éléments, dans l'ordre d'affichage
-local selected = nil         -- élément sélectionné
-local onCategoryChanged = nil -- callback(categoryID) fourni par MainWindow
+local categoriesFrame = nil
+local elements = {}           -- tous les éléments, dans l'ordre d'affichage
+local selected = nil
+local onCategoryChanged = nil -- callback(categoryID) de MainWindow
 
--- Construit la liste : Résumé, catégories de premier niveau, et chaque
--- sous-catégorie juste après sa mère (masquée tant que la mère est fermée).
+-- Résumé, catégories de premier niveau, puis chaque fille juste après sa
+-- mère, masquée tant que la mère est fermée.
 local function BuildElements()
-	local source = ns.API.GetCategoryList()
+	local source = API.GetCategoryList()
 	local list = { { id = SUMMARY_ID } }
 
 	for _, id in ipairs(source) do
-		local _, parent = ns.API.GetCategoryInfo(id)
+		local _, parent = API.GetCategoryInfo(id)
 		if parent == -1 then
 			list[#list + 1] = { id = id }
 		end
 	end
 
-	-- En partant de la fin, chaque insertion juste après la mère garde les
-	-- sous-catégories dans l'ordre de Data/Categories.lua.
+	-- Parcours à l'envers : insérer chaque fille juste après sa mère garde
+	-- l'ordre de Data/Categories.lua.
 	for i = #source, 1, -1 do
-		local _, parent = ns.API.GetCategoryInfo(source[i])
+		local _, parent = API.GetCategoryInfo(source[i])
 		for j, category in ipairs(list) do
 			if category.id == parent then
 				category.parent = true
@@ -63,24 +60,13 @@ local function BuildElements()
 	return list
 end
 
--- Total et obtenus d'une catégorie, sous-catégories comprises
--- (AchievementFrame_GetCategoryTotalNumAchievements de Blizzard).
 local function GetCategoryTotals(categoryID)
 	if categoryID == SUMMARY_ID then
-		return ns.API.GetNumCompletedAchievements()
+		return API.GetNumCompletedAchievements()
 	end
-	local total, completed = ns.API.GetCategoryNumAchievements(categoryID)
-	for _, element in ipairs(elements) do
-		if element.isChild and element.parent == categoryID then
-			local childTotal, childCompleted = ns.API.GetCategoryNumAchievements(element.id)
-			total = total + childTotal
-			completed = completed + childCompleted
-		end
-	end
-	return total, completed
+	return API.GetCategoryTotalNumAchievements(categoryID)
 end
 
--- Infobulle : nom et barre de progression, comme chez Blizzard.
 local function OnButtonEnter(button)
 	local total, completed = GetCategoryTotals(button.categoryID)
 	GameTooltip:SetOwner(button, "ANCHOR_RIGHT")
@@ -105,7 +91,6 @@ local function UpdateDataProvider()
 	categoriesFrame.ScrollBox:SetDataProvider(dataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
 
--- Met à jour la surbrillance de tous les boutons visibles.
 local function RefreshSelectionHighlight()
 	categoriesFrame.ScrollBox:ForEachFrame(function(frame, element)
 		if element.selected then
@@ -116,11 +101,11 @@ local function RefreshSelectionHighlight()
 	end)
 end
 
--- Sélectionne un élément (clone de AchievementFrameCategories_SelectElementData) :
--- un clic sur une catégorie mère l'ouvre ou la ferme, et ferme les autres.
+-- Un clic sur une mère l'ouvre ou la ferme, et ferme les autres
+-- (AchievementFrameCategories_SelectElementData).
 function CategoryList:Select(element)
 	local categoryChanged = not selected or selected.id ~= element.id
-	-- Revenir d'une sous-catégorie à sa mère ne referme pas la mère.
+	-- Revenir d'une fille à sa mère ne referme pas la mère.
 	local changeCollapsed = not (element.parent and selected and selected.parent == element.id)
 	local isChild = element.isChild
 
@@ -160,29 +145,32 @@ function CategoryList:Select(element)
 	end
 end
 
--- Sélectionne une catégorie par son id, en ouvrant sa mère si besoin
--- (pour ouvrir la fenêtre sur un haut fait, depuis un toast par exemple).
+-- Sélectionne une catégorie par son id et ouvre sa mère si besoin (toast,
+-- Résumé, recherche). Déjà sélectionnée, elle reste telle quelle : un
+-- nouveau Select replierait une mère ouverte.
 function CategoryList:SelectCategory(categoryID)
 	for _, element in ipairs(elements) do
 		if element.id == categoryID then
-			if element.isChild then
-				for _, other in ipairs(elements) do
-					if other.isChild then
-						other.hidden = other.parent ~= element.parent
-					elseif other.id == element.parent then
-						other.collapsed = false
+			if not element.selected then
+				if element.isChild then
+					for _, other in ipairs(elements) do
+						if other.isChild then
+							other.hidden = other.parent ~= element.parent
+						elseif other.id == element.parent then
+							other.collapsed = false
+						end
 					end
+					UpdateDataProvider()
 				end
-				UpdateDataProvider()
+				self:Select(element)
 			end
-			self:Select(element)
 			categoriesFrame.ScrollBox:ScrollToElementData(element, ScrollBoxConstants.AlignCenter)
 			return
 		end
 	end
 end
 
--- Remplit un bouton de catégorie (clone de AchievementCategoryTemplateMixin:Init).
+-- AchievementCategoryTemplateMixin:Init
 local function InitButton(frame, element)
 	local button = frame.Button
 	if not button.initialized then
@@ -208,7 +196,7 @@ local function InitButton(frame, element)
 	if element.id == SUMMARY_ID then
 		name = L.CATEGORY_SUMMARY
 	else
-		name = ns.API.GetCategoryInfo(element.id)
+		name = API.GetCategoryInfo(element.id)
 	end
 	button.Label:SetText(name)
 	button.categoryID = element.id
@@ -234,15 +222,10 @@ function CategoryList:Init(frame, categoryChangedCallback)
 	Log.Debug("CategoryList:", #elements, "éléments")
 end
 
--- À l'ouverture de la fenêtre : rafraîchit la liste et sélectionne le
--- Résumé si rien ne l'est encore.
+-- À l'ouverture de la fenêtre. Sans sélection, choisit le Résumé.
 function CategoryList:Refresh()
 	UpdateDataProvider()
 	if not selected then
 		self:Select(elements[1])
 	end
-end
-
-function CategoryList:GetSelectedCategory()
-	return selected and selected.id
 end

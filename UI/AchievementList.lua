@@ -1,15 +1,10 @@
--- Liste des hauts faits d'une catégorie (partie droite de la fenêtre).
--- Clone de la logique de Blizzard_AchievementUI/Mainline (export Forever) :
--- AchievementFrameAchievements_OnLoad / _UpdateDataProvider,
--- AchievementTemplateMixin (Init, Collapse, Expand, Saturate, Desaturate,
--- CalculateSelectedHeight, DisplayObjectives), AchievementsObjectivesMixin,
--- AchievementObjectives_DisplayCriteria et _DisplayProgressiveAchievement.
--- Retiré : guilde, suivi d'objectifs, lien dans le chat, manette.
---
--- Un clic sur une ligne la déplie (critères, barres de progression, hauts
--- faits demandés par un méta, ou petites icônes de la série) ; un second
--- clic la replie. Une seule ligne dépliée à la fois, comme chez Blizzard.
--- Les données viennent uniquement de ns.API.
+-- Liste des hauts faits d'une catégorie, à droite de la fenêtre.
+-- Clone de Blizzard_AchievementUI/Mainline : AchievementFrameAchievements_
+-- OnLoad / _UpdateDataProvider, AchievementTemplateMixin,
+-- AchievementsObjectivesMixin, AchievementObjectives_DisplayCriteria et
+-- _DisplayProgressiveAchievement. Retiré : guilde, suivi d'objectifs, lien
+-- dans le chat, manette.
+-- Une seule ligne dépliée à la fois, comme chez Blizzard.
 local _, ns = ...
 
 local L = ns.L
@@ -42,7 +37,7 @@ local FORCE_COLUMNS_RIGHT_OFFSET = 24
 -- critère affiché en barre (EVALUATION_TREE_FLAG_PROGRESS_BAR).
 local FLAG_ACCOUNT = 0x00020000
 local CRITERIA_FLAG_PROGRESS_BAR = 0x00000001
--- Type de critère « obtenir un autre haut fait » (nom de type de ns.CriteriaTypes).
+-- Nom du type de critère des métas dans ns.CriteriaTypes.
 local CRITERIA_TYPE_ACHIEVEMENT = "achievement"
 
 -- Couleurs de bordure de Blizzard (ACHIEVEMENT_RED/BLUE_BORDER_COLOR).
@@ -63,13 +58,13 @@ local fontHeight = nil        -- hauteur d'une ligne de description
 local textCheckWidth = nil    -- largeur du texte "- " devant un critère non rempli
 local hideCompleted = false   -- case « masquer les obtenus » cochée (non sauvegardé, comme le filtre de Blizzard)
 local hideCheckbox = nil      -- HFFAchievementFrame.HeaderDetails.HideCompleted
--- Textures absentes du client Forever : on se rabat sur l'équivalent présent.
+-- Repli sur une texture présente quand celle de retail manque sur Forever.
 local hasAccountHeader = true
 local hasNoPointsShield = true
 local hasNoPointsMiniShield = true
 
--- Points d'une série : somme des points de ce haut fait et des précédents
--- (AchievementButton_GetProgressivePoints).
+-- AchievementButton_GetProgressivePoints : ce haut fait et les précédents
+-- de la série.
 local function GetProgressivePoints(achievementID)
 	local _, _, total = API.GetAchievementInfo(achievementID)
 	local previous = API.GetPreviousAchievement(achievementID)
@@ -81,7 +76,7 @@ local function GetProgressivePoints(achievementID)
 	return total or 0
 end
 
--- Texte des points dans le bouclier (AchievementShield_SetPoints).
+-- AchievementShield_SetPoints
 local function SetShieldPoints(points, fontString)
 	if points == 0 then
 		fontString:SetText("")
@@ -111,8 +106,8 @@ function Objectives:Clear()
 	self:SetHeight(0)
 end
 
--- Renvoie l'élément n° index de la collection, en le créant au besoin.
--- setup(frame) est appelé une seule fois par cadre créé.
+-- Crée l'élément au besoin. setup n'est appelé qu'une fois par cadre : les
+-- cadres sont réutilisés par le pool.
 function Objectives:GetElementAtIndex(poolKey, collection, index, setup)
 	local found = collection[index]
 	if found then
@@ -128,7 +123,7 @@ function Objectives:GetElementAtIndex(poolKey, collection, index, setup)
 	return frame
 end
 
--- Infobulle d'une petite icône de série (OnEnter de MiniAchievementTemplate).
+-- OnEnter de MiniAchievementTemplate
 local function OnMiniEnter(mini)
 	GameTooltip:SetOwner(mini, "ANCHOR_RIGHT")
 	if mini.name then
@@ -148,8 +143,7 @@ local function SetupMini(mini)
 	mini:SetScript("OnLeave", GameTooltip_Hide)
 end
 
--- Critère de méta : infobulle avec la date, clic pour ouvrir le haut fait visé
--- (AchievementMetaCriteriaMixin).
+-- AchievementMetaCriteriaMixin : date en infobulle, clic vers le haut fait visé.
 local function SetupMeta(meta)
 	meta:SetScript("OnEnter", function(self)
 		if self.date then
@@ -180,8 +174,8 @@ function Objectives:GetMeta(index)
 	return self:GetElementAtIndex("meta", self.metas, index, SetupMeta)
 end
 
--- Petites icônes de la série, de la première à celle-ci
--- (AchievementObjectives_DisplayProgressiveAchievement).
+-- AchievementObjectives_DisplayProgressiveAchievement : une icône par étape
+-- de la série, jusqu'à celle-ci.
 function Objectives:DisplayProgressiveAchievement(id)
 	local series = { id }
 	local previous = API.GetPreviousAchievement(id)
@@ -231,8 +225,7 @@ function Objectives:DisplayProgressiveAchievement(id)
 	self:SetWidth(math.min(#series, MINIS_PER_ROW) * PROGRESSIVE_WIDTH)
 end
 
--- Critères du haut fait : textes, barres de progression et hauts faits
--- demandés par un méta (AchievementObjectives_DisplayCriteria).
+-- AchievementObjectives_DisplayCriteria
 function Objectives:DisplayCriteria(id)
 	local numCriteria = API.GetAchievementNumCriteria(id)
 	if numCriteria == 0 then
@@ -432,7 +425,7 @@ local function CreateObjectivesFrame(parent)
 		mini = CreateFramePool("Frame", frame, "HFFMiniAchievementTemplate"),
 		meta = CreateFramePool("Button", frame, "HFFMetaCriteriaTemplate"),
 	}
-	-- Comme Blizzard (clearOnClose) : tout est libéré quand le cadre est caché.
+	-- clearOnClose de Blizzard : tout est libéré quand le cadre est caché.
 	frame:SetScript("OnHide", frame.Clear)
 	frame:Clear()
 	frame:Hide()
@@ -443,8 +436,8 @@ end
 
 local Button = {}
 
--- Hauteur d'une ligne dépliée, calculée avant affichage avec les textes
--- témoins (AchievementTemplateMixin.CalculateSelectedHeight).
+-- AchievementTemplateMixin.CalculateSelectedHeight : la ScrollBox a besoin
+-- de la hauteur avant que la ligne existe, d'où les textes témoins.
 local function CalculateSelectedHeight(elementData)
 	local totalHeight = COLLAPSED_HEIGHT
 	local objectivesHeight
@@ -530,8 +523,7 @@ local function CalculateSelectedHeight(elementData)
 	return totalHeight
 end
 
--- Infobulle du bouclier : haut fait de compte, et personnage qui l'a obtenu
--- (AchievementShield_OnEnter, plus le nom du personnage que nous enregistrons).
+-- AchievementShield_OnEnter, avec en plus le personnage qui l'a obtenu.
 local function OnShieldEnter(shield)
 	local button = shield:GetParent()
 	GameTooltip:SetOwner(shield, "ANCHOR_RIGHT")
@@ -720,8 +712,7 @@ function Button:InitRewards(rewardText)
 	end
 end
 
--- Pose le cadre des critères dans la ligne et renvoie la hauteur dépliée
--- (AchievementTemplateMixin:DisplayObjectives).
+-- AchievementTemplateMixin:DisplayObjectives. Renvoie la hauteur dépliée.
 function Button:DisplayObjectives(id, completed)
 	objectives:Clear()
 	objectives:SetParent(self)
@@ -750,7 +741,7 @@ function Button:DisplayObjectives(id, completed)
 	return height
 end
 
--- Remplit la ligne (AchievementTemplateMixin:Init).
+-- AchievementTemplateMixin:Init
 function Button:Init(elementData)
 	self.index = elementData.index
 	self.id = elementData.id
@@ -819,8 +810,8 @@ end
 
 -- [[ Liste ]]
 
--- Case « masquer les obtenus » : visible seulement avec la liste (Blizzard
--- cache aussi son filtre sur le Résumé), placée à gauche de la recherche.
+-- Visible seulement avec la liste, comme le filtre de Blizzard. Placée en
+-- Lua : la case de recherche est créée après elle dans le XML.
 local function SetupHideCompletedCheckbox(checkbox, searchBox)
 	hideCheckbox = checkbox
 	checkbox.Label:SetText(L.HIDE_COMPLETED)
@@ -840,8 +831,7 @@ local function SetupHideCompletedCheckbox(checkbox, searchBox)
 	end)
 end
 
--- Appelé une fois par MainWindow:Init. checkbox et searchBox : la case
--- « masquer les obtenus » et la case de recherche du bandeau.
+-- Appelé une fois par MainWindow:Init.
 function AchievementList:Init(frame, checkbox, searchBox)
 	listFrame = frame
 	SetupHideCompletedCheckbox(checkbox, searchBox)
@@ -889,9 +879,8 @@ function AchievementList:Init(frame, checkbox, searchBox)
 	Log.Debug("AchievementList: prête")
 end
 
--- Affiche les hauts faits d'une catégorie (AchievementFrameAchievements_UpdateDataProvider).
--- Case « masquer les obtenus » cochée : comme le filtre « non accomplis » de
--- Blizzard, on saute les premiers (les obtenus sont en tête de la catégorie).
+-- AchievementFrameAchievements_UpdateDataProvider. Case cochée : comme le
+-- filtre « non accomplis », on saute les obtenus, qui sont en tête.
 function AchievementList:ShowCategory(categoryID)
 	self.categoryID = categoryID
 	local dataProvider = CreateDataProvider()
@@ -904,8 +893,7 @@ function AchievementList:ShowCategory(categoryID)
 	listFrame.ScrollBox:SetDataProvider(dataProvider)
 end
 
--- Déplie un haut fait de la catégorie affichée et le centre à l'écran
--- (AchievementFrame_SelectAndScrollToAchievementId).
+-- AchievementFrame_SelectAndScrollToAchievementId
 function AchievementList:SelectAchievement(achievementID)
 	local dataProvider = listFrame.ScrollBox:GetDataProvider()
 	if not dataProvider then
@@ -917,8 +905,8 @@ function AchievementList:SelectAchievement(achievementID)
 		end)
 	end
 	local elementData = Find()
-	-- Haut fait obtenu mais masqué par la case : on la décoche pour le
-	-- montrer (comme forceSelect dans AchievementFrame_SelectAchievement).
+	-- Masqué par la case : elle se décoche, comme forceSelect dans
+	-- AchievementFrame_SelectAchievement.
 	if not elementData and hideCompleted and self.categoryID then
 		hideCompleted = false
 		hideCheckbox:SetChecked(false)
@@ -933,8 +921,7 @@ function AchievementList:SelectAchievement(achievementID)
 	end
 end
 
--- Redessine la catégorie affichée (haut fait obtenu fenêtre ouverte), en
--- gardant dépliée la ligne qui l'était.
+-- Après un haut fait obtenu fenêtre ouverte. La ligne dépliée le reste.
 function AchievementList:Refresh()
 	if not self.categoryID then
 		return

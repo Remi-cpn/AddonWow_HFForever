@@ -1,10 +1,8 @@
 -- Panneau Résumé : derniers hauts faits obtenus et progression par catégorie.
--- Clone de la logique de Blizzard_AchievementUI/Mainline (export Forever) :
--- AchievementFrameSummary_UpdateAchievements, _UpdateSummaryProgressBars,
--- AchievementFrameSummaryCategoriesStatusBar_Update,
--- AchievementFrameSummaryAchievement_OnClick / _OnEnter et
--- AchievementComparisonPlayerButton_Saturate / _Desaturate.
--- Les données viennent uniquement de ns.API.
+-- Clone de Blizzard_AchievementUI/Mainline : AchievementFrameSummary_
+-- UpdateAchievements, _UpdateSummaryProgressBars, AchievementFrameSummary
+-- CategoriesStatusBar_Update, AchievementFrameSummaryAchievement_OnClick /
+-- _OnEnter et AchievementComparisonPlayerButton_Saturate / _Desaturate.
 local _, ns = ...
 
 local L = ns.L
@@ -14,14 +12,11 @@ local API = ns.API
 local Summary = {}
 ns.Summary = Summary
 
--- Nombre de derniers hauts faits affichés. Blizzard Mainline en affiche 3,
--- le cahier des charges de HF Forever en demande 5.
+-- Blizzard Mainline en affiche 3 ; HF Forever en veut 5.
 local MAX_ACHIEVEMENTS = 5
 
--- Quand moins de MAX_ACHIEVEMENTS hauts faits sont obtenus, les places
--- libres montrent, grisés, les premiers hauts faits non obtenus de cette
--- liste (ACHIEVEMENTUI_DEFAULTSUMMARYACHIEVEMENTS de Blizzard : niveau 10,
--- 50 quêtes, métier à 150...). Équivalents chez nous :
+-- Places libres : les premiers hauts faits non obtenus de cette liste,
+-- grisés. Équivalent de ACHIEVEMENTUI_DEFAULTSUMMARYACHIEVEMENTS.
 local DEFAULT_ACHIEVEMENTS = {
 	1001, -- Niveau 10
 	2001, -- 50 quêtes
@@ -30,8 +25,7 @@ local DEFAULT_ACHIEVEMENTS = {
 	5002, -- Premier donjon classique
 }
 
--- Barres de catégorie : largeur 234, 2 colonnes séparées de 20, lignes
--- séparées de 10 (positions de Blizzard).
+-- Espacement des barres de catégorie, valeurs de Blizzard.
 local CATEGORY_COLUMN_GAP = 20
 local CATEGORY_ROW_GAP = 10
 
@@ -42,9 +36,9 @@ local ACCOUNT_HEADER_FILE = "Interface\\AchievementFrame\\AccountLevel-Achieveme
 local SHIELDS_FILE = "Interface\\AchievementFrame\\UI-Achievement-Shields"
 local SHIELDS_NOPOINTS_FILE = "Interface\\AchievementFrame\\UI-Achievement-Shields-NoPoints"
 
-local panel = nil       -- HFFAchievementFrame.Summary
-local buttons = {}      -- lignes des derniers hauts faits
-local categoryBars = {} -- barres de progression par catégorie
+local panel = nil -- HFFAchievementFrame.Summary
+local buttons = {}
+local categoryBars = {}
 local hasAccountHeader = true
 local hasNoPointsShield = true
 
@@ -98,8 +92,7 @@ function Button:Desaturate()
 	self:SetBackdropBorderColor(0.5, 0.5, 0.5)
 end
 
--- Clic : ouvre le haut fait. Dans une série déjà avancée, ouvre la dernière
--- étape obtenue (AchievementFrameSummaryAchievement_OnClick).
+-- Dans une série, ouvre la dernière étape obtenue plutôt que celle affichée.
 function Button:OnClick()
 	local id = self.id
 	local nextID, completed = API.GetNextAchievement(id)
@@ -131,7 +124,6 @@ function Button:OnLeave()
 	GameTooltip:Hide()
 end
 
--- Remplit la ligne avec un haut fait. Renvoie completed.
 function Button:SetAchievement(achievementID)
 	local id, name, points, completed, month, day, year, description, flags, icon = API.GetAchievementInfo(achievementID)
 	self.accountWide = hasAccountHeader and bit.band(flags, FLAG_ACCOUNT) == FLAG_ACCOUNT or nil
@@ -156,7 +148,6 @@ function Button:SetAchievement(achievementID)
 		self.DateCompleted:SetText("")
 	end
 	self:Show()
-	return completed
 end
 
 local function CreateAchievementButton(index)
@@ -178,8 +169,6 @@ local function CreateAchievementButton(index)
 	return button
 end
 
--- Derniers hauts faits obtenus, complétés par les hauts faits par défaut
--- grisés (AchievementFrameSummary_UpdateAchievements).
 local function UpdateAchievements()
 	local latest = { API.GetLatestCompletedAchievements() }
 	local nextDefault = 1
@@ -193,12 +182,13 @@ local function UpdateAchievements()
 			end
 			button.tooltipTitle = nil
 		else
-			-- Premier haut fait par défaut pas encore obtenu.
 			local shown = false
 			while DEFAULT_ACHIEVEMENTS[nextDefault] do
 				local id = DEFAULT_ACHIEVEMENTS[nextDefault]
 				nextDefault = nextDefault + 1
-				if ns.Registry:GetAchievement(id) and not select(4, API.GetAchievementInfo(id)) then
+				-- GetAchievementInfo renvoie nil pour un id retiré de Data/.
+				local knownID, _, _, completed = API.GetAchievementInfo(id)
+				if knownID and not completed then
 					button:SetAchievement(id)
 					button:Desaturate()
 					button.tooltipTitle = L.SUMMARY_INCOMPLETE
@@ -217,21 +207,6 @@ local function UpdateAchievements()
 end
 
 -- [[ Progression par catégorie ]]
-
--- Total et obtenus d'une catégorie, sous-catégories comprises
--- (AchievementFrame_GetCategoryTotalNumAchievements).
-local function GetCategoryTotals(categoryID)
-	local total, completed = API.GetCategoryNumAchievements(categoryID)
-	for _, id in ipairs(API.GetCategoryList()) do
-		local _, parent = API.GetCategoryInfo(id)
-		if parent == categoryID then
-			local childTotal, childCompleted = API.GetCategoryNumAchievements(id)
-			total = total + childTotal
-			completed = completed + childCompleted
-		end
-	end
-	return total, completed
-end
 
 -- Une barre par catégorie de premier niveau, sur 2 colonnes. Une dernière
 -- barre seule sur sa ligne est centrée, comme la 11e chez Blizzard.
@@ -266,8 +241,6 @@ local function CreateCategoryBars()
 	end
 end
 
--- Barre du total et barres des catégories
--- (AchievementFrameSummaryCategoriesStatusBar_Update et _Category_OnShow).
 local function UpdateCategories()
 	local total, completed = API.GetNumCompletedAchievements()
 	local statusBar = panel.Categories.StatusBar
@@ -276,7 +249,7 @@ local function UpdateCategories()
 	statusBar.Text:SetText(BreakUpLargeNumbers(completed) .. "/" .. BreakUpLargeNumbers(total))
 
 	for _, bar in ipairs(categoryBars) do
-		local categoryTotal, categoryCompleted = GetCategoryTotals(bar.categoryID)
+		local categoryTotal, categoryCompleted = API.GetCategoryTotalNumAchievements(bar.categoryID)
 		bar.Text:SetText(("%d/%d"):format(categoryCompleted, categoryTotal))
 		bar:SetMinMaxValues(0, categoryTotal)
 		bar:SetValue(categoryCompleted)
@@ -307,7 +280,6 @@ function Summary:Init(frame)
 	Log.Debug("Summary: prêt,", #categoryBars, "catégories")
 end
 
--- Met tout le panneau à jour (AchievementFrameSummary_Update).
 function Summary:Refresh()
 	UpdateCategories()
 	UpdateAchievements()

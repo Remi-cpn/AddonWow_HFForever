@@ -1,16 +1,13 @@
--- Recherche de hauts faits (case en haut à droite de la fenêtre).
--- Clone de la logique de Blizzard_AchievementUI/Mainline (export Forever) :
--- AchievementFrameSearchBox_* (OnTextChanged, OnEnterPressed, OnKeyDown,
--- OnFocusLost / Gained), AchievementFrame_ShowSearchPreviewResults,
--- _SetSearchPreviewSelection, _ShowFullSearch, _UpdateFullSearchResults et
+-- Recherche de hauts faits, en haut à droite de la fenêtre.
+-- Clone de Blizzard_AchievementUI/Mainline : AchievementFrameSearchBox_*,
+-- AchievementFrame_ShowSearchPreviewResults, _SetSearchPreviewSelection,
+-- _ShowFullSearch, _UpdateFullSearchResults et
 -- AchievementFullSearchResultsButtonMixin:Init.
 --
--- Différence : Blizzard cherche côté serveur (SetAchievementSearchString,
--- avec une barre d'attente). Nos hauts faits sont en mémoire, la recherche
--- est immédiate : pas de barre d'attente. Comme Blizzard, on cherche dans le
--- nom et dans la description (taper un nom de boss trouve tous les hauts
--- faits qui le citent), sans tenir compte des majuscules ni des accents.
--- Les données viennent uniquement de ns.API.
+-- Blizzard cherche côté serveur (SetAchievementSearchString) et affiche une
+-- barre d'attente. Nos hauts faits sont en mémoire : recherche immédiate,
+-- sans barre. Comme chez Blizzard, elle porte sur le nom et la description,
+-- ce qui retrouve un haut fait par le nom de son boss.
 local _, ns = ...
 
 local L = ns.L
@@ -20,33 +17,31 @@ local API = ns.API
 local Search = {}
 ns.Search = Search
 
--- Valeurs de Blizzard : 5 lignes d'aperçu, la 6e place est « tous les
--- résultats », et MIN_CHARACTER_SEARCH caractères au minimum (3 en français).
+-- Valeurs de Blizzard. La place n° 6 de l'aperçu est « tous les résultats ».
 local NUM_PREVIEWS = 5
 local SHOW_ALL_INDEX = NUM_PREVIEWS + 1
 local MIN_CHARACTERS = MIN_CHARACTER_SEARCH or 3
 
-local window = nil        -- HFFAchievementFrame
-local searchBox = nil     -- HFFAchievementFrame.HeaderDetails.SearchBox
-local container = nil     -- aperçu sous la case
-local previews = {}       -- les 5 lignes de l'aperçu
-local resultsFrame = nil  -- fenêtre « tous les résultats »
-local results = {}        -- id des hauts faits trouvés, dans l'ordre des catégories
+local searchBox = nil
+local container = nil    -- aperçu sous la case
+local previews = {}
+local resultsFrame = nil -- fenêtre « tous les résultats »
+local results = {}       -- id trouvés, dans l'ordre des catégories
 
+-- PlaySound(nil) lève une erreur si le SOUNDKIT manque sur Forever.
 local function PlayUISound(soundKit)
 	if soundKit then
 		PlaySound(soundKit)
 	end
 end
 
--- Majuscules accentuées du français (string.lower ne les change pas en UTF-8).
+-- string.lower ne connaît pas les majuscules accentuées en UTF-8.
 local ACCENTS = {
 	["À"] = "à", ["Â"] = "â", ["Ä"] = "ä", ["Ç"] = "ç", ["É"] = "é", ["È"] = "è",
 	["Ê"] = "ê", ["Ë"] = "ë", ["Î"] = "î", ["Ï"] = "ï", ["Ô"] = "ô", ["Ö"] = "ö",
 	["Ù"] = "ù", ["Û"] = "û", ["Ü"] = "ü", ["Œ"] = "œ",
 }
--- Lettres accentuées vers lettres simples, pour que « elwynn » trouve aussi
--- « Elwynn » et « ecarlate » trouve « Écarlate ».
+-- Pour que « ecarlate » trouve « Écarlate ».
 local PLAIN = {
 	["à"] = "a", ["â"] = "a", ["ä"] = "a", ["ç"] = "c", ["é"] = "e", ["è"] = "e",
 	["ê"] = "e", ["ë"] = "e", ["î"] = "i", ["ï"] = "i", ["ô"] = "o", ["ö"] = "o",
@@ -64,8 +59,6 @@ local function Normalize(text)
 	return text
 end
 
--- Remplit results avec les hauts faits dont le nom ou la description
--- contient le texte.
 local function RunSearch(text)
 	wipe(results)
 	local needle = Normalize(text)
@@ -82,10 +75,9 @@ local function RunSearch(text)
 	Log.Debug("Search:", text, #results, "résultat(s)")
 end
 
--- Chemin de la catégorie, par exemple « Exploration > Kalimdor ».
+-- Par exemple « Exploration > Kalimdor ».
 local function GetCategoryPath(achievementID)
-	local categoryID = ns.Registry:GetAchievement(achievementID).category
-	local name, parent = API.GetCategoryInfo(categoryID)
+	local name, parent = API.GetCategoryInfo(API.GetAchievementCategory(achievementID))
 	local path = name
 	while parent ~= -1 do
 		name, parent = API.GetCategoryInfo(parent)
@@ -104,8 +96,7 @@ local function HidePreview()
 	container.ShowAllSearchResults:Hide()
 end
 
--- Met en surbrillance la ligne n° selectedIndex (flèches haut et bas,
--- survol). Tourne en boucle sur les lignes visibles.
+-- Flèches et survol. L'index boucle sur les lignes visibles.
 local function SetPreviewSelection(selectedIndex)
 	local numShown = 0
 	for _, preview in ipairs(previews) do
@@ -180,8 +171,7 @@ local function UpdatePreview()
 	ShowPreviewResults()
 end
 
--- Ouvre un haut fait trouvé et ferme la recherche
--- (AchievementSearchPreviewButton_OnClick).
+-- AchievementSearchPreviewButton_OnClick
 local function SelectResult(achievementID)
 	resultsFrame:Hide()
 	HidePreview()
@@ -259,17 +249,16 @@ local function OnKeyDown(self, key)
 end
 
 -- Appelé une fois par MainWindow:Init.
-function Search:Init(frame)
-	window = frame
-	searchBox = frame.HeaderDetails.SearchBox
+function Search:Init(window)
+	searchBox = window.HeaderDetails.SearchBox
 	container = searchBox.SearchPreviewContainer
-	resultsFrame = frame.SearchResults
+	resultsFrame = window.SearchResults
 	for i = 1, NUM_PREVIEWS do
 		previews[i] = container["SearchPreview" .. i]
 	end
 
-	-- La case garde le focus tant que la souris est sur l'aperçu, sinon un
-	-- clic sur une ligne fermerait l'aperçu avant d'être pris en compte.
+	-- Garde le focus quand la souris est sur l'aperçu : sinon, cliquer une
+	-- ligne ferme l'aperçu avant que le clic ne soit pris en compte.
 	searchBox.HasStickyFocus = function()
 		return DoesAncestryIncludeAny(container, GetMouseFoci())
 	end
@@ -319,7 +308,7 @@ function Search:Init(frame)
 		PlayUISound(SOUNDKIT.IG_SPELLBOOK_CLOSE)
 	end)
 
-	-- Fenêtre fermée : on vide la recherche, comme Blizzard (AchievementFrame_OnHide).
+	-- Vidée à la fermeture de la fenêtre, comme dans AchievementFrame_OnHide.
 	window:HookScript("OnHide", function()
 		HidePreview()
 		resultsFrame:Hide()

@@ -4,11 +4,10 @@ local addonName, ns = ...
 local L = ns.L
 local Log = ns.Log
 
--- Frame anonyme (sans nom) : elle ne crée donc pas de globale.
 local eventFrame = CreateFrame("Frame")
 
 local function OnAddonLoaded(loadedName)
-	-- ADDON_LOADED se déclenche pour chaque addon, on ne garde que le nôtre.
+	-- ADDON_LOADED arrive pour chaque addon.
 	if loadedName ~= addonName then
 		return
 	end

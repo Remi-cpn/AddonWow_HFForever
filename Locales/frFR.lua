@@ -80,6 +80,7 @@ L.OPTION_TOASTS = "Afficher les toasts"
 L.OPTION_TOASTS_TOOLTIP = "Affiche une alerte à l'écran quand un haut fait est obtenu. Le message dans le chat reste toujours affiché."
 L.OPTION_SOUND = "Son des toasts"
 L.OPTION_SOUND_TOOLTIP = "Joue le son de haut fait avec chaque toast."
+L.OPTIONS_IN_COMBAT = "les options ne s'ouvrent pas en combat."
 
 -- Mode debug
 L.DEBUG_ON = "mode debug activé."

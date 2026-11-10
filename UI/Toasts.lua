@@ -1,10 +1,7 @@
--- Toasts (popups) de haut fait obtenu, sur le modèle de retail.
--- Le visuel vient de UI/Toasts.xml (clone du modèle Blizzard).
---
--- File d'attente propre à l'addon : au plus MAX_VISIBLE toasts à l'écran,
--- empilés vers le haut ; les suivants attendent qu'une place se libère.
--- On n'utilise pas le système AlertFrame de Blizzard pour ne modifier
--- aucune de ses tables (risque de taint).
+-- Toasts de haut fait obtenu (cadre dans UI/Toasts.xml).
+-- File d'attente propre : au plus MAX_VISIBLE à l'écran, empilés vers le
+-- haut. Le système AlertFrame de Blizzard n'est pas utilisé, pour ne
+-- modifier aucune de ses tables (taint).
 local _, ns = ...
 
 local L = ns.L
@@ -17,19 +14,16 @@ local TEMPLATE = "HFFAchievementToastTemplate"
 local MAX_VISIBLE = 3
 local TOAST_HEIGHT = 101
 local SPACING = 4
--- Au-dessus de la zone des alertes Blizzard (butin, etc.), qui commence à 128.
+-- Au-dessus des alertes Blizzard (butin), qui commencent à 128.
 local ANCHOR_Y = 250
--- Son de haut fait : fichier sound/spells/achievmentsound1.ogg (FileDataID
--- trouvé dans la listfile communautaire wowdev/wow-listfile).
--- Sur Forever, le kit de son retail 12891 n'existe pas, et un fichier hors
--- du dossier Interface ne se joue que par son numéro, pas par son chemin.
+-- sound/spells/achievmentsound1.ogg. Le kit retail 12891 n'existe pas sur
+-- Forever, et un fichier hors de Interface\ ne se joue que par FileDataID.
 local ACHIEVEMENT_SOUND_FILE = 569143
--- Plusieurs toasts affichés en même temps ne jouent le son qu'une fois
--- (sinon les sons s'additionnent et le volume explose).
+-- Un seul son pour plusieurs toasts simultanés : les sons superposés
+-- montent fort.
 local MIN_SOUND_INTERVAL = 1
 local lastSoundTime = 0
 
--- Atlas utilisés par le modèle : vérifiés au démarrage.
 local REQUIRED_ATLASES = {
 	"ui-achievement-alert-background",
 	"ui-achievement-iconframe",
@@ -38,18 +32,17 @@ local REQUIRED_ATLASES = {
 	"ui-achievement-alert-glow-shine",
 }
 
--- Bouclier sans chiffre (hauts faits à 0 point). Absent du client Forever
--- (vérifié en jeu) : on garde le bouclier normal, sans texte, à la place.
+-- Bouclier des hauts faits à 0 point. Absent du client Forever : le
+-- bouclier normal, sans chiffre, le remplace.
 local SHIELD_NO_POINTS_ATLAS = "UI-Achievement-Shield-NoPoints"
 local hasNoPointsShield = false
 
-local pool = {}     -- toasts créés mais libres
-local visible = {}  -- toasts affichés, du bas vers le haut
-local queue = {}    -- toasts en attente : { title, name, icon, points, achievementID }
+local pool = {}     -- toasts libres, réutilisés
+local visible = {}  -- du bas vers le haut
+local queue = {}    -- { title, name, icon, points, achievementID }
 
-local ShowNext -- déclarée plus bas, utilisée par Release
+local ShowNext -- Release et ShowNext s'appellent l'une l'autre
 
--- Replace les toasts visibles les uns au-dessus des autres.
 local function Relayout()
 	for index, frame in ipairs(visible) do
 		frame:ClearAllPoints()
@@ -58,7 +51,6 @@ local function Relayout()
 	end
 end
 
--- Retire un toast de l'écran et le remet dans la réserve.
 local function Release(frame)
 	for index = #visible, 1, -1 do
 		if visible[index] == frame then
@@ -72,8 +64,7 @@ local function Release(frame)
 	ShowNext()
 end
 
--- Points dans le bouclier, comme AchievementShield_SetPoints de Blizzard :
--- police plus petite à partir de 100, bouclier sans chiffre pour 0 point.
+-- AchievementShield_SetPoints : police plus petite à partir de 100 points.
 local function SetShield(frame, points)
 	local pointString = frame.Shield.Points
 	if points == 0 then
@@ -87,10 +78,15 @@ local function SetShield(frame, points)
 	pointString:SetText(points)
 end
 
+-- Clic gauche : ouvre le haut fait, ou juste la fenêtre pour le toast
+-- résumé (sans id). Toggle fermerait une fenêtre déjà ouverte.
+-- Clic droit : ferme le toast.
 local function OnClick(frame, mouseButton)
 	Log.Debug("Toasts: clic", mouseButton, frame.achievementID)
 	if mouseButton == "LeftButton" then
-		ns.MainWindow:Toggle(frame.achievementID)
+		if not (frame.achievementID and ns.MainWindow:ShowAchievement(frame.achievementID)) then
+			ns.MainWindow:Show()
+		end
 	end
 	Release(frame)
 end
@@ -106,7 +102,7 @@ local function CreateToast()
 	frame.shine.animIn:SetScript("OnFinished", function()
 		frame.shine:Hide()
 	end)
-	-- Survol : le toast reste affiché tant que la souris est dessus.
+	-- Le toast ne disparaît pas tant que la souris est dessus.
 	frame:SetScript("OnEnter", function(self)
 		self.waitAndAnimOut:Stop()
 		self:SetAlpha(1)
@@ -155,7 +151,6 @@ local function Enqueue(entry)
 	ShowNext()
 end
 
--- Toast d'un haut fait obtenu.
 function Toasts:ShowAchievement(achievementID)
 	local id, name, points, _, _, _, _, _, _, icon = ns.API.GetAchievementInfo(achievementID)
 	if not id then
@@ -171,7 +166,7 @@ function Toasts:ShowAchievement(achievementID)
 	})
 end
 
--- Toast de résumé pour les hauts faits détectés à la connexion.
+-- Un seul toast pour les hauts faits détectés à la connexion.
 function Toasts:ShowSummary(count, points)
 	Enqueue({
 		title = L.TOAST_RETRO_TITLE,
@@ -181,10 +176,9 @@ function Toasts:ShowSummary(count, points)
 	})
 end
 
--- Abonné du moteur : un toast par haut fait obtenu en direct, un seul
--- toast de résumé pour une détection rétroactive. Rien si les toasts sont
--- désactivés dans les options (le moteur écrit toujours dans le chat ;
--- /hff toast, commande de dev, passe outre).
+-- Un toast par haut fait obtenu en direct, un seul résumé pour une
+-- détection rétroactive. Désactivé dans les options, plus de toast : le
+-- moteur écrit toujours dans le chat, et /hff toast passe outre.
 local function OnAchievementsEarned(achievementIDs, retroactive)
 	if not ns.Database:IsToastEnabled() then
 		return
@@ -202,7 +196,7 @@ local function OnAchievementsEarned(achievementIDs, retroactive)
 	end
 end
 
--- Appelé au chargement : vérifie les atlas et s'abonne au moteur.
+-- Appelé une fois à ADDON_LOADED.
 function Toasts:Init()
 	for _, atlas in ipairs(REQUIRED_ATLASES) do
 		if not C_Texture.GetAtlasInfo(atlas) then

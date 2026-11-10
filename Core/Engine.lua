@@ -1,19 +1,16 @@
 -- Moteur de détection : évalue les critères et enregistre les hauts faits
 -- obtenus.
 --
--- Fonctionnement :
 --   1. Quelques secondes après la connexion, un scan complet lit l'état du
---      personnage (niveau, statistiques, exploration, métiers) : c'est la
---      détection rétroactive.
---   2. Ensuite, des événements du jeu (montée de niveau, quête rendue,
---      nouvelle zone découverte...) demandent une nouvelle évaluation.
---      Les demandes rapprochées sont regroupées (THROTTLE_SECONDS).
---   3. Jamais d'évaluation en combat : certaines valeurs y sont illisibles
---      (« secret values »). On attend la fin du combat.
+--      personnage : c'est la détection rétroactive.
+--   2. Ensuite, les événements de WATCHED_EVENTS demandent une nouvelle
+--      évaluation ; les demandes rapprochées sont regroupées.
+--   3. Pas d'évaluation en combat, où certaines valeurs sont illisibles
+--      (secret values) : elle attend la fin du combat.
 --
--- Un haut fait détecté pendant la première minute après la connexion est
--- marqué « rétroactif » : il était déjà accompli avant, on n'en connaît pas
--- la vraie date, et on ne l'annonce pas un par un (un seul résumé).
+-- Ce qui est obtenu pendant la première minute est marqué rétroactif : déjà
+-- accompli avant la connexion, date réelle inconnue, annoncé par un seul
+-- résumé au lieu d'un message par haut fait.
 local _, ns = ...
 
 local L = ns.L
@@ -42,9 +39,8 @@ local pendingReason = nil      -- évaluation programmée, avec sa raison
 local forceRetroactive = false -- demandé par /hff reset
 local listeners = {}
 
--- Les autres modules (toasts, UI) s'abonnent ici pour être prévenus, une
--- fois par évaluation qui a obtenu au moins un haut fait :
--- callback(achievementIDs, retroactive), achievementIDs = liste d'id
+-- callback(achievementIDs, retroactive) est appelé une fois par évaluation
+-- qui a obtenu au moins un haut fait (toasts, fenêtre).
 function Engine:RegisterListener(callback)
 	listeners[#listeners + 1] = callback
 end
@@ -61,13 +57,12 @@ local function IsInRetroactiveWindow()
 	return forceRetroactive or (loginTime ~= nil and GetTime() - loginTime < RETROACTIVE_WINDOW)
 end
 
--- Évalue tous les critères d'un haut fait et enregistre leur progression.
--- Renvoie true si tous sont remplis.
+-- Enregistre la progression de chaque critère ; true si tous sont remplis.
 local function EvaluateAchievement(achievement)
 	local allDone = true
 	for index, criterion in ipairs(achievement.criteria) do
 		local criteriaType = ns.CriteriaTypes[criterion.type]
-		-- pcall : une erreur dans un critère ne doit pas bloquer tout le scan.
+		-- pcall : une erreur dans un critère ne bloque pas le reste du scan.
 		local ok, current = pcall(criteriaType.current, criterion)
 		if not ok or type(current) ~= "number" then
 			Log.Error(L.ENGINE_CRITERIA_ERROR, achievement.id, index, current)
@@ -90,7 +85,6 @@ local function NotifyListeners(achievementIDs, retroactive)
 	end
 end
 
--- Annonce dans le chat (les toasts passent par RegisterListener).
 local function AnnounceEarned(achievement)
 	Log.Info(L.ENGINE_EARNED, achievement.name, achievement.points)
 end
@@ -108,8 +102,8 @@ local function RunEvaluation(reason)
 	local character = GetCharacterName()
 	local earned = {}
 
-	-- Plusieurs passes : un méta peut devenir obtenu grâce à un haut fait
-	-- obtenu dans la même évaluation.
+	-- Plusieurs passes : un méta peut dépendre d'un haut fait obtenu dans la
+	-- même évaluation (zone, puis continent, puis Explorateur).
 	for pass = 1, MAX_PASSES do
 		local earnedThisPass = 0
 		for id, achievement in ns.Registry:Iterate() do
@@ -148,8 +142,7 @@ local function RunEvaluation(reason)
 		reason, debugprofilestop() - startTime, #earned))
 end
 
--- Programme une évaluation. Les demandes reçues avant qu'elle ne parte sont
--- regroupées en une seule.
+-- Les demandes reçues avant le départ de l'évaluation sont regroupées.
 function Engine:RequestEvaluation(reason)
 	if pendingReason then
 		return
@@ -162,7 +155,7 @@ function Engine:RequestEvaluation(reason)
 	end)
 end
 
--- Pour /hff reset : la prochaine évaluation sera traitée comme rétroactive.
+-- Après /hff reset : la prochaine évaluation est traitée comme rétroactive.
 function Engine:RequestRetroactiveScan()
 	forceRetroactive = true
 	self:RequestEvaluation("rescan")

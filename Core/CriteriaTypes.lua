@@ -18,8 +18,8 @@ local L = ns.L
 local CriteriaTypes = {}
 ns.CriteriaTypes = CriteriaTypes
 
--- Nom d'une statistique de Forever (ex. « Quêtes achevées »), ou nil.
--- Les statistiques partagent la base des hauts faits de Blizzard.
+-- Nom d'une statistique de Forever, ou nil. Les statistiques sont lues avec
+-- GetAchievementInfo, comme chez Blizzard.
 local function GetStatisticName(statisticID)
 	return select(2, GetAchievementInfo(statisticID))
 end
@@ -30,9 +30,8 @@ local function GetExplorationTotal(mapID)
 	return artID and ns.Data.explorationTotals[artID]
 end
 
--- Valeur d'une statistique sous forme de nombre. GetStatistic renvoie du
--- texte : "--" quand la valeur est nulle, et peut-être des séparateurs de
--- milliers pour les grands nombres. On ne garde que les chiffres.
+-- GetStatistic renvoie du texte ("--" pour zéro). Seuls les chiffres sont
+-- gardés, ce qui écarte aussi un éventuel séparateur de milliers.
 local function GetStatisticNumber(statisticID)
 	local text = GetStatistic(statisticID)
 	if type(text) ~= "string" then
@@ -151,14 +150,12 @@ CriteriaTypes.profession = {
 	end,
 }
 
--- Obtenir un autre haut fait de l'addon (pour les métas).
+-- Obtenir un autre haut fait de l'addon (métas).
 -- Exemple : { type = "achievement", id = 3001 }
--- L'existence de l'id est vérifiée par le Registry, une fois tous les hauts
--- faits chargés.
+-- L'id visé est vérifié par le Registry, quand tous les hauts faits sont chargés.
 CriteriaTypes.achievement = {
 	fields = { "id" },
 	progressBar = false,
-	-- Haut fait visé, renvoyé comme assetID par GetAchievementCriteriaInfo.
 	asset = function(criterion)
 		return criterion.id
 	end,

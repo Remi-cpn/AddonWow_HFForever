@@ -1,7 +1,6 @@
--- Registre : vérifie les données de Data/ puis construit des index pour
--- retrouver vite une catégorie ou un haut fait par son id.
--- Une entrée invalide est signalée en rouge dans le chat et ignorée, le reste
--- de l'addon continue de fonctionner.
+-- Vérifie les données de Data/ et construit les index par id.
+-- Une entrée invalide est signalée dans le chat et ignorée : le reste de
+-- l'addon fonctionne quand même.
 local _, ns = ...
 
 local L = ns.L
@@ -10,11 +9,11 @@ local Log = ns.Log
 local Registry = {}
 ns.Registry = Registry
 
-local categoriesById = {}         -- [id] = catégorie
-local categoryOrder = {}          -- liste des id, dans l'ordre d'affichage
-local achievementsById = {}       -- [id] = haut fait
-local achievementsByCategory = {} -- [categoryID] = liste de hauts faits
-local nextById = {}               -- [id] = id du haut fait suivant de la série
+local categoriesById = {}
+local categoryOrder = {}          -- id des catégories, dans l'ordre de Data/Categories.lua
+local achievementsById = {}
+local achievementsByCategory = {} -- [categoryID] = liste, dans l'ordre de Data/Achievements.lua
+local nextById = {}               -- [id] = haut fait suivant dans la série
 local achievementCount = 0
 local errorCount = 0
 
@@ -47,8 +46,7 @@ local function BuildCategories()
 		end
 	end
 
-	-- Les parents sont vérifiés à la fin, car un parent peut être déclaré
-	-- après sa sous-catégorie.
+	-- Après coup : une catégorie mère peut être déclarée après ses filles.
 	for _, id in ipairs(categoryOrder) do
 		local parent = categoriesById[id].parent
 		if parent ~= nil and not categoriesById[parent] then
@@ -58,7 +56,6 @@ local function BuildCategories()
 	end
 end
 
--- Vérifie un critère. Renvoie true s'il est utilisable.
 local function ValidateCriterion(achievementID, index, criterion)
 	local criteriaType = type(criterion) == "table" and ns.CriteriaTypes[criterion.type]
 	if not criteriaType then
@@ -72,7 +69,6 @@ local function ValidateCriterion(achievementID, index, criterion)
 			return false
 		end
 	end
-	-- Contrôle propre au type (statistique existante, carte connue...).
 	if criteriaType.validate then
 		local message = criteriaType.validate(criterion)
 		if message then
@@ -83,7 +79,6 @@ local function ValidateCriterion(achievementID, index, criterion)
 	return true
 end
 
--- Vérifie un haut fait. Renvoie true s'il est utilisable.
 local function ValidateAchievement(achievement)
 	local id = achievement.id
 	if not IsNonEmptyString(achievement.name) then
@@ -114,8 +109,8 @@ local function ValidateAchievement(achievement)
 	return true
 end
 
--- Une icône absente ne bloque pas le haut fait : on met l'icône de secours.
--- GetFileIDFromPath renvoie nil quand le fichier n'existe pas dans le client.
+-- Une icône absente du client ne bloque pas le haut fait : elle est
+-- remplacée par l'icône de secours.
 local function CheckIcon(achievement)
 	if type(achievement.icon) ~= "string" or not GetFileIDFromPath(achievement.icon) then
 		ReportError(L.DATA_ERR_ICON, achievement.id, achievement.icon)
@@ -139,8 +134,8 @@ local function BuildAchievements()
 		end
 	end
 
-	-- Métas : un critère « achievement » doit viser un haut fait chargé.
-	-- Sinon le méta est retiré (il ne pourrait jamais être obtenu).
+	-- Un méta qui vise un haut fait absent ne pourrait jamais être obtenu :
+	-- on le retire.
 	local invalid = {}
 	for id, achievement in pairs(achievementsById) do
 		for index, criterion in ipairs(achievement.criteria) do
@@ -162,7 +157,7 @@ local function BuildAchievements()
 		achievementCount = achievementCount - 1
 	end
 
-	-- Séries : vérifiées à la fin, comme les parents de catégories.
+	-- Séries : previous peut viser un haut fait déclaré plus loin.
 	for id, achievement in pairs(achievementsById) do
 		local previous = achievement.previous
 		if previous ~= nil then
@@ -176,7 +171,7 @@ local function BuildAchievements()
 	end
 end
 
--- Appelé une fois au chargement (ADDON_LOADED), après la sauvegarde.
+-- Appelé une fois à ADDON_LOADED, après Database:Init.
 function Registry:Build()
 	BuildCategories()
 	BuildAchievements()
@@ -188,7 +183,7 @@ function Registry:GetCategory(categoryID)
 	return categoriesById[categoryID]
 end
 
--- Liste des id de catégories dans l'ordre d'affichage. À lire seulement.
+-- Ne pas modifier la table renvoyée.
 function Registry:GetCategoryOrder()
 	return categoryOrder
 end
@@ -197,7 +192,7 @@ function Registry:GetAchievement(achievementID)
 	return achievementsById[achievementID]
 end
 
--- Liste des hauts faits d'une catégorie, ou nil si la catégorie n'existe pas.
+-- nil si la catégorie n'existe pas.
 function Registry:GetCategoryAchievements(categoryID)
 	return achievementsByCategory[categoryID]
 end
@@ -210,7 +205,7 @@ function Registry:GetAchievementCount()
 	return achievementCount
 end
 
--- Parcours de tous les hauts faits : for id, achievement in Registry:Iterate()
+-- for id, achievement in Registry:Iterate() do ... end
 function Registry:Iterate()
 	return pairs(achievementsById)
 end

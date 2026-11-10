@@ -1,6 +1,6 @@
--- Bouton autour de la minimap, via LibDataBroker (la description du bouton)
--- et LibDBIcon (l'affichage, le glisser autour de la minimap, la sauvegarde
--- de la position). LibDBIcon ajoute aussi l'entrée du compartiment d'addons.
+-- Bouton de la minimap : LibDataBroker décrit le bouton, LibDBIcon
+-- l'affiche, gère le déplacement, sauvegarde la position et ajoute l'entrée
+-- du compartiment d'addons.
 local _, ns = ...
 
 local L = ns.L
@@ -12,13 +12,11 @@ local LDBIcon = LibStub("LibDBIcon-1.0")
 local MinimapButton = {}
 ns.MinimapButton = MinimapButton
 
--- Nom d'enregistrement auprès de LibDBIcon. Il est aussi affiché tel quel
--- dans le compartiment d'addons.
+-- Aussi affiché tel quel dans le compartiment d'addons.
 local BUTTON_NAME = "HF Forever"
 
--- Menu du clic droit (API officielle MenuUtil). Il s'ouvre sous le curseur,
--- accroché à UIParent : dans le compartiment d'addons, le cadre cliqué se
--- ferme tout de suite et fermerait le menu avec lui.
+-- Accroché à UIParent et pas au cadre cliqué : dans le compartiment
+-- d'addons, ce cadre se ferme aussitôt et emporterait le menu.
 local function ShowContextMenu()
 	MenuUtil.CreateContextMenu(UIParent, function(_, rootDescription)
 		rootDescription:CreateTitle(L.ADDON_TITLE)
@@ -31,8 +29,7 @@ local function ShowContextMenu()
 	end)
 end
 
--- Clic gauche : la fenêtre. Clic droit : le menu. Même chose depuis le
--- compartiment d'addons (LibDBIcon y transmet le bouton de souris).
+-- LibDBIcon transmet aussi le bouton de souris depuis le compartiment.
 local function OnClick(_, mouseButton)
 	Log.Debug("MinimapButton: clic", mouseButton)
 	if mouseButton == "LeftButton" then
@@ -48,8 +45,8 @@ local function OnTooltipShow(tooltip)
 	tooltip:AddLine(L.MINIMAP_TOOLTIP_RIGHTCLICK, 1, 1, 1)
 end
 
--- À appeler une fois la sauvegarde chargée (ADDON_LOADED), car LibDBIcon
--- lit et écrit directement dans la table des réglages.
+-- Après Database:Init : LibDBIcon lit et écrit directement dans la table
+-- des réglages.
 function MinimapButton:Init()
 	local dataObject = LDB:NewDataObject(BUTTON_NAME, {
 		type = "launcher",
@@ -66,7 +63,7 @@ function MinimapButton:IsShown()
 	return not ns.Database:GetMinimapSettings().hide
 end
 
--- LibDBIcon:Show/Hide n'enregistrent pas l'état, on le sauvegarde nous-mêmes.
+-- LibDBIcon:Show/Hide n'enregistrent pas l'état.
 function MinimapButton:SetShown(show)
 	ns.Database:GetMinimapSettings().hide = not show
 	if show then

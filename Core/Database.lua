@@ -1,43 +1,40 @@
--- Persistance : la SavedVariable HFForeverDB, commune à tout le compte.
--- C'est la seule globale de l'addon (WoW l'impose pour la sauvegarde).
--- Le reste du code ne touche jamais HFForeverDB directement : il passe par
--- les fonctions de ce module.
+-- Sauvegarde du compte (SavedVariable HFForeverDB).
+-- Le reste du code passe toujours par ce module et ne touche jamais
+-- HFForeverDB directement.
 local _, ns = ...
 
 local Database = {}
 ns.Database = Database
 
--- À incrémenter quand la forme des données sauvegardées change, pour
--- pouvoir migrer les anciennes sauvegardes plus tard.
+-- À incrémenter si la forme des données change, pour pouvoir migrer les
+-- anciennes sauvegardes.
 local SCHEMA_VERSION = 1
 
--- Valeurs par défaut, complétées dans la sauvegarde si elles manquent.
+-- Complétées dans la sauvegarde quand elles manquent.
 local DEFAULTS = {
 	schemaVersion = SCHEMA_VERSION,
 	debug = false,
-	-- Réglages du bouton de minimap, lus et écrits par LibDBIcon :
-	-- hide (masqué), minimapPos (angle en degrés), showInCompartment.
+	-- Lu et écrit par LibDBIcon : hide, minimapPos (angle), showInCompartment.
 	minimap = {
 		hide = false,
 		showInCompartment = true,
 	},
-	-- Réglages des toasts : enabled (afficher les toasts de déblocage ; le
-	-- message dans le chat reste toujours), sound (son de haut fait).
+	-- enabled : toasts de déblocage (le message dans le chat reste toujours).
 	toasts = {
 		enabled = true,
 		sound = true,
 	},
-	-- [achievementID] = { date = horodatage, character = "Nom-Royaume",
-	--                     retroactive = true si détecté à la connexion,
-	--                     donc accompli avant, date réelle inconnue }
+	-- [achievementID] = { date, order, character = "Nom-Royaume",
+	--                     retroactive = true si détecté à la connexion }
+	-- Pour un haut fait rétroactif, la date est celle de la détection : la
+	-- vraie date d'obtention n'est pas connue.
 	completed = {},
 	-- Meilleure progression vue, tous personnages confondus :
 	-- [achievementID] = { [criteriaIndex] = quantité }
 	progress = {},
 }
 
--- Ajoute dans target les clés de defaults qui manquent, récursivement.
--- Les valeurs déjà présentes ne sont jamais écrasées.
+-- Ajoute récursivement les clés manquantes, sans écraser les valeurs présentes.
 local function ApplyDefaults(target, defaults)
 	for key, value in pairs(defaults) do
 		if target[key] == nil then
@@ -53,21 +50,29 @@ local function ApplyDefaults(target, defaults)
 	end
 end
 
--- Données en mémoire. nil tant que ADDON_LOADED n'est pas passé.
+-- Retire les entrées de completed qui n'ont pas la bonne forme (fichier de
+-- sauvegarde modifié à la main) : le reste de l'addon peut alors lire
+-- record.date sans vérifier.
+local function RemoveInvalidCompletions(completed)
+	for id, record in pairs(completed) do
+		if type(record) ~= "table" or type(record.date) ~= "number" then
+			completed[id] = nil
+		end
+	end
+end
+
+-- nil jusqu'à ADDON_LOADED.
 local data = nil
 
--- Appelé une seule fois, quand WoW a chargé la sauvegarde (ADDON_LOADED).
+-- Appelé une fois, à ADDON_LOADED, quand WoW a chargé la sauvegarde.
 function Database:Init()
 	if type(HFForeverDB) ~= "table" then
 		HFForeverDB = {}
 	end
 	ApplyDefaults(HFForeverDB, DEFAULTS)
+	RemoveInvalidCompletions(HFForeverDB.completed)
 	data = HFForeverDB
 	ns.Log.Debug("Database: sauvegarde prête, schéma", data.schemaVersion)
-end
-
-function Database:IsReady()
-	return data ~= nil
 end
 
 function Database:IsDebug()
@@ -78,8 +83,7 @@ function Database:SetDebug(enabled)
 	data.debug = enabled and true or false
 end
 
--- Table des réglages du bouton de minimap. On la donne telle quelle à
--- LibDBIcon, qui y sauvegarde lui-même la position quand on déplace le bouton.
+-- Donnée telle quelle à LibDBIcon, qui y enregistre la position du bouton.
 function Database:GetMinimapSettings()
 	return data.minimap
 end
@@ -104,24 +108,23 @@ function Database:GetSchemaVersion()
 	return data.schemaVersion
 end
 
--- Enregistrement d'un haut fait obtenu ({ date, character }), ou nil.
+-- { date, order, character, retroactive }, ou nil si pas obtenu.
 function Database:GetCompletion(achievementID)
 	return data.completed[achievementID]
 end
 
--- Toute la table des hauts faits obtenus. À lire seulement, jamais modifier.
+-- Ne pas modifier la table renvoyée.
 function Database:GetAllCompletions()
 	return data.completed
 end
 
--- Enregistre un haut fait obtenu. Ne fait rien s'il l'est déjà.
+-- Sans effet si le haut fait est déjà enregistré.
 function Database:SetCompleted(achievementID, character, retroactive)
 	if data.completed[achievementID] then
 		return
 	end
-	-- Numéro d'ordre croissant : départage les hauts faits obtenus dans la
-	-- même seconde (time() n'a qu'une seconde de précision), par exemple
-	-- pendant la détection rétroactive.
+	-- time() est à la seconde près : order départage les hauts faits
+	-- obtenus dans la même seconde, par exemple lors d'un scan rétroactif.
 	data.completionCounter = (data.completionCounter or 0) + 1
 	data.completed[achievementID] = {
 		date = time(),
@@ -131,14 +134,13 @@ function Database:SetCompleted(achievementID, character, retroactive)
 	}
 end
 
--- Meilleure progression enregistrée pour un critère (0 si aucune).
+-- 0 si aucune progression enregistrée.
 function Database:GetProgress(achievementID, criteriaIndex)
 	local entry = data.progress[achievementID]
 	return entry and entry[criteriaIndex] or 0
 end
 
--- Enregistre une progression si elle dépasse la meilleure connue.
--- Renvoie la meilleure valeur après mise à jour.
+-- Garde la meilleure valeur vue et la renvoie.
 function Database:UpdateProgress(achievementID, criteriaIndex, quantity)
 	local entry = data.progress[achievementID]
 	if not entry then
@@ -151,14 +153,12 @@ function Database:UpdateProgress(achievementID, criteriaIndex, quantity)
 	return entry[criteriaIndex] or 0
 end
 
--- Efface hauts faits obtenus et progression (pour tester la détection
--- rétroactive). Les réglages (debug, minimap) sont conservés.
+-- Efface hauts faits et progression ; les réglages sont conservés.
 function Database:ResetAchievements()
 	data.completed = {}
 	data.progress = {}
 end
 
--- Nombre de hauts faits obtenus enregistrés.
 function Database:CountCompleted()
 	local count = 0
 	for _ in pairs(data.completed) do

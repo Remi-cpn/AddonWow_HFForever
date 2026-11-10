@@ -11,12 +11,10 @@ local _, ns = ...
 local L = ns.L
 local Log = ns.Log
 
--- Chaque sous-commande est une fonction rangée dans cette table, comme un
--- tableau de pointeurs de fonctions en C.
+-- [nom de la sous-commande] = function(argument)
 local handlers = {}
 
--- Lignes d'aide des commandes de développement (remplies plus bas, dans un
--- bloc @debug@ : la liste reste vide dans la version publiée).
+-- Rempli dans le bloc debug : reste vide dans la version publiée.
 local devHelp = {}
 
 handlers.aide = function()
@@ -98,7 +96,7 @@ handlers.toast = function(argument)
 end
 
 -- Efface les hauts faits obtenus puis relance une détection rétroactive.
--- Demande une confirmation explicite, car c'est irréversible.
+-- Irréversible : demande « confirmer » en argument.
 handlers.reset = function(argument)
 	if argument ~= "confirmer" then
 		Log.Info(L.RESET_CONFIRM_NEEDED)
@@ -184,8 +182,7 @@ local function OnSlashCommand(msg)
 	end
 end
 
--- WoW impose ces globales pour déclarer une commande slash.
--- Le nom HFFOREVER est propre à l'addon, il ne remplace rien de Blizzard.
+-- Globales imposées par WoW pour une commande slash.
 SLASH_HFFOREVER1 = "/hff"
 SLASH_HFFOREVER2 = "/hfforever"
 SlashCmdList.HFFOREVER = OnSlashCommand
