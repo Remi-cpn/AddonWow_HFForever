@@ -1,4 +1,11 @@
 -- Commandes slash : /hff et /hfforever.
+--
+-- Commandes publiques : aide, minimap, son, scan, etat, et /hff seul.
+-- Commandes de développement : debug, test, toast, reset. Elles sont dans le
+-- bloc « debug » plus bas (balises de début et de fin du packager) : le
+-- packager CurseForge / Wago le transforme en commentaire dans la version
+-- publiée, elles n'y existent donc pas. En local (copie du dépôt), les
+-- balises ne sont que des commentaires et tout fonctionne.
 local _, ns = ...
 
 local L = ns.L
@@ -8,18 +15,24 @@ local Log = ns.Log
 -- tableau de pointeurs de fonctions en C.
 local handlers = {}
 
+-- Lignes d'aide des commandes de développement (remplies plus bas, dans un
+-- bloc @debug@ : la liste reste vide dans la version publiée).
+local devHelp = {}
+
 handlers.aide = function()
 	Log.Info(L.CMD_HELP_HEADER)
 	Log.Info(L.CMD_HELP_OPEN)
-	Log.Info(L.CMD_HELP_DEBUG)
 	Log.Info(L.CMD_HELP_MINIMAP)
-	Log.Info(L.CMD_HELP_STATUS)
-	Log.Info(L.CMD_HELP_TEST)
-	Log.Info(L.CMD_HELP_TOAST)
 	Log.Info(L.CMD_HELP_SOUND)
 	Log.Info(L.CMD_HELP_SCAN)
-	Log.Info(L.CMD_HELP_RESET)
+	Log.Info(L.CMD_HELP_STATUS)
 	Log.Info(L.CMD_HELP_HELP)
+	if #devHelp > 0 then
+		Log.Info(L.CMD_HELP_DEV_HEADER)
+		for _, line in ipairs(devHelp) do
+			Log.Info(line)
+		end
+	end
 end
 
 -- Active ou coupe le son des toasts.
@@ -28,6 +41,42 @@ handlers.son = function()
 	ns.Database:SetToastSoundEnabled(enabled)
 	Log.Info(enabled and L.SOUND_ON or L.SOUND_OFF)
 end
+
+-- Force une évaluation de tous les critères.
+handlers.scan = function()
+	Log.Info(L.SCAN_REQUESTED)
+	ns.Engine:RequestEvaluation("commande /hff scan")
+end
+
+handlers.minimap = function()
+	local shown = ns.MinimapButton:Toggle()
+	Log.Info(shown and L.MINIMAP_SHOWN or L.MINIMAP_HIDDEN)
+end
+
+handlers.etat = function()
+	local db = ns.Database
+	local minimap = db:GetMinimapSettings()
+	Log.Info(L.STATUS_SCHEMA, db:GetSchemaVersion())
+	Log.Info(L.STATUS_DEBUG, db:IsDebug() and L.YES or L.NO)
+	Log.Info(L.STATUS_COMPLETED, db:CountCompleted())
+	-- minimapPos reste nil tant que le bouton n'a jamais été déplacé.
+	Log.Info(L.STATUS_MINIMAP, minimap.hide and L.NO or L.YES, tostring(minimap.minimapPos))
+end
+
+-- Sans argument : ouvrir la fenêtre.
+handlers[""] = function()
+	ns.MainWindow:Toggle()
+end
+
+--@debug@
+-- ===== Commandes de développement (absentes de la version publiée) =====
+
+devHelp = {
+	L.CMD_HELP_DEBUG,
+	L.CMD_HELP_TEST,
+	L.CMD_HELP_TOAST,
+	L.CMD_HELP_RESET,
+}
 
 -- Toasts de test : /hff toast [nombre] ou /hff toast resume
 handlers.toast = function(argument)
@@ -46,12 +95,6 @@ handlers.toast = function(argument)
 			shown = shown + 1
 		end
 	end
-end
-
--- Force une évaluation de tous les critères.
-handlers.scan = function()
-	Log.Info(L.SCAN_REQUESTED)
-	ns.Engine:RequestEvaluation("commande /hff scan")
 end
 
 -- Efface les hauts faits obtenus puis relance une détection rétroactive.
@@ -125,26 +168,7 @@ handlers.debug = function()
 	Log.Info(enabled and L.DEBUG_ON or L.DEBUG_OFF)
 	Log.Debug("Commands: debug =", enabled)
 end
-
-handlers.minimap = function()
-	local shown = ns.MinimapButton:Toggle()
-	Log.Info(shown and L.MINIMAP_SHOWN or L.MINIMAP_HIDDEN)
-end
-
-handlers.etat = function()
-	local db = ns.Database
-	local minimap = db:GetMinimapSettings()
-	Log.Info(L.STATUS_SCHEMA, db:GetSchemaVersion())
-	Log.Info(L.STATUS_DEBUG, db:IsDebug() and L.YES or L.NO)
-	Log.Info(L.STATUS_COMPLETED, db:CountCompleted())
-	-- minimapPos reste nil tant que le bouton n'a jamais été déplacé.
-	Log.Info(L.STATUS_MINIMAP, minimap.hide and L.NO or L.YES, tostring(minimap.minimapPos))
-end
-
--- Sans argument : ouvrir la fenêtre.
-handlers[""] = function()
-	ns.MainWindow:Toggle()
-end
+--@end-debug@
 
 local function OnSlashCommand(msg)
 	-- Premier mot en minuscules = la commande, le reste = l'argument.
