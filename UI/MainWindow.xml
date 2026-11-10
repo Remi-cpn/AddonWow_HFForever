@@ -329,6 +329,25 @@
 							<Anchor point="TOPLEFT" x="6" y="-10"/>
 						</Anchors>
 					</Button>
+					<!-- Case « masquer les hauts faits obtenus », à gauche de la
+					     recherche, visible seulement avec la liste des hauts faits.
+					     Habillage de Blizzard (UICheckButtonArtTemplate) avec notre
+					     propre texte : UICheckButtonTemplate créerait une globale.
+					     Comportement dans UI/AchievementList.lua. -->
+					<!-- Position réglée en Lua : la case de recherche, à laquelle
+					     elle s'accroche, est créée après elle. -->
+					<CheckButton parentKey="HideCompleted" inherits="UICheckButtonArtTemplate" hidden="true">
+						<Size x="26" y="26"/>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString parentKey="Label" inherits="GameFontNormalSmall" justifyH="RIGHT">
+									<Anchors>
+										<Anchor point="RIGHT" relativePoint="LEFT" x="0" y="1"/>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+					</CheckButton>
 					<!-- Case de recherche et son aperçu (5 résultats et « tous les
 					     résultats »), comportement dans UI/Search.lua. -->
 					<EditBox parentKey="SearchBox" inherits="SearchBoxTemplate" letters="40" autoFocus="false">

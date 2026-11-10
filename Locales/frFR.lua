@@ -56,6 +56,7 @@ L.BACK = "Retour"
 L.ACCOUNT_WIDE = ACCOUNT_WIDE_ACHIEVEMENT or "Haut fait de compte"
 L.ACCOUNT_WIDE_COMPLETED = ACCOUNT_WIDE_ACHIEVEMENT_COMPLETED or "Haut fait de compte obtenu"
 L.EARNED_BY = "Obtenu par %s"
+L.HIDE_COMPLETED = "Masquer les obtenus"
 L.META_COMPLETED_DATE = ACHIEVEMENT_META_COMPLETED_DATE or "Obtenu le %s"
 -- Panneau Résumé (UI/Summary.lua), mêmes textes que Blizzard quand ils existent.
 L.SUMMARY_LATEST = LATEST_UNLOCKED_ACHIEVEMENTS or "Derniers hauts faits obtenus"

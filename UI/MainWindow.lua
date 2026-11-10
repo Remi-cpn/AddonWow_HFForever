@@ -121,7 +121,7 @@ function MainWindow:Init()
 	frame.HeaderDetails.Back:SetText(L.BACK)
 	frame.HeaderDetails.Back:Disable()
 
-	ns.AchievementList:Init(frame.Achievements)
+	ns.AchievementList:Init(frame.Achievements, frame.HeaderDetails.HideCompleted, frame.HeaderDetails.SearchBox)
 	ns.Summary:Init(frame.Summary)
 	ns.CategoryList:Init(frame.Categories, OnCategoryChanged)
 

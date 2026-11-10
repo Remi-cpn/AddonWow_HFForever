@@ -61,6 +61,8 @@ local selectionBehavior = nil -- sélection « intrusive » de Blizzard (une lig
 local objectives = nil        -- cadre des critères, posé dans la ligne dépliée
 local fontHeight = nil        -- hauteur d'une ligne de description
 local textCheckWidth = nil    -- largeur du texte "- " devant un critère non rempli
+local hideCompleted = false   -- case « masquer les obtenus » cochée (non sauvegardé, comme le filtre de Blizzard)
+local hideCheckbox = nil      -- HFFAchievementFrame.HeaderDetails.HideCompleted
 -- Textures absentes du client Forever : on se rabat sur l'équivalent présent.
 local hasAccountHeader = true
 local hasNoPointsShield = true
@@ -817,9 +819,32 @@ end
 
 -- [[ Liste ]]
 
--- Appelé une fois par MainWindow:Init.
-function AchievementList:Init(frame)
+-- Case « masquer les obtenus » : visible seulement avec la liste (Blizzard
+-- cache aussi son filtre sur le Résumé), placée à gauche de la recherche.
+local function SetupHideCompletedCheckbox(checkbox, searchBox)
+	hideCheckbox = checkbox
+	checkbox.Label:SetText(L.HIDE_COMPLETED)
+	checkbox:SetPoint("RIGHT", searchBox, "LEFT", -8, 0)
+	checkbox:SetScript("OnClick", function(self)
+		hideCompleted = self:GetChecked()
+		PlaySound(hideCompleted and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF)
+		if AchievementList.categoryID then
+			AchievementList:ShowCategory(AchievementList.categoryID)
+		end
+	end)
+	listFrame:HookScript("OnShow", function()
+		checkbox:Show()
+	end)
+	listFrame:HookScript("OnHide", function()
+		checkbox:Hide()
+	end)
+end
+
+-- Appelé une fois par MainWindow:Init. checkbox et searchBox : la case
+-- « masquer les obtenus » et la case de recherche du bandeau.
+function AchievementList:Init(frame, checkbox, searchBox)
 	listFrame = frame
+	SetupHideCompletedCheckbox(checkbox, searchBox)
 	listFrame.PlaceholderHiddenDescription:SetWidth(MAX_CONTENT_WIDTH)
 	objectives = CreateObjectivesFrame(listFrame)
 
@@ -865,11 +890,14 @@ function AchievementList:Init(frame)
 end
 
 -- Affiche les hauts faits d'une catégorie (AchievementFrameAchievements_UpdateDataProvider).
+-- Case « masquer les obtenus » cochée : comme le filtre « non accomplis » de
+-- Blizzard, on saute les premiers (les obtenus sont en tête de la catégorie).
 function AchievementList:ShowCategory(categoryID)
 	self.categoryID = categoryID
 	local dataProvider = CreateDataProvider()
-	local numAchievements = API.GetCategoryNumAchievements(categoryID)
-	for index = 1, numAchievements do
+	local numAchievements, numCompleted = API.GetCategoryNumAchievements(categoryID)
+	local first = hideCompleted and numCompleted + 1 or 1
+	for index = first, numAchievements do
 		local id = API.GetAchievementInfo(categoryID, index)
 		dataProvider:Insert({ category = categoryID, index = index, id = id })
 	end
@@ -883,9 +911,20 @@ function AchievementList:SelectAchievement(achievementID)
 	if not dataProvider then
 		return
 	end
-	local elementData = dataProvider:FindElementDataByPredicate(function(data)
-		return data.id == achievementID
-	end)
+	local function Find()
+		return listFrame.ScrollBox:GetDataProvider():FindElementDataByPredicate(function(data)
+			return data.id == achievementID
+		end)
+	end
+	local elementData = Find()
+	-- Haut fait obtenu mais masqué par la case : on la décoche pour le
+	-- montrer (comme forceSelect dans AchievementFrame_SelectAchievement).
+	if not elementData and hideCompleted and self.categoryID then
+		hideCompleted = false
+		hideCheckbox:SetChecked(false)
+		self:ShowCategory(self.categoryID)
+		elementData = Find()
+	end
 	if elementData then
 		selectionBehavior:SelectElementData(elementData)
 		-- Le dépliage change la hauteur : mise à jour avant de centrer.
