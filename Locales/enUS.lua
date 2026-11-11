@@ -167,8 +167,8 @@ L.DATA_ERR_EXPLORE_TOTAL = "no exploration total for map %s (art %s), see Data/E
 -- Catégories et hauts faits, rangés par id (Data/Categories.lua et
 -- Data/Achievements.lua). Zones et boss : noms officiels du build Forever
 -- (wago.tools, tables UiMap et Achievement en enUS). Noms de hauts faits :
--- le nom officiel WotLK quand le même haut fait existe (docs/WotlkAchievements.md),
--- sinon un nom dans le même style.
+-- les noms officiels de Blizzard quand ils existent, sinon un nom dans le
+-- même style.
 -------------------------------------------------------------------------------
 
 -- [id de catégorie] = nom
@@ -251,12 +251,10 @@ L.ACHIEVEMENT_NAMES = {
 	[53] = "Explore Mount Hyjal",
 	[54] = "Explore Shen'dralas",
 	[55] = "Explore Kalimdor",
-	-- Exploration (57 n'est pas « World Explorer » de WotLK : sans Outreterre
-	-- ni Norfendre)
+	-- Exploration
 	[56] = "Explore Zephras Isle",
 	[57] = "Explorer",
-	-- Métiers. En WotLK, « Master » = 375 et « Grand Master » = 450 : 300 se
-	-- dit « Artisan ».
+	-- Métiers (300 = « Artisan »)
 	[58] = "Professional Journeyman",
 	[59] = "Professional Expert",
 	[60] = "Professional Artisan",
@@ -372,7 +370,7 @@ L.ACHIEVEMENT_NAMES = {
 	[162] = "40 Exalted Reputations",
 	[163] = "Ambassador of the Alliance",
 	[164] = "Ambassador of the Horde",
-	-- Capitales (pas dans WotLK) : nom de la faction, comme « The Argent Dawn »
+	-- Capitales : nom de la faction, comme « The Argent Dawn »
 	[165] = "Stormwind",
 	[166] = "Ironforge",
 	[167] = "Gnomeregan Exiles",
@@ -385,7 +383,7 @@ L.ACHIEVEMENT_NAMES = {
 	[173] = "Onyxia's Lair",
 	[174] = "Hyjal Summit",
 	[175] = "Barrow Deeps",
-	-- Donjons de Forever (pas dans WotLK)
+	-- Donjons de Forever
 	[176] = "Guardians of the Terrace",
 	[177] = "The Ignored",
 }
@@ -568,7 +566,7 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[160] = "Raise 30 reputations to Exalted.",
 	[161] = "Raise 35 reputations to Exalted.",
 	[162] = "Raise 40 reputations to Exalted.",
-	-- Adapté : 4 races par camp sur Forever (5 dans WotLK)
+	-- 4 races par camp sur Forever
 	[163] = "Earn Exalted reputation with all four Alliance races.",
 	[164] = "Earn Exalted reputation with all four Horde races.",
 	[165] = "Earn Exalted status with Stormwind.",

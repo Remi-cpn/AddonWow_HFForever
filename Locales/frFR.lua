@@ -244,12 +244,10 @@ Override(L.ACHIEVEMENT_NAMES, {
 	[53] = "Exploration du mont Hyjal",
 	[54] = "Exploration de Shen'dralas",
 	[55] = "Exploration de Kalimdor",
-	-- Exploration (57 n'est pas « Grand explorateur » de WotLK : sans Outreterre
-	-- ni Norfendre)
+	-- Exploration
 	[56] = "Exploration de l'île de Zéphras",
 	[57] = "Explorateur",
-	-- Métiers. En WotLK, « Maître » = 375 et « Grand maître » = 450 : 300 se
-	-- dit « Artisan ».
+	-- Métiers (300 = « Artisan »)
 	[58] = "Compagnon de métier",
 	[59] = "Expert de métier",
 	[60] = "Artisan de métier",
@@ -365,7 +363,7 @@ Override(L.ACHIEVEMENT_NAMES, {
 	[162] = "40 réputations exaltées",
 	[163] = "Ambassadeur de l'Alliance",
 	[164] = "Ambassadeur de la Horde",
-	-- Capitales (pas dans WotLK) : nom de la faction, comme « L'Aube d'argent »
+	-- Capitales : nom de la faction, comme « L'Aube d'argent »
 	[165] = "Stormwind",
 	[166] = "Forgefer",
 	[167] = "Exilés de Gnomeregan",
@@ -378,7 +376,7 @@ Override(L.ACHIEVEMENT_NAMES, {
 	[173] = "Repaire d'Onyxia",
 	[174] = "Sommet d'Hyjal",
 	[175] = "Profondeurs des Saisons",
-	-- Donjons de Forever (pas dans WotLK)
+	-- Donjons de Forever
 	[176] = "Les gardiens de la terrasse",
 	[177] = "L'ignoré",
 })
@@ -560,7 +558,7 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[160] = "Monter 30 réputations jusqu'à Exalté.",
 	[161] = "Être exalté auprès de 35 factions.",
 	[162] = "Être exalté auprès de 40 factions.",
-	-- Adapté : 4 races par camp sur Forever (5 dans WotLK)
+	-- 4 races par camp sur Forever
 	[163] = "Être exalté auprès des 4 races de sa faction.",
 	[164] = "Être exalté auprès des 4 races de sa faction.",
 	[165] = "Être exalté auprès de Stormwind.",

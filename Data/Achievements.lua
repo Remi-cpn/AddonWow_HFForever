@@ -68,7 +68,7 @@ ns.Data.achievements = {
 	},
 
 	---------------------------------------------------------------------------
-	-- Général : banque, argent, montures (hauts faits WotLK de même nom)
+	-- Général : banque, argent, montures
 	---------------------------------------------------------------------------
 	{
 		-- Statistique 928 « Emplacements en banque supplémentaires achetés »
@@ -132,7 +132,7 @@ ns.Data.achievements = {
 		previous = 105,
 	},
 	{
-		-- WotLK en a deux (2536 Alliance, 2537 Horde) : un seul ici.
+		-- Commun aux deux camps.
 		id = 107, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "Ability_Hunter_Pet_DragonHawk",
 		criteria = { { type = "statistic", id = 339, value = 100 } },
@@ -436,7 +436,7 @@ ns.Data.achievements = {
 	},
 
 	---------------------------------------------------------------------------
-	-- Exploration : méta global (comme « Explorateur » de WotLK, 50 points).
+	-- Exploration : méta global (50 points).
 	-- Sans l'île de Zéphras (personnages Skyborne uniquement) : obtenable par tous.
 	---------------------------------------------------------------------------
 	{
@@ -700,7 +700,7 @@ ns.Data.achievements = {
 		icon = ICONS .. "Trade_Tailoring",
 		criteria = { { type = "profession", skillLine = 197, value = 300 } },
 	},
-	-- Métiers secondaires : séries 150, 225, 300 comme dans WotLK
+	-- Métiers secondaires : séries 150, 225, 300
 	{
 		id = 135, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "INV_Misc_Food_15",
@@ -850,7 +850,7 @@ ns.Data.achievements = {
 		criteria = { { type = "statistic", id = 377, value = 40 } },
 		previous = 161,
 	},
-	-- Capitales de l'Alliance (pas dans WotLK : étapes de l'Ambassadeur)
+	-- Capitales de l'Alliance : étapes de l'Ambassadeur
 	{
 		id = 165, category = CAT.REPUTATION, points = 10, faction = "Alliance",
 		icon = ICONS .. "Spell_Arcane_TeleportStormWind",
@@ -872,8 +872,7 @@ ns.Data.achievements = {
 		criteria = { { type = "reputation", factionID = 69 } }, -- Darnassus
 	},
 	{
-		-- Ambassadeur de l'Alliance : WotLK demande 5 races, Forever n'en a
-		-- que 4 (pas d'Exodar).
+		-- Ambassadeur de l'Alliance : les 4 races de l'Alliance sur Forever.
 		id = 163, category = CAT.REPUTATION, points = 10, faction = "Alliance",
 		icon = ICONS .. "Achievement_PVP_A_16",
 		criteria = {
@@ -881,7 +880,7 @@ ns.Data.achievements = {
 			{ type = "achievement", id = 167 }, { type = "achievement", id = 168 },
 		},
 	},
-	-- Capitales de la Horde (pas dans WotLK : étapes de l'Ambassadeur)
+	-- Capitales de la Horde : étapes de l'Ambassadeur
 	{
 		id = 169, category = CAT.REPUTATION, points = 10, faction = "Horde",
 		icon = ICONS .. "Spell_Arcane_TeleportOrgrimmar",
