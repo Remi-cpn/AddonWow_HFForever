@@ -1,7 +1,7 @@
 ## Interface: 16001
 ## Title: HF Forever
-## Notes: Account-wide achievements in the spirit of WotLK, adapted to WoW: Forever.
-## Notes-frFR: Hauts faits à l'échelle du compte, dans l'esprit de WotLK, adaptés à WoW: Forever.
+## Notes: Account-wide achievements for WoW: Forever.
+## Notes-frFR: Hauts faits à l'échelle du compte pour WoW: Forever.
 ## Author: Pahouf
 # Remplacé par le nom du tag (v1.0.0...) dans le zip publié par le packager.
 ## Version: @project-version@
