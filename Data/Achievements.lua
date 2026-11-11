@@ -3,7 +3,7 @@
 -- La liste validée est décrite dans docs/ProposedAchievements.md.
 --
 --   id          : numéro unique et DÉFINITIF, la sauvegarde s'en sert. Un
---                 nouveau haut fait prend le numéro libre suivant (173), quel
+--                 nouveau haut fait prend le numéro libre suivant (178), quel
 --                 que soit l'endroit où il est rangé. Ne jamais changer ni
 --                 réutiliser un numéro.
 --   category    : une constante CAT de Data/Categories.lua
@@ -1069,5 +1069,40 @@ ns.Data.achievements = {
 		id = 96, category = CAT.DUNGEONS_FOREVER, points = 10,
 		icon = ICONS .. "INV_Misc_Gem_Variety_02",
 		criteria = { { type = "statistic", id = 63574, value = 1 } }, -- Terrasse du Façonneur
+	},
+	{
+		-- Les trois gardiens de la terrasse du Façonneur
+		id = 176, category = CAT.DUNGEONS_FOREVER, points = 10,
+		icon = ICONS .. "Spell_Nature_Lightning",
+		criteria = {
+			{ type = "statistic", id = 63590, value = 1 }, -- Braise
+			{ type = "statistic", id = 63592, value = 1 }, -- Fulguro
+			{ type = "statistic", id = 63593, value = 1 }, -- Serre-neigeuse
+		},
+	},
+	{
+		-- Boss facultatif de la cité de Dalaran
+		id = 177, category = CAT.DUNGEONS_FOREVER, points = 10,
+		icon = ICONS .. "Spell_Arcane_Blink",
+		criteria = { { type = "statistic", id = 63589, value = 1 } }, -- Lyn l'Ignoré
+	},
+
+	---------------------------------------------------------------------------
+	-- Raids : statistique « Morts de <boss> » >= 1
+	---------------------------------------------------------------------------
+	{
+		id = 173, category = CAT.RAIDS, points = 10,
+		icon = ICONS .. "INV_Misc_Head_Dragon_Black",
+		criteria = { { type = "statistic", id = 1098, value = 1 } }, -- Repaire d'Onyxia
+	},
+	{
+		id = 174, category = CAT.RAIDS, points = 10,
+		icon = ICONS .. "Spell_Nature_Regeneration",
+		criteria = { { type = "statistic", id = 63580, value = 1 } }, -- Sommet d'Hyjal
+	},
+	{
+		id = 175, category = CAT.RAIDS, points = 10,
+		icon = ICONS .. "Spell_Shadow_Twilight",
+		criteria = { { type = "statistic", id = 63581, value = 1 } }, -- Profondeurs des Saisons
 	},
 }

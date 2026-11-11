@@ -180,6 +180,7 @@ Override(L.CATEGORY_NAMES, {
 	[5] = "Donjons",
 	[51] = "Classiques",
 	[52] = "Forever",
+	[53] = "Raids",
 })
 
 Override(L.ACHIEVEMENT_NAMES, {
@@ -373,6 +374,13 @@ Override(L.ACHIEVEMENT_NAMES, {
 	[170] = "Thunder Bluff",
 	[171] = "Fossoyeuse",
 	[172] = "Trolls Darkspear",
+	-- Raids
+	[173] = "Repaire d'Onyxia",
+	[174] = "Sommet d'Hyjal",
+	[175] = "Profondeurs des Saisons",
+	-- Donjons de Forever (pas dans WotLK)
+	[176] = "Les gardiens de la terrasse",
+	[177] = "L'ignoré",
 })
 
 Override(L.ACHIEVEMENT_DESCRIPTIONS, {
@@ -563,6 +571,11 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[170] = "Être exalté auprès de Thunder Bluff.",
 	[171] = "Être exalté auprès de Fossoyeuse.",
 	[172] = "Être exalté auprès des Trolls Darkspear.",
+	[173] = "Vaincre Onyxia dans le repaire d'Onyxia.",
+	[174] = "Vaincre le roi sauvage au sommet d'Hyjal.",
+	[175] = "Vaincre Sonya Sanctombre dans les profondeurs des Saisons.",
+	[176] = "Vaincre Braise, Fulguro et Serre-neigeuse sur la terrasse du Façonneur.",
+	[177] = "Vaincre Lyn l'Ignoré dans la cité de Dalaran.",
 })
 
 Override(L.CRITERIA_TEXTS, {
@@ -593,4 +606,9 @@ Override(L.CRITERIA_TEXTS, {
 	[95] = { "Rugiflamme" },
 	[96] = { "Nanaya" },
 	[154] = { "Une réputation exaltée" },
+	[173] = { "Onyxia" },
+	[174] = { "Roi sauvage" },
+	[175] = { "Sonya Sanctombre" },
+	[176] = { "Braise", "Fulguro", "Serre-neigeuse" },
+	[177] = { "Lyn l'Ignoré" },
 })

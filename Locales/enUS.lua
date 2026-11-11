@@ -187,6 +187,7 @@ L.CATEGORY_NAMES = {
 	[5] = "Dungeons",
 	[51] = "Classic",
 	[52] = "Forever",
+	[53] = "Raids",
 }
 
 -- [id de haut fait] = nom
@@ -380,6 +381,13 @@ L.ACHIEVEMENT_NAMES = {
 	[170] = "Thunder Bluff",
 	[171] = "Undercity",
 	[172] = "Darkspear Trolls",
+	-- Raids
+	[173] = "Onyxia's Lair",
+	[174] = "Hyjal Summit",
+	[175] = "Barrow Deeps",
+	-- Donjons de Forever (pas dans WotLK)
+	[176] = "Guardians of the Terrace",
+	[177] = "The Ignored",
 }
 
 -- [id de haut fait] = description
@@ -571,6 +579,11 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[170] = "Earn Exalted status with Thunder Bluff.",
 	[171] = "Earn Exalted status with Undercity.",
 	[172] = "Earn Exalted status with the Darkspear Trolls.",
+	[173] = "Defeat Onyxia in Onyxia's Lair.",
+	[174] = "Defeat the Wild King in Hyjal Summit.",
+	[175] = "Defeat Sonya Darkhallow in the Barrow Deeps.",
+	[176] = "Defeat Cinder, Bolt and Snowtalon on the Shaper's Terrace.",
+	[177] = "Defeat Lyn the Ignored in the City of Dalaran.",
 }
 
 -- [id de haut fait] = texte de récompense, purement décoratif (titre, objet...).
@@ -611,4 +624,9 @@ L.CRITERIA_TEXTS = {
 	[96] = { "Nanaya" },
 	-- Sans barre (seuil 1) : le nom de la statistique 377 serait affiché
 	[154] = { "One Exalted reputation" },
+	[173] = { "Onyxia" },
+	[174] = { "The Wild King" },
+	[175] = { "Sonya Darkhallow" },
+	[176] = { "Cinder", "Bolt", "Snowtalon" },
+	[177] = { "Lyn the Ignored" },
 }

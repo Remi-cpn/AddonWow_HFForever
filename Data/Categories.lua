@@ -22,6 +22,7 @@ local CAT = {
 	DUNGEONS = 5,
 	DUNGEONS_CLASSIC = 51,
 	DUNGEONS_FOREVER = 52,
+	RAIDS = 53,
 }
 ns.Data.CAT = CAT
 
@@ -40,4 +41,5 @@ ns.Data.categories = {
 	{ id = CAT.DUNGEONS },
 	{ id = CAT.DUNGEONS_CLASSIC, parent = CAT.DUNGEONS },
 	{ id = CAT.DUNGEONS_FOREVER, parent = CAT.DUNGEONS },
+	{ id = CAT.RAIDS, parent = CAT.DUNGEONS },
 }
