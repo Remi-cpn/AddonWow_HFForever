@@ -69,6 +69,10 @@ local function ValidateCriterion(achievementID, index, criterion)
 			return false
 		end
 	end
+	if criterion.combine ~= nil and criterion.combine ~= "max" and criterion.combine ~= "sum" then
+		ReportError(L.DATA_ERR_CRITERIA_COMBINE, achievementID, index, tostring(criterion.combine))
+		return false
+	end
 	if criteriaType.validate then
 		local message = criteriaType.validate(criterion)
 		if message then
@@ -171,25 +175,26 @@ local function BuildAchievements()
 	end
 end
 
--- Data/ est en français. Sur un autre client, Locales/Achievements_enUS.lua
--- fournit ns.Data.translation : appliqué avant les contrôles, le reste de
--- l'addon ne voit que les textes traduits. Un texte absent reste en français.
-local function ApplyTranslation()
-	local translation = ns.Data.translation
-	if not translation then
-		return
-	end
+-- Data/ ne contient aucun texte : noms, descriptions et textes de critères
+-- viennent des dictionnaires de Locales/, rangés par id. Copiés dans les
+-- données avant les contrôles : un texte manquant y est signalé, et le reste
+-- de l'addon lit simplement achievement.name.
+local function ApplyTexts()
 	for _, category in ipairs(ns.Data.categories or {}) do
-		category.name = translation.categories[category.id] or category.name
+		category.name = L.CATEGORY_NAMES[category.id]
 	end
 	for _, achievement in ipairs(ns.Data.achievements or {}) do
-		local text = translation.achievements[achievement.id]
-		if text then
-			achievement.name = text.name or achievement.name
-			achievement.description = text.description or achievement.description
-			local criterion = type(achievement.criteria) == "table" and achievement.criteria[1]
-			if text.criteriaText and type(criterion) == "table" then
-				criterion.text = text.criteriaText
+		local id = achievement.id
+		achievement.name = L.ACHIEVEMENT_NAMES[id]
+		achievement.description = L.ACHIEVEMENT_DESCRIPTIONS[id]
+		achievement.reward = L.ACHIEVEMENT_REWARDS[id]
+		local texts = L.CRITERIA_TEXTS[id]
+		if texts and type(achievement.criteria) == "table" then
+			for index, text in pairs(texts) do
+				local criterion = achievement.criteria[index]
+				if type(criterion) == "table" then
+					criterion.text = text
+				end
 			end
 		end
 	end
@@ -197,7 +202,7 @@ end
 
 -- Appelé une fois à ADDON_LOADED, après Database:Init.
 function Registry:Build()
-	ApplyTranslation()
+	ApplyTexts()
 	BuildCategories()
 	BuildAchievements()
 	Log.Debug("Registry:", #categoryOrder, "catégories,", achievementCount,

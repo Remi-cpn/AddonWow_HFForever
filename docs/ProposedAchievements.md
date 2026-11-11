@@ -8,7 +8,7 @@ Légende de faisabilité :
 - 🔴 impossible à détecter (raison donnée)
 
 Règles communes :
-- HF communs Horde / Alliance, à l'échelle du compte : obtenu dès qu'**un** personnage remplit les conditions. Les progressions ne s'additionnent pas entre personnages (le meilleur personnage compte).
+- HF communs Horde / Alliance, à l'échelle du compte : obtenu dès qu'**un** personnage remplit les conditions. Par défaut le meilleur personnage compte (`max`) ; les compteurs marqués `sum` additionnent les personnages (depuis l'étape 9a, 2026-11-11).
 - Rétroactif : au chargement, l'addon lit l'état du personnage connecté. Un autre personnage déjà avancé débloque ses HF à sa prochaine connexion.
 - Points : barème WotLK (10 standard, 25 pour les gros HF).
 - Les icônes manquantes sur Forever seront signalées au chargement (vérification de l'étape 3) et remplacées.
@@ -159,6 +159,276 @@ Excavation Site: Wetlands, The Drowned City, Krol'dok Stronghold, Blackmaw Hold 
 ### Raids : hors v1
 
 Les statistiques contiennent aussi Onyxia (1098), le roi sauvage (Sommet d'Hyjal, 63580) et Sonya Sanctombre (Profondeurs des Saisons, 63581). Ils serviront pour une catégorie Raids plus tard.
+
+---
+
+# Étape 9b : ajouts proposés à partir des statistiques (2026-11-11)
+
+Statut : **proposition à valider**. Source : [WagoStatistics.md](WagoStatistics.md). Barre, change les paliers, les noms ou les points, je reporterai.
+
+- Colonne « Comb. » : `sum` additionne les personnages, `max` garde le meilleur.
+- Descriptions des `sum` : je propose d'ajouter « (tous personnages confondus) » à l'affichage, à valider.
+- Icônes : choisies à l'écriture du code parmi celles qui existent sur Forever, vérifiées au chargement comme aujourd'hui.
+- 🟡 = à vérifier en jeu avant de coder (commandes en bas de section).
+
+Nouvelles catégories et plages d'id :
+
+| Catégorie | id | Plage d'id |
+| --- | --- | --- |
+| Général > Richesse | 11 | 1100 |
+| Général > Collections | 12 | 1200 |
+| Général > Voyages | 13 | 1300 |
+| Général > Vie quotidienne | 14 | 1400 |
+| Général > Social | 15 | 1500 |
+| JcJ | 6 | 6000 |
+| JcJ > Champs de bataille | 61 | 6100 |
+| Combat > Victimes | 71 | 7000 |
+| Combat > Morts | 72 | 7100 |
+| Réputation | 8 | 8000 |
+| Donjons > Raids | 53 | 5200 |
+
+Les niveaux (1001 à 1006) restent à la racine de Général.
+
+## 9b.1 Quêtes (4 HF) 🟢
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 2006 | Infatigable | Terminer 2 500 quêtes. | 98 | `sum` | 25 |
+| 2007 | Mémoire d'Azeroth | Terminer 5 000 quêtes. | 98 | `sum` | 25 |
+| 2011 | Pas pour moi | Abandonner 10 quêtes. | 94 | `sum` | 10 |
+| 2012 | Indécis | Abandonner 100 quêtes. | 94 | `sum` | 10 |
+
+## 9b.2 Général > Richesse (11 HF) 🟡 format de l'or
+
+Les statistiques d'or ne sont pas un simple nombre (voir le test en bas). Nouveau type de critère `money` avec une valeur en pièces d'or. Les autres (329, 330, 1149) sont des compteurs normaux 🟢.
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 1101 | Bourse garnie | Obtenir 100 pièces d'or au total. | 328 | `sum` | 10 |
+| 1102 | Coffres pleins | Obtenir 1 000 pièces d'or au total. | 328 | `sum` | 10 |
+| 1103 | Magnat | Obtenir 10 000 pièces d'or au total. | 328 | `sum` | 25 |
+| 1111 | Fouille-poches | Ramasser 100 pièces d'or sur des monstres. | 333 | `sum` | 10 |
+| 1112 | Détrousseur | Ramasser 1 000 pièces d'or sur des monstres. | 333 | `sum` | 10 |
+| 1121 | Marchand | Mettre 10 objets en vente à l'hôtel des ventes. | 329 | `sum` | 10 |
+| 1122 | Commissaire-priseur | Mettre 100 objets en vente à l'hôtel des ventes. | 329 | `sum` | 10 |
+| 1123 | Acheteur compulsif | Acheter 100 objets à l'hôtel des ventes. | 330 | `sum` | 10 |
+| 1131 | Changement de cap | Réinitialiser ses talents. | 1149 | `sum` | 10 |
+| 1141 | Petit pécule | Posséder 100 pièces d'or en même temps. | 334 | `max` | 10 |
+| 1142 | Fortune | Posséder 1 000 pièces d'or en même temps. | 334 | `max` | 25 |
+
+## 9b.3 Général > Collections (8 HF) 🟡
+
+À vérifier : que 339 / 338 comptent bien les montures et mascottes de Forever.
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 1201 | En selle | Obtenir une monture. | 339 | `max` | 10 |
+| 1202 | Écurie | Obtenir 10 montures. | 339 | `max` | 10 |
+| 1203 | Grande écurie | Obtenir 25 montures. | 339 | `max` | 25 |
+| 1211 | Un ami fidèle | Obtenir une mascotte. | 338 | `max` | 10 |
+| 1212 | Ménagerie | Obtenir 10 mascottes. | 338 | `max` | 10 |
+| 1213 | Zoo ambulant | Obtenir 25 mascottes. | 338 | `max` | 25 |
+| 1221 | Violet ! | Obtenir 10 objets épiques. | 342 | `sum` | 10 |
+| 1222 | Légende vivante | Obtenir un objet légendaire. | 336 | `sum` | 25 |
+
+## 9b.4 Général > Voyages (8 HF) 🟢
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 1301 | Passager | Emprunter 10 trajets aériens. | 349 | `sum` | 10 |
+| 1302 | Habitué des airs | Emprunter 100 trajets aériens. | 349 | `sum` | 10 |
+| 1303 | Grand voyageur | Emprunter 500 trajets aériens. | 349 | `sum` | 25 |
+| 1311 | Retour au bercail | Utiliser 10 fois la pierre de foyer. | 353 | `sum` | 10 |
+| 1312 | Casanier | Utiliser 100 fois la pierre de foyer. | 353 | `sum` | 10 |
+| 1313 | Il n'y a rien de tel que son foyer | Utiliser 500 fois la pierre de foyer. | 353 | `sum` | 10 |
+| 1321 | Raccourci | Emprunter 10 portails de mage. | 350 | `sum` | 10 |
+| 1331 | On m'appelle | Accepter 10 invocations. | 2277 | `sum` | 10 |
+
+## 9b.5 Général > Vie quotidienne (16 HF) 🟢 (campements 🟡)
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 1401 | Bon appétit | Manger 100 fois. | 347 | `sum` | 10 |
+| 1402 | Gourmand | Manger 1 000 fois. | 347 | `sum` | 10 |
+| 1411 | Désaltéré | Boire 100 fois. | 346 | `sum` | 10 |
+| 1412 | Assoiffé | Boire 1 000 fois. | 346 | `sum` | 10 |
+| 1421 | Une petite gorgée | Boire 10 potions de soins. | 345 | `sum` | 10 |
+| 1422 | Accro aux potions | Boire 100 potions de soins. | 345 | `sum` | 10 |
+| 1423 | Esprit clair | Boire 10 potions de mana. | 922 | `sum` | 10 |
+| 1424 | Puits de mana | Boire 100 potions de mana. | 922 | `sum` | 10 |
+| 1431 | Premiers secours | Utiliser 100 bandages. | 344 | `sum` | 10 |
+| 1432 | Pierre de vie | Utiliser 10 pierres de soins. | 812 | `sum` | 10 |
+| 1433 | Alchimie appliquée | Consommer 50 élixirs. | 923 | `sum` | 10 |
+| 1434 | Préparé pour le raid | Consommer 10 flacons. | 811 | `sum` | 10 |
+| 1441 | Campeur | Établir 10 campements. | 64222 | `sum` | 10 |
+| 1442 | Vie sauvage | Établir 50 campements. | 64222 | `sum` | 10 |
+| 1451 | Besoin ! | Faire 100 jets de besoin sur du butin. | 1044 | `sum` | 10 |
+| 1452 | Cupidité | Faire 100 jets de cupidité sur du butin. | 1043 | `sum` | 10 |
+
+## 9b.6 Général > Social (7 HF) 🟡 emotes avec cible ?
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 1501 | Câlin gratuit | Faire 10 câlins. | 1042 | `sum` | 10 |
+| 1502 | Bon public | Rire 10 fois (/mdr). | 1066 | `sum` | 10 |
+| 1503 | Supporter | Acclamer 10 fois. | 1045 | `sum` | 10 |
+| 1504 | Salut ! | Faire 10 signes de la main. | 1065 | `sum` | 10 |
+| 1505 | Consterné | Utiliser 10 fois /consternant. | 1047 | `sum` | 10 |
+| 1506 | Le plus petit violon du monde | S'apitoyer 10 fois. | 1067 | `sum` | 10 |
+| 1511 | Expressif | Obtenir les 6 HF ci-dessus (méta). | - | - | 10 |
+
+## 9b.7 JcJ (12 HF) 🟢
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 6001 | Une victoire honorable | Obtenir une victoire honorable. | 588 | `sum` | 10 |
+| 6002 | 100 victoires honorables | Obtenir 100 victoires honorables. | 588 | `sum` | 10 |
+| 6003 | 1 000 victoires honorables | Obtenir 1 000 victoires honorables. | 588 | `sum` | 10 |
+| 6004 | 5 000 victoires honorables | Obtenir 5 000 victoires honorables. | 588 | `sum` | 25 |
+| 6005 | 10 000 victoires honorables | Obtenir 10 000 victoires honorables. | 588 | `sum` | 25 |
+| 6011 | En garde | Gagner un duel. | 319 | `sum` | 10 |
+| 6012 | Duelliste | Gagner 10 duels. | 319 | `sum` | 10 |
+| 6013 | Maître duelliste | Gagner 100 duels. | 319 | `sum` | 25 |
+| 6014 | Mauvais perdant | Perdre 10 duels. | 320 | `sum` | 10 |
+| 6021 | Coup de grâce | Porter 100 coups fatals. | 1487 | `sum` | 10 |
+| 6022 | Exécuteur | Porter 1 000 coups fatals. | 1487 | `sum` | 10 |
+| 6023 | Bourreau | Porter 10 000 coups fatals. | 1487 | `sum` | 25 |
+
+## 9b.8 JcJ > Champs de bataille (20 HF) 🟢
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 6101 | Baptême du feu | Participer à un champ de bataille. | 839 | `sum` | 10 |
+| 6102 | Habitué des champs de bataille | Participer à 100 champs de bataille. | 839 | `sum` | 10 |
+| 6103 | Vétéran des champs de bataille | Participer à 500 champs de bataille. | 839 | `sum` | 25 |
+| 6111 | Première victoire | Gagner un champ de bataille. | 840 | `sum` | 10 |
+| 6112 | Cent victoires | Gagner 100 champs de bataille. | 840 | `sum` | 10 |
+| 6121 | Vainqueur de la vallée d'Alterac | Gagner la vallée d'Alterac. | 49 | `sum` | 10 |
+| 6122 | Vainqueur du bassin Arathi | Gagner le bassin Arathi. | 51 | `sum` | 10 |
+| 6123 | Vainqueur du goulet des Chanteguerres | Gagner le goulet des Chanteguerres. | 105 | `sum` | 10 |
+| 6124 | Vainqueur des îles des Sombrelances | Gagner les îles des Sombrelances. | 64176 | `sum` | 10 |
+| 6125 | Maître des champs de bataille | Obtenir les 4 HF ci-dessus (méta). | - | - | 25 |
+| 6131 | Porte-drapeau | Capturer un drapeau dans le goulet des Chanteguerres. | 395 | `sum` | 10 |
+| 6132 | Voleur de drapeaux | Capturer 10 drapeaux dans le goulet des Chanteguerres. | 395 | `sum` | 10 |
+| 6133 | Gardien du drapeau | Ramener 10 drapeaux dans le goulet des Chanteguerres. | 586 | `sum` | 10 |
+| 6134 | Preneur de tours | Capturer 10 tours dans la vallée d'Alterac. | 394 | `sum` | 10 |
+| 6135 | Défenseur des tours | Défendre 10 tours dans la vallée d'Alterac. | 393 | `sum` | 10 |
+| 6136 | Assaut sur Arathi | Attaquer 10 bases dans le bassin Arathi. | 64348 | `sum` | 10 |
+| 6137 | Défense d'Arathi | Défendre 10 bases dans le bassin Arathi. | 64349 | `sum` | 10 |
+| 6138 | Assaut sur les Sombrelances | Attaquer 10 bases sur les îles des Sombrelances. | 64350 | `sum` | 10 |
+| 6139 | Défense des Sombrelances | Défendre 10 bases sur les îles des Sombrelances. | 64351 | `sum` | 10 |
+| 6140 | Drapeaux des Sombrelances | Capturer 10 drapeaux sur les îles des Sombrelances. | 64352 | `sum` | 10 |
+
+## 9b.9 Combat > Victimes (16 HF) 🟢 (records 🟡 paliers)
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 7001 | Chasseur | Tuer 1 000 créatures. | 107 | `sum` | 10 |
+| 7002 | Traqueur | Tuer 10 000 créatures. | 107 | `sum` | 10 |
+| 7003 | Fléau des terres sauvages | Tuer 50 000 créatures. | 107 | `sum` | 25 |
+| 7004 | Exterminateur | Tuer 100 000 créatures. | 107 | `sum` | 25 |
+| 7011 | Pas les lapins ! | Tuer 10 bestioles. | 108 | `sum` | 10 |
+| 7012 | Ennemi des bestioles | Tuer 100 bestioles. | 108 | `sum` | 10 |
+| 7013 | Cauchemar des bestioles | Tuer 1 000 bestioles. | 108 | `sum` | 10 |
+| 7021 | Naturaliste | Tuer tous les types de créatures (nombre à vérifier). | 1337 | `max` | 10 |
+| 7031 | Gros coup | Infliger 1 000 points de dégâts en un coup. | 193 | `max` | 10 |
+| 7032 | Coup dévastateur | Infliger 2 500 points de dégâts en un coup. | 193 | `max` | 10 |
+| 7033 | Grand soin | Rendre 1 000 points de vie en un soin. | 189 | `max` | 10 |
+| 7034 | Soin miraculeux | Rendre 2 500 points de vie en un soin. | 189 | `max` | 10 |
+| 7041 | Destructeur | Infliger 1 million de points de dégâts. | 197 | `sum` | 10 |
+| 7042 | Anéantisseur | Infliger 10 millions de points de dégâts. | 197 | `sum` | 25 |
+| 7043 | Guérisseur | Rendre 1 million de points de vie. | 198 | `sum` | 10 |
+| 7044 | Main de la vie | Rendre 10 millions de points de vie. | 198 | `sum` | 25 |
+
+## 9b.10 Combat > Morts (10 HF) 🟢
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 7101 | Ça arrive | Mourir 10 fois. | 60 | `sum` | 10 |
+| 7102 | Habitué du cimetière | Mourir 100 fois. | 60 | `sum` | 10 |
+| 7103 | Ami des esprits soigneurs | Mourir 500 fois. | 60 | `sum` | 10 |
+| 7111 | Respirer, c'est surfait | Mourir noyé. | 112 | `sum` | 10 |
+| 7112 | Loi de la gravité | Mourir d'une chute. | 114 | `sum` | 10 |
+| 7113 | Ça brûle ! | Mourir dans le feu ou la lave. | 115 | `sum` | 10 |
+| 7114 | Trop loin du rivage | Mourir de fatigue. | 113 | `sum` | 10 |
+| 7115 | Victime de Lardeur | Être tué par Lardeur. | 594 | `sum` | 10 |
+| 7121 | Revenu de loin | Être ressuscité par un prêtre, un druide, un chaman, un paladin et une pierre d'âme (5 critères : 796, 798, 799, 800, 801). | - | `sum` | 10 |
+| 7131 | Mort en donjon | Mourir 50 fois en donjon à 5. | 918 | `sum` | 10 |
+
+## 9b.11 Réputation (6 HF) 🟡 paliers
+
+`max` obligatoire : la même faction sur deux personnages compterait deux fois.
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 8001 | Exalté | Être exalté auprès d'une faction. | 377 | `max` | 10 |
+| 8002 | Bien vu partout | Être exalté auprès de 5 factions. | 377 | `max` | 10 |
+| 8003 | Ambassadeur | Être exalté auprès de 10 factions. | 377 | `max` | 25 |
+| 8011 | Respecté | Être honoré auprès de 10 factions. | 529 | `max` | 10 |
+| 8012 | Révéré | Être révéré auprès de 5 factions. | 378 | `max` | 10 |
+| 8021 | Diplomate | Rencontrer 25 factions. | 931 | `max` | 10 |
+
+## 9b.12 Donjons et raids (12 HF)
+
+### Raids (3) 🟡 boss finaux à confirmer
+
+| id | Nom | Boss (statistique) | Comb. | Pts |
+|---|---|---|---|---|
+| 5201 | Repaire d'Onyxia | Onyxia (1098) | `max` | 10 |
+| 5202 | Sommet d'Hyjal | Le roi sauvage (63580) | `max` | 10 |
+| 5203 | Profondeurs des Saisons | Sonya Sanctombre (63581) | `max` | 10 |
+
+### Forever (2) 🟡
+
+| id | Nom | Description | Stat | Pts |
+|---|---|---|---|---|
+| 5106 | Les gardiens de la terrasse | Vaincre Braise, Fulguro et Serre-neigeuse sur la terrasse du Façonneur. | 63590, 63592, 63593 | 10 |
+| 5107 | L'ignoré | Vaincre Lyn l'Ignoré dans la cité de Dalaran. | 63589 | 10 |
+
+### Entrées (7) 🟢 (raids 🟡 tailles existantes sur Forever)
+
+À la racine de Donjons.
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 5301 | Explorateur de donjons | Entrer 10 fois dans un donjon à 5. | 932 | `sum` | 10 |
+| 5302 | Habitué des donjons | Entrer 50 fois dans un donjon à 5. | 932 | `sum` | 10 |
+| 5303 | Pilier de donjon | Entrer 100 fois dans un donjon à 5. | 932 | `sum` | 10 |
+| 5304 | Vétéran des donjons | Entrer 250 fois dans un donjon à 5. | 932 | `sum` | 25 |
+| 5311 | Premier raid à 10 | Entrer dans un raid à 10. | 933 | `sum` | 10 |
+| 5312 | Premier raid à 20 | Entrer dans un raid à 20. | 934 | `sum` | 10 |
+| 5313 | Premier raid à 40 | Entrer dans un raid à 40. | 64184 | `sum` | 10 |
+
+## 9b.13 Métiers (7 HF) 🟢 (recettes 🟡 nombre total)
+
+| id | Nom | Description | Stat | Comb. | Pts |
+|---|---|---|---|---|---|
+| 4031 | Pêcheur du dimanche | Pêcher 100 poissons. | 1518 | `sum` | 10 |
+| 4032 | Pêcheur aguerri | Pêcher 1 000 poissons. | 1518 | `sum` | 10 |
+| 4033 | Roi de la pêche | Pêcher 5 000 poissons. | 1518 | `sum` | 25 |
+| 4041 | Livre de recettes | Connaître 25 recettes de cuisine. | 1745 | `max` | 10 |
+| 4042 | Cordon-bleu | Connaître 50 recettes de cuisine. | 1745 | `max` | 10 |
+| 4051 | Désenchanteur | Désenchanter 100 objets. | 181 | `sum` | 10 |
+| 4052 | Briseur d'enchantements | Désenchanter 1 000 objets. | 181 | `sum` | 10 |
+
+## 9b : à vérifier en jeu avant de coder
+
+Une seule commande, qui affiche la valeur brute (texte) des statistiques 🟡 sur le personnage connecté :
+
+```
+./run for _,id in ipairs({328,333,334,339,338,64222,1042,193,189,1337,377,931,1745,933,934,64184}) do print(id, select(2,GetAchievementInfo(id)), GetStatistic(id)) end
+```
+
+Ce que je regarde :
+- 328 / 333 / 334 : format de l'or (icônes de pièces ? séparateurs ?) pour le type `money` ;
+- 339 / 338 : nombre de montures et mascottes, à comparer avec ton journal ;
+- 64222 : à quoi correspondent les « campements » de Forever ;
+- 1042 : refais un `/calin` sans cible puis avec une cible, et relance la commande, pour savoir si le compteur bouge dans les deux cas ;
+- 193 / 189 : tes records, pour régler les paliers 7031 à 7034 ;
+- 1337, 377, 931, 1745 : pour régler les paliers ;
+- 933 / 934 / 64184 : quelles tailles de raid existent.
+
+Total 9b : 4 + 11 + 8 + 8 + 16 + 7 + 12 + 20 + 16 + 10 + 6 + 12 + 7 = **137 HF**, soit 233 avec la v1.
 
 ---
 

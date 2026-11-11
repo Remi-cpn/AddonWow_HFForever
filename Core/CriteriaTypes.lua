@@ -40,6 +40,28 @@ local function GetStatisticNumber(statisticID)
 	return tonumber((text:gsub("%D", ""))) or 0
 end
 
+-- Pièces d'or d'une statistique d'argent (333 « or ramassé », 326 « or des
+-- quêtes »). GetStatistic renvoie alors chaque pièce suivie de son icône :
+-- "12|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t 34|T...SilverIcon...|t".
+-- Seul le nombre devant l'icône d'or compte (argent et cuivre ignorés).
+-- Sans aucune icône, le texte est pris comme un nombre de pièces de cuivre.
+-- Format à confirmer en jeu : /dump GetStatistic(333)
+local function GetStatisticGold(statisticID)
+	local text = GetStatistic(statisticID)
+	if type(text) ~= "string" then
+		return 0
+	end
+	if not text:find("|T", 1, true) then
+		return math.floor(GetStatisticNumber(statisticID) / 10000)
+	end
+	for amount, texture in text:gmatch("([^|]*)|T([^|]*)|t") do
+		if texture:find("[Gg]old") then
+			return tonumber((amount:gsub("%D", ""))) or 0
+		end
+	end
+	return 0
+end
+
 -- Rang d'un métier du personnage. skillLine = nil : meilleur des deux
 -- métiers principaux. GetProfessions renvoie les index des métiers
 -- (2 principaux puis les secondaires), nil pour un emplacement vide.
@@ -101,6 +123,20 @@ CriteriaTypes.statistic = {
 	end,
 }
 
+-- Statistique d'argent de Forever >= value pièces d'or.
+-- Exemple : { type = "money", id = 333, value = 100 }
+-- text (facultatif) remplace le nom de la statistique dans l'UI.
+CriteriaTypes.money = {
+	fields = { "id", "value" },
+	progressBar = true,
+	describe = CriteriaTypes.statistic.describe,
+	goal = CriteriaTypes.statistic.goal,
+	validate = CriteriaTypes.statistic.validate,
+	current = function(criterion)
+		return GetStatisticGold(criterion.id)
+	end,
+}
+
 -- Explorer entièrement une zone. Exemple : { type = "explore", mapID = 1429 }
 CriteriaTypes.explore = {
 	fields = { "mapID" },
@@ -151,7 +187,7 @@ CriteriaTypes.profession = {
 }
 
 -- Obtenir un autre haut fait de l'addon (métas).
--- Exemple : { type = "achievement", id = 3001 }
+-- Exemple : { type = "achievement", id = 12 }
 -- L'id visé est vérifié par le Registry, quand tous les hauts faits sont chargés.
 CriteriaTypes.achievement = {
 	fields = { "id" },

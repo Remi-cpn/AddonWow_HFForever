@@ -32,7 +32,6 @@ Libs\LibDBIcon-1.0\lib.xml
 Core\Init.lua
 Locales\enUS.lua
 Locales\frFR.lua
-Locales\Achievements_enUS.lua
 Core\Log.lua
 Core\Database.lua
 Data\Categories.lua

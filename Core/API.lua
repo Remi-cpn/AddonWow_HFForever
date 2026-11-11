@@ -144,7 +144,7 @@ function API.GetAchievementCriteriaInfo(achievementID, criteriaIndex)
 	local criteriaType = ns.CriteriaTypes[criterion.type]
 	local reqQuantity = criteriaType.goal and criteriaType.goal(criterion) or 1
 	-- Plafonnée à l'objectif : 179 quêtes pour un objectif de 50 donne 50 / 50.
-	local quantity = Database:GetProgress(achievementID, criteriaIndex)
+	local quantity = Database:GetProgress(achievementID, criteriaIndex, criterion.combine)
 	if Database:GetCompletion(achievementID) then
 		quantity = reqQuantity
 	end

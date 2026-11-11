@@ -1,19 +1,41 @@
 -- Catégories de hauts faits. Données uniquement, aucune logique.
 -- L'ordre de la liste est l'ordre d'affichage dans la fenêtre.
+-- Les noms sont dans Locales/ (L.CATEGORY_NAMES[id]).
 --
 --   id     : nombre unique et définitif
---   name   : nom affiché
 --   parent : (facultatif) id de la catégorie mère, pour une sous-catégorie
 local _, ns = ...
 
+-- Noms lisibles des id, utilisés par Data/Achievements.lua (category = CAT.QUESTS).
+local CAT = {
+	GENERAL = 1,
+	QUESTS = 2,
+	EXPLORATION = 3,
+	EASTERN_KINGDOMS = 31,
+	KALIMDOR = 32,
+	PVP = 6,
+	WARSONG_GULCH = 61,
+	ARATHI_BASIN = 62,
+	ALTERAC_VALLEY = 63,
+	PROFESSIONS = 4,
+	DUNGEONS = 5,
+	DUNGEONS_CLASSIC = 51,
+	DUNGEONS_FOREVER = 52,
+}
+ns.Data.CAT = CAT
+
 ns.Data.categories = {
-	{ id = 1, name = "Général" },
-	{ id = 2, name = "Quêtes" },
-	{ id = 3, name = "Exploration" },
-	{ id = 31, name = "Royaumes de l'Est", parent = 3 },
-	{ id = 32, name = "Kalimdor", parent = 3 },
-	{ id = 4, name = "Métiers" },
-	{ id = 5, name = "Donjons" },
-	{ id = 51, name = "Classiques", parent = 5 },
-	{ id = 52, name = "Forever", parent = 5 },
+	{ id = CAT.GENERAL },
+	{ id = CAT.QUESTS },
+	{ id = CAT.EXPLORATION },
+	{ id = CAT.EASTERN_KINGDOMS, parent = CAT.EXPLORATION },
+	{ id = CAT.KALIMDOR, parent = CAT.EXPLORATION },
+	{ id = CAT.PVP },
+	{ id = CAT.WARSONG_GULCH, parent = CAT.PVP },
+	{ id = CAT.ARATHI_BASIN, parent = CAT.PVP },
+	{ id = CAT.ALTERAC_VALLEY, parent = CAT.PVP },
+	{ id = CAT.PROFESSIONS },
+	{ id = CAT.DUNGEONS },
+	{ id = CAT.DUNGEONS_CLASSIC, parent = CAT.DUNGEONS },
+	{ id = CAT.DUNGEONS_FOREVER, parent = CAT.DUNGEONS },
 }

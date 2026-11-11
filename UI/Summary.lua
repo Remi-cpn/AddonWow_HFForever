@@ -18,11 +18,11 @@ local MAX_ACHIEVEMENTS = 5
 -- Places libres : les premiers hauts faits non obtenus de cette liste,
 -- grisés. Équivalent de ACHIEVEMENTUI_DEFAULTSUMMARYACHIEVEMENTS.
 local DEFAULT_ACHIEVEMENTS = {
-	1001, -- Niveau 10
-	2001, -- 50 quêtes
-	4001, -- Un métier principal à 150
-	3001, -- Première zone d'exploration
-	5002, -- Premier donjon classique
+	1, -- Niveau 10
+	7, -- 50 quêtes
+	58, -- Un métier principal à 150
+	12, -- Première zone d'exploration
+	73, -- Premier donjon classique
 }
 
 -- Espacement des barres de catégorie, valeurs de Blizzard.

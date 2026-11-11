@@ -57,6 +57,7 @@ handlers.etat = function()
 	Log.Info(L.STATUS_SCHEMA, db:GetSchemaVersion())
 	Log.Info(L.STATUS_DEBUG, db:IsDebug() and L.YES or L.NO)
 	Log.Info(L.STATUS_COMPLETED, db:CountCompleted())
+	Log.Info(L.STATUS_CHARACTERS, db:GetNumCharacters())
 	-- minimapPos reste nil tant que le bouton n'a jamais été déplacé.
 	Log.Info(L.STATUS_MINIMAP, minimap.hide and L.NO or L.YES, tostring(minimap.minimapPos))
 end

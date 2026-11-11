@@ -35,6 +35,7 @@ local WATCHED_EVENTS = {
 
 local eventFrame = CreateFrame("Frame")
 local loginTime = nil          -- GetTime() à la connexion
+local playerGUID = nil         -- clé du personnage dans la progression
 local pendingReason = nil      -- évaluation programmée, avec sa raison
 local forceRetroactive = false -- demandé par /hff reset
 local listeners = {}
@@ -68,8 +69,9 @@ local function EvaluateAchievement(achievement)
 			Log.Error(L.ENGINE_CRITERIA_ERROR, achievement.id, index, current)
 			current = 0
 		end
-		local best = ns.Database:UpdateProgress(achievement.id, index, current)
-		if best < criteriaType.goal(criterion) then
+		local total = ns.Database:UpdateProgress(achievement.id, index, playerGUID,
+			current, criterion.combine)
+		if total < criteriaType.goal(criterion) then
 			allDone = false
 		end
 	end
@@ -175,6 +177,9 @@ end)
 -- Appelé au PLAYER_LOGIN : branche les événements et lance le scan initial.
 function Engine:Start()
 	loginTime = GetTime()
+	-- Lu une fois, hors combat. Le GUID ne change pas si le personnage est
+	-- renommé ou change de royaume.
+	playerGUID = UnitGUID("player") or GetCharacterName()
 	for _, event in ipairs(WATCHED_EVENTS) do
 		eventFrame:RegisterEvent(event)
 	end

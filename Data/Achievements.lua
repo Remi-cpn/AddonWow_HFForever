@@ -1,23 +1,28 @@
--- Définitions des hauts faits. Données uniquement, aucune logique.
+-- Définitions des hauts faits. Données uniquement, aucune logique, aucun texte.
 -- L'ordre de la liste est l'ordre d'affichage dans chaque catégorie.
 -- La liste validée est décrite dans docs/ProposedAchievements.md.
 --
---   id          : nombre unique et DÉFINITIF (la sauvegarde s'en sert,
---                 ne jamais le changer ni le réutiliser)
---   category    : id d'une catégorie de Data/Categories.lua
+--   id          : numéro unique et DÉFINITIF, la sauvegarde s'en sert. Un
+--                 nouveau haut fait prend le numéro libre suivant (135), quel
+--                 que soit l'endroit où il est rangé. Ne jamais changer ni
+--                 réutiliser un numéro.
+--   category    : une constante CAT de Data/Categories.lua
 --   points      : points du haut fait
 --   icon        : chemin de l'icône (Interface\\Icons\\...)
---   name        : nom affiché
---   description : texte affiché sous le nom
 --   criteria    : liste de critères, TOUS doivent être remplis.
 --                 Types disponibles : voir Core/CriteriaTypes.lua
+--                 combine (facultatif, sur un critère) : "sum" additionne
+--                 les personnages du compte (compteurs : quêtes, monstres
+--                 tués...). Par défaut "max" : le meilleur personnage compte
+--                 (niveau, métier, exploration, boss vaincu une fois).
 --   previous    : (facultatif) id du haut fait précédent d'une série
---   reward      : (facultatif) texte de récompense, purement décoratif
 --
--- Plages d'id : Général 1000, Quêtes 2000, Exploration 3000, Métiers 4000,
--- Donjons 5000.
+-- Les textes sont dans Locales/enUS.lua et Locales/frFR.lua, rangés par id :
+-- L.ACHIEVEMENT_NAMES, L.ACHIEVEMENT_DESCRIPTIONS, L.ACHIEVEMENT_REWARDS et
+-- L.CRITERIA_TEXTS (texte d'un critère, à la place du nom de la statistique).
 local _, ns = ...
 
+local CAT = ns.Data.CAT
 local ICONS = "Interface\\Icons\\"
 
 ns.Data.achievements = {
@@ -25,436 +30,397 @@ ns.Data.achievements = {
 	-- Général : niveaux
 	---------------------------------------------------------------------------
 	{
-		id = 1001, category = 1, points = 10,
+		id = 1, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "Achievement_Level_10",
-		name = "Niveau 10",
-		description = "Atteindre le niveau 10.",
 		criteria = { { type = "level", value = 10 } },
 	},
 	{
-		id = 1002, category = 1, points = 10,
+		id = 2, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "Achievement_Level_20",
-		name = "Niveau 20",
-		description = "Atteindre le niveau 20.",
 		criteria = { { type = "level", value = 20 } },
-		previous = 1001,
+		previous = 1,
 	},
 	{
-		id = 1003, category = 1, points = 10,
+		id = 3, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "Achievement_Level_30",
-		name = "Niveau 30",
-		description = "Atteindre le niveau 30.",
 		criteria = { { type = "level", value = 30 } },
-		previous = 1002,
+		previous = 2,
 	},
 	{
-		id = 1004, category = 1, points = 10,
+		id = 4, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "Achievement_Level_40",
-		name = "Niveau 40",
-		description = "Atteindre le niveau 40.",
 		criteria = { { type = "level", value = 40 } },
-		previous = 1003,
+		previous = 3,
 	},
 	{
-		id = 1005, category = 1, points = 10,
+		id = 5, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "Achievement_Level_50",
-		name = "Niveau 50",
-		description = "Atteindre le niveau 50.",
 		criteria = { { type = "level", value = 50 } },
-		previous = 1004,
+		previous = 4,
 	},
 	{
-		id = 1006, category = 1, points = 25,
+		id = 6, category = CAT.GENERAL, points = 25,
 		icon = ICONS .. "Achievement_Level_60",
-		name = "Niveau 60",
-		description = "Atteindre le niveau 60.",
 		criteria = { { type = "level", value = 60 } },
-		previous = 1005,
+		previous = 5,
 	},
 
 	---------------------------------------------------------------------------
-	-- Quêtes : statistique 98 « Quêtes achevées »
+	-- Général : banque, argent, montures (hauts faits WotLK de même nom)
 	---------------------------------------------------------------------------
 	{
-		id = 2001, category = 2, points = 10,
+		-- Statistique 928 « Emplacements en banque supplémentaires achetés »
+		id = 97, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Box_01",
+		criteria = { { type = "statistic", id = 928, value = 7 } },
+	},
+	{
+		-- Statistique 333 « Argent ramassé », en pièces d'or
+		id = 98, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Misc_Coin_06",
+		criteria = { { type = "money", id = 333, value = 100, combine = "sum" } },
+	},
+	{
+		id = 99, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Misc_Coin_04",
+		criteria = { { type = "money", id = 333, value = 1000, combine = "sum" } },
+		previous = 98,
+	},
+	{
+		id = 100, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Misc_Coin_03",
+		criteria = { { type = "money", id = 333, value = 5000, combine = "sum" } },
+		previous = 99,
+	},
+	{
+		id = 101, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Misc_Coin_02",
+		criteria = { { type = "money", id = 333, value = 10000, combine = "sum" } },
+		previous = 100,
+	},
+	{
+		id = 102, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Misc_Coin_01",
+		criteria = { { type = "money", id = 333, value = 25000, combine = "sum" } },
+		previous = 101,
+	},
+	{
+		-- Statistique 326 « Argent obtenu en récompense de quêtes »
+		id = 103, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Misc_Coin_16",
+		criteria = { { type = "money", id = 326, value = 10000, combine = "sum" } },
+	},
+	{
+		-- Statistique 339 « Montures possédées » : le meilleur personnage compte
+		-- (une même monture sur deux personnages ne compte qu'une fois).
+		id = 104, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "Ability_Mount_RidingElekk",
+		criteria = { { type = "statistic", id = 339, value = 10 } },
+	},
+	{
+		id = 105, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "Ability_Mount_RidingElekkElite_Green",
+		criteria = { { type = "statistic", id = 339, value = 25 } },
+		previous = 104,
+	},
+	{
+		id = 106, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "Ability_Mount_Mammoth_Black",
+		criteria = { { type = "statistic", id = 339, value = 50 } },
+		previous = 105,
+	},
+	{
+		-- WotLK en a deux (2536 Alliance, 2537 Horde) : un seul ici.
+		id = 107, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "Ability_Hunter_Pet_DragonHawk",
+		criteria = { { type = "statistic", id = 339, value = 100 } },
+		previous = 106,
+	},
+
+	---------------------------------------------------------------------------
+	-- Quêtes : statistique 98 « Quêtes achevées », additionnée sur le compte
+	---------------------------------------------------------------------------
+	{
+		id = 7, category = CAT.QUESTS, points = 10,
 		icon = ICONS .. "Achievement_Quests_Completed_01",
-		name = "Aventurier",
-		description = "Terminer 50 quêtes.",
-		criteria = { { type = "statistic", id = 98, value = 50 } },
+		criteria = { { type = "statistic", id = 98, value = 50, combine = "sum" } },
 	},
 	{
-		id = 2002, category = 2, points = 10,
+		id = 8, category = CAT.QUESTS, points = 10,
 		icon = ICONS .. "Achievement_Quests_Completed_02",
-		name = "Aventurier aguerri",
-		description = "Terminer 100 quêtes.",
-		criteria = { { type = "statistic", id = 98, value = 100 } },
-		previous = 2001,
+		criteria = { { type = "statistic", id = 98, value = 100, combine = "sum" } },
+		previous = 7,
 	},
 	{
-		id = 2003, category = 2, points = 10,
+		id = 9, category = CAT.QUESTS, points = 10,
 		icon = ICONS .. "Achievement_Quests_Completed_03",
-		name = "Aventurier émérite",
-		description = "Terminer 250 quêtes.",
-		criteria = { { type = "statistic", id = 98, value = 250 } },
-		previous = 2002,
+		criteria = { { type = "statistic", id = 98, value = 250, combine = "sum" } },
+		previous = 8,
 	},
 	{
-		id = 2004, category = 2, points = 10,
+		id = 10, category = CAT.QUESTS, points = 10,
 		icon = ICONS .. "Achievement_Quests_Completed_04",
-		name = "Héros des quêtes",
-		description = "Terminer 500 quêtes.",
-		criteria = { { type = "statistic", id = 98, value = 500 } },
-		previous = 2003,
+		criteria = { { type = "statistic", id = 98, value = 500, combine = "sum" } },
+		previous = 9,
 	},
 	{
-		id = 2005, category = 2, points = 25,
+		id = 11, category = CAT.QUESTS, points = 25,
 		icon = ICONS .. "Achievement_Quests_Completed_05",
-		name = "Légende des quêtes",
-		description = "Terminer 1000 quêtes.",
-		criteria = { { type = "statistic", id = 98, value = 1000 } },
-		previous = 2004,
+		criteria = { { type = "statistic", id = 98, value = 1000, combine = "sum" } },
+		previous = 10,
 	},
 
 	---------------------------------------------------------------------------
 	-- Exploration : Royaumes de l'Est (une zone = un uiMapID)
 	---------------------------------------------------------------------------
 	{
-		id = 3001, category = 31, points = 10,
+		id = 12, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les montagnes d'Alterac",
-		description = "Révéler toute la carte des montagnes d'Alterac.",
-		criteria = { { type = "explore", mapID = 1416 } },
+		criteria = { { type = "explore", mapID = 1416 } }, -- Montagnes d'Alterac
 	},
 	{
-		id = 3002, category = 31, points = 10,
+		id = 13, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les Hautes-terres d'Arathi",
-		description = "Révéler toute la carte des Hautes-terres d'Arathi.",
-		criteria = { { type = "explore", mapID = 1417 } },
+		criteria = { { type = "explore", mapID = 1417 } }, -- Hautes-terres d'Arathi
 	},
 	{
-		id = 3003, category = 31, points = 10,
+		id = 14, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les Terres ingrates",
-		description = "Révéler toute la carte des Terres ingrates.",
-		criteria = { { type = "explore", mapID = 1418 } },
+		criteria = { { type = "explore", mapID = 1418 } }, -- Terres ingrates
 	},
 	{
-		id = 3004, category = 31, points = 10,
+		id = 15, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les Terres foudroyées",
-		description = "Révéler toute la carte des Terres foudroyées.",
-		criteria = { { type = "explore", mapID = 1419 } },
+		criteria = { { type = "explore", mapID = 1419 } }, -- Terres foudroyées
 	},
 	{
-		id = 3005, category = 31, points = 10,
+		id = 16, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les clairières de Tirisfal",
-		description = "Révéler toute la carte des clairières de Tirisfal.",
-		criteria = { { type = "explore", mapID = 1420 } },
+		criteria = { { type = "explore", mapID = 1420 } }, -- Clairières de Tirisfal
 	},
 	{
-		id = 3006, category = 31, points = 10,
+		id = 17, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer la forêt des Pins-Argentés",
-		description = "Révéler toute la carte de la forêt des Pins-Argentés.",
-		criteria = { { type = "explore", mapID = 1421 } },
+		criteria = { { type = "explore", mapID = 1421 } }, -- Forêt des Pins-Argentés
 	},
 	{
-		id = 3007, category = 31, points = 10,
+		id = 18, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les Maleterres de l'Ouest",
-		description = "Révéler toute la carte des Maleterres de l'Ouest.",
-		criteria = { { type = "explore", mapID = 1422 } },
+		criteria = { { type = "explore", mapID = 1422 } }, -- Maleterres de l'Ouest
 	},
 	{
-		id = 3008, category = 31, points = 10,
+		id = 19, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les Maleterres de l'Est",
-		description = "Révéler toute la carte des Maleterres de l'Est.",
-		criteria = { { type = "explore", mapID = 1423 } },
+		criteria = { { type = "explore", mapID = 1423 } }, -- Maleterres de l'Est
 	},
 	{
-		id = 3009, category = 31, points = 10,
+		id = 20, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les contreforts de Hautebrande",
-		description = "Révéler toute la carte des contreforts de Hautebrande.",
-		criteria = { { type = "explore", mapID = 1424 } },
+		criteria = { { type = "explore", mapID = 1424 } }, -- Contreforts de Hautebrande
 	},
 	{
-		id = 3010, category = 31, points = 10,
+		id = 21, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les Hinterlands",
-		description = "Révéler toute la carte des Hinterlands.",
-		criteria = { { type = "explore", mapID = 1425 } },
+		criteria = { { type = "explore", mapID = 1425 } }, -- Les Hinterlands
 	},
 	{
-		id = 3011, category = 31, points = 10,
+		id = 22, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer Dun Morogh",
-		description = "Révéler toute la carte de Dun Morogh.",
-		criteria = { { type = "explore", mapID = 1426 } },
+		criteria = { { type = "explore", mapID = 1426 } }, -- Dun Morogh
 	},
 	{
-		id = 3012, category = 31, points = 10,
+		id = 23, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer la gorge des Vents brûlants",
-		description = "Révéler toute la carte de la gorge des Vents brûlants.",
-		criteria = { { type = "explore", mapID = 1427 } },
+		criteria = { { type = "explore", mapID = 1427 } }, -- Gorge des Vents brûlants
 	},
 	{
-		id = 3013, category = 31, points = 10,
+		id = 24, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les steppes Ardentes",
-		description = "Révéler toute la carte des steppes Ardentes.",
-		criteria = { { type = "explore", mapID = 1428 } },
+		criteria = { { type = "explore", mapID = 1428 } }, -- Steppes ardentes
 	},
 	{
-		id = 3014, category = 31, points = 10,
+		id = 25, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer la forêt d'Elwynn",
-		description = "Révéler toute la carte de la forêt d'Elwynn.",
-		criteria = { { type = "explore", mapID = 1429 } },
+		criteria = { { type = "explore", mapID = 1429 } }, -- Forêt d'Elwynn
 	},
 	{
-		id = 3015, category = 31, points = 10,
+		id = 26, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer le défilé de Deuillevent",
-		description = "Révéler toute la carte du défilé de Deuillevent.",
-		criteria = { { type = "explore", mapID = 1430 } },
+		criteria = { { type = "explore", mapID = 1430 } }, -- Défilé de Deuillevent
 	},
 	{
-		id = 3016, category = 31, points = 10,
+		id = 27, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer le bois de la Pénombre",
-		description = "Révéler toute la carte du bois de la Pénombre.",
-		criteria = { { type = "explore", mapID = 1431 } },
+		criteria = { { type = "explore", mapID = 1431 } }, -- Bois de la Pénombre
 	},
 	{
-		id = 3017, category = 31, points = 10,
+		id = 28, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer le Loch Modan",
-		description = "Révéler toute la carte du Loch Modan.",
-		criteria = { { type = "explore", mapID = 1432 } },
+		criteria = { { type = "explore", mapID = 1432 } }, -- Loch Modan
 	},
 	{
-		id = 3018, category = 31, points = 10,
+		id = 29, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les Carmines",
-		description = "Révéler toute la carte des Carmines.",
-		criteria = { { type = "explore", mapID = 1433 } },
+		criteria = { { type = "explore", mapID = 1433 } }, -- Les Carmines
 	},
 	{
-		id = 3019, category = 31, points = 10,
+		id = 30, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer la vallée de Strangleronce",
-		description = "Révéler toute la carte de la vallée de Strangleronce.",
-		criteria = { { type = "explore", mapID = 1434 } },
+		criteria = { { type = "explore", mapID = 1434 } }, -- Vallée de Strangleronce
 	},
 	{
-		id = 3020, category = 31, points = 10,
+		id = 31, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer le marais des Chagrins",
-		description = "Révéler toute la carte du marais des Chagrins.",
-		criteria = { { type = "explore", mapID = 1435 } },
+		criteria = { { type = "explore", mapID = 1435 } }, -- Marais des Chagrins
 	},
 	{
-		id = 3021, category = 31, points = 10,
+		id = 32, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer la marche de l'Ouest",
-		description = "Révéler toute la carte de la marche de l'Ouest.",
-		criteria = { { type = "explore", mapID = 1436 } },
+		criteria = { { type = "explore", mapID = 1436 } }, -- Marche de l'Ouest
 	},
 	{
-		id = 3022, category = 31, points = 10,
+		id = 33, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les Paluns",
-		description = "Révéler toute la carte des Paluns.",
-		criteria = { { type = "explore", mapID = 1437 } },
+		criteria = { { type = "explore", mapID = 1437 } }, -- Les Paluns
 	},
 	{
-		id = 3023, category = 31, points = 10,
+		id = 34, category = CAT.EASTERN_KINGDOMS, points = 10,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorer les Rives Claires",
-		description = "Révéler toute la carte des Rives Claires.",
-		criteria = { { type = "explore", mapID = 2548 } },
+		criteria = { { type = "explore", mapID = 2548 } }, -- Rives Claires (Forever)
 	},
 	{
-		id = 3050, category = 31, points = 25,
+		id = 35, category = CAT.EASTERN_KINGDOMS, points = 25,
 		icon = ICONS .. "Achievement_Zone_EasternKingdoms_01",
-		name = "Explorateur des Royaumes de l'Est",
-		description = "Explorer toutes les zones des Royaumes de l'Est.",
 		criteria = {
-			{ type = "achievement", id = 3001 }, { type = "achievement", id = 3002 },
-			{ type = "achievement", id = 3003 }, { type = "achievement", id = 3004 },
-			{ type = "achievement", id = 3005 }, { type = "achievement", id = 3006 },
-			{ type = "achievement", id = 3007 }, { type = "achievement", id = 3008 },
-			{ type = "achievement", id = 3009 }, { type = "achievement", id = 3010 },
-			{ type = "achievement", id = 3011 }, { type = "achievement", id = 3012 },
-			{ type = "achievement", id = 3013 }, { type = "achievement", id = 3014 },
-			{ type = "achievement", id = 3015 }, { type = "achievement", id = 3016 },
-			{ type = "achievement", id = 3017 }, { type = "achievement", id = 3018 },
-			{ type = "achievement", id = 3019 }, { type = "achievement", id = 3020 },
-			{ type = "achievement", id = 3021 }, { type = "achievement", id = 3022 },
-			{ type = "achievement", id = 3023 },
+			{ type = "achievement", id = 12 }, { type = "achievement", id = 13 },
+			{ type = "achievement", id = 14 }, { type = "achievement", id = 15 },
+			{ type = "achievement", id = 16 }, { type = "achievement", id = 17 },
+			{ type = "achievement", id = 18 }, { type = "achievement", id = 19 },
+			{ type = "achievement", id = 20 }, { type = "achievement", id = 21 },
+			{ type = "achievement", id = 22 }, { type = "achievement", id = 23 },
+			{ type = "achievement", id = 24 }, { type = "achievement", id = 25 },
+			{ type = "achievement", id = 26 }, { type = "achievement", id = 27 },
+			{ type = "achievement", id = 28 }, { type = "achievement", id = 29 },
+			{ type = "achievement", id = 30 }, { type = "achievement", id = 31 },
+			{ type = "achievement", id = 32 }, { type = "achievement", id = 33 },
+			{ type = "achievement", id = 34 },
 		},
 	},
 
 	---------------------------------------------------------------------------
 	-- Exploration : Kalimdor
+	-- Reflet-de-Lune n'y est pas : sa carte n'a qu'un morceau, affiché d'office
+	-- par le jeu, impossible de savoir si la zone a été explorée.
 	---------------------------------------------------------------------------
 	{
-		id = 3101, category = 32, points = 10,
+		id = 36, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Durotar",
-		description = "Révéler toute la carte de Durotar.",
-		criteria = { { type = "explore", mapID = 1411 } },
+		criteria = { { type = "explore", mapID = 1411 } }, -- Durotar
 	},
 	{
-		id = 3102, category = 32, points = 10,
+		id = 37, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Mulgore",
-		description = "Révéler toute la carte de Mulgore.",
-		criteria = { { type = "explore", mapID = 1412 } },
+		criteria = { { type = "explore", mapID = 1412 } }, -- Mulgore
 	},
 	{
-		id = 3103, category = 32, points = 10,
+		id = 38, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer les Tarides",
-		description = "Révéler toute la carte des Tarides.",
-		criteria = { { type = "explore", mapID = 1413 } },
+		criteria = { { type = "explore", mapID = 1413 } }, -- Les Tarides
 	},
 	{
-		id = 3104, category = 32, points = 10,
+		id = 39, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Teldrassil",
-		description = "Révéler toute la carte de Teldrassil.",
-		criteria = { { type = "explore", mapID = 1438 } },
+		criteria = { { type = "explore", mapID = 1438 } }, -- Teldrassil
 	},
 	{
-		id = 3105, category = 32, points = 10,
+		id = 40, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Sombrivage",
-		description = "Révéler toute la carte de Sombrivage.",
-		criteria = { { type = "explore", mapID = 1439 } },
+		criteria = { { type = "explore", mapID = 1439 } }, -- Sombrivage
 	},
 	{
-		id = 3106, category = 32, points = 10,
+		id = 41, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Orneval",
-		description = "Révéler toute la carte d'Orneval.",
-		criteria = { { type = "explore", mapID = 1440 } },
+		criteria = { { type = "explore", mapID = 1440 } }, -- Orneval
 	},
 	{
-		id = 3107, category = 32, points = 10,
+		id = 42, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Mille pointes",
-		description = "Révéler toute la carte de Mille pointes.",
-		criteria = { { type = "explore", mapID = 1441 } },
+		criteria = { { type = "explore", mapID = 1441 } }, -- Mille pointes
 	},
 	{
-		id = 3108, category = 32, points = 10,
+		id = 43, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer les Serres-Rocheuses",
-		description = "Révéler toute la carte des Serres-Rocheuses.",
-		criteria = { { type = "explore", mapID = 1442 } },
+		criteria = { { type = "explore", mapID = 1442 } }, -- Les Serres-Rocheuses
 	},
 	{
-		id = 3109, category = 32, points = 10,
+		id = 44, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Désolace",
-		description = "Révéler toute la carte de Désolace.",
-		criteria = { { type = "explore", mapID = 1443 } },
+		criteria = { { type = "explore", mapID = 1443 } }, -- Désolace
 	},
 	{
-		id = 3110, category = 32, points = 10,
+		id = 45, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Féralas",
-		description = "Révéler toute la carte de Féralas.",
-		criteria = { { type = "explore", mapID = 1444 } },
+		criteria = { { type = "explore", mapID = 1444 } }, -- Féralas
 	},
 	{
-		id = 3111, category = 32, points = 10,
+		id = 46, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer le marécage d'Âprefange",
-		description = "Révéler toute la carte du marécage d'Âprefange.",
-		criteria = { { type = "explore", mapID = 1445 } },
+		criteria = { { type = "explore", mapID = 1445 } }, -- Marécage d'Âprefange
 	},
 	{
-		id = 3112, category = 32, points = 10,
+		id = 47, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Tanaris",
-		description = "Révéler toute la carte de Tanaris.",
-		criteria = { { type = "explore", mapID = 1446 } },
+		criteria = { { type = "explore", mapID = 1446 } }, -- Tanaris
 	},
 	{
-		id = 3113, category = 32, points = 10,
+		id = 48, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Azshara",
-		description = "Révéler toute la carte d'Azshara.",
-		criteria = { { type = "explore", mapID = 1447 } },
+		criteria = { { type = "explore", mapID = 1447 } }, -- Azshara
 	},
 	{
-		id = 3114, category = 32, points = 10,
+		id = 49, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Gangrebois",
-		description = "Révéler toute la carte de Gangrebois.",
-		criteria = { { type = "explore", mapID = 1448 } },
+		criteria = { { type = "explore", mapID = 1448 } }, -- Gangrebois
 	},
 	{
-		id = 3115, category = 32, points = 10,
+		id = 50, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer le cratère d'Un'Goro",
-		description = "Révéler toute la carte du cratère d'Un'Goro.",
-		criteria = { { type = "explore", mapID = 1449 } },
-	},
-	-- 3116 Explorer Reflet-de-Lune : retiré. Sa carte n'a qu'un morceau,
-	-- affiché d'office par le jeu : impossible de savoir si la zone a été
-	-- explorée. Id réservé, ne pas réutiliser.
-	{
-		id = 3117, category = 32, points = 10,
-		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Silithus",
-		description = "Révéler toute la carte de Silithus.",
-		criteria = { { type = "explore", mapID = 1451 } },
+		criteria = { { type = "explore", mapID = 1449 } }, -- Cratère d'Un'Goro
 	},
 	{
-		id = 3118, category = 32, points = 10,
+		id = 51, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Berceau-de-l'Hiver",
-		description = "Révéler toute la carte de Berceau-de-l'Hiver.",
-		criteria = { { type = "explore", mapID = 1452 } },
+		criteria = { { type = "explore", mapID = 1451 } }, -- Silithus
 	},
 	{
-		id = 3119, category = 32, points = 10,
+		id = 52, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer le mont Hyjal",
-		description = "Révéler toute la carte du mont Hyjal.",
-		criteria = { { type = "explore", mapID = 2482 } },
+		criteria = { { type = "explore", mapID = 1452 } }, -- Berceau-de-l'Hiver
 	},
 	{
-		id = 3120, category = 32, points = 10,
+		id = 53, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorer Shen'dralas",
-		description = "Révéler toute la carte de Shen'dralas.",
-		criteria = { { type = "explore", mapID = 2652 } },
+		criteria = { { type = "explore", mapID = 2482 } }, -- Mont Hyjal (Forever)
 	},
 	{
-		id = 3150, category = 32, points = 25,
+		id = 54, category = CAT.KALIMDOR, points = 10,
 		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
-		name = "Explorateur de Kalimdor",
-		description = "Explorer toutes les zones de Kalimdor.",
+		criteria = { { type = "explore", mapID = 2652 } }, -- Shen'dralas (Forever)
+	},
+	{
+		id = 55, category = CAT.KALIMDOR, points = 25,
+		icon = ICONS .. "Achievement_Zone_Kalimdor_01",
 		criteria = {
-			{ type = "achievement", id = 3101 }, { type = "achievement", id = 3102 },
-			{ type = "achievement", id = 3103 }, { type = "achievement", id = 3104 },
-			{ type = "achievement", id = 3105 }, { type = "achievement", id = 3106 },
-			{ type = "achievement", id = 3107 }, { type = "achievement", id = 3108 },
-			{ type = "achievement", id = 3109 }, { type = "achievement", id = 3110 },
-			{ type = "achievement", id = 3111 }, { type = "achievement", id = 3112 },
-			{ type = "achievement", id = 3113 }, { type = "achievement", id = 3114 },
-			{ type = "achievement", id = 3115 }, { type = "achievement", id = 3117 },
-			{ type = "achievement", id = 3118 }, { type = "achievement", id = 3119 },
-			{ type = "achievement", id = 3120 },
+			{ type = "achievement", id = 36 }, { type = "achievement", id = 37 },
+			{ type = "achievement", id = 38 }, { type = "achievement", id = 39 },
+			{ type = "achievement", id = 40 }, { type = "achievement", id = 41 },
+			{ type = "achievement", id = 42 }, { type = "achievement", id = 43 },
+			{ type = "achievement", id = 44 }, { type = "achievement", id = 45 },
+			{ type = "achievement", id = 46 }, { type = "achievement", id = 47 },
+			{ type = "achievement", id = 48 }, { type = "achievement", id = 49 },
+			{ type = "achievement", id = 50 }, { type = "achievement", id = 51 },
+			{ type = "achievement", id = 52 }, { type = "achievement", id = 53 },
+			{ type = "achievement", id = 54 },
 		},
 	},
 
@@ -462,10 +428,8 @@ ns.Data.achievements = {
 	-- Exploration : île de Zéphras (personnages Skyborne uniquement)
 	---------------------------------------------------------------------------
 	{
-		id = 3201, category = 3, points = 10,
+		id = 56, category = CAT.EXPLORATION, points = 10,
 		icon = ICONS .. "INV_Misc_Map_01",
-		name = "Explorer l'île de Zéphras",
-		description = "Révéler toute la carte de l'île de Zéphras.",
 		criteria = { { type = "explore", mapID = 2521 } },
 	},
 
@@ -474,307 +438,403 @@ ns.Data.achievements = {
 	-- Sans l'île de Zéphras (personnages Skyborne uniquement) : obtenable par tous.
 	---------------------------------------------------------------------------
 	{
-		id = 3300, category = 3, points = 50,
+		id = 57, category = CAT.EXPLORATION, points = 50,
 		icon = ICONS .. "INV_Misc_Map09",
-		name = "Explorateur",
-		description = "Explorer les Royaumes de l'Est et Kalimdor.",
 		criteria = {
-			{ type = "achievement", id = 3050 },
-			{ type = "achievement", id = 3150 },
+			{ type = "achievement", id = 35 },
+			{ type = "achievement", id = 55 },
 		},
+	},
+
+	---------------------------------------------------------------------------
+	-- JcJ : statistique 588 « Nombre total de victoires honorables » et 319
+	-- « Duels gagnés »,
+	-- additionnées sur le compte
+	---------------------------------------------------------------------------
+	{
+		id = 108, category = CAT.PVP, points = 10,
+		icon = ICONS .. "Achievement_PVP_P_01",
+		criteria = { { type = "statistic", id = 588, value = 1, combine = "sum" } },
+	},
+	{
+		id = 109, category = CAT.PVP, points = 10,
+		icon = ICONS .. "Achievement_PVP_P_02",
+		criteria = { { type = "statistic", id = 588, value = 100, combine = "sum" } },
+		previous = 108,
+	},
+	{
+		id = 110, category = CAT.PVP, points = 10,
+		icon = ICONS .. "Achievement_PVP_P_03",
+		criteria = { { type = "statistic", id = 588, value = 500, combine = "sum" } },
+		previous = 109,
+	},
+	{
+		id = 111, category = CAT.PVP, points = 10,
+		icon = ICONS .. "Achievement_PVP_P_04",
+		criteria = { { type = "statistic", id = 588, value = 1000, combine = "sum" } },
+		previous = 110,
+	},
+	{
+		id = 112, category = CAT.PVP, points = 10,
+		icon = ICONS .. "Achievement_PVP_P_06",
+		criteria = { { type = "statistic", id = 588, value = 5000, combine = "sum" } },
+		previous = 111,
+	},
+	{
+		id = 113, category = CAT.PVP, points = 10,
+		icon = ICONS .. "Achievement_PVP_P_09",
+		criteria = { { type = "statistic", id = 588, value = 10000, combine = "sum" } },
+		previous = 112,
+	},
+	{
+		id = 114, category = CAT.PVP, points = 10,
+		icon = ICONS .. "Achievement_PVP_P_11",
+		criteria = { { type = "statistic", id = 588, value = 25000, combine = "sum" } },
+		previous = 113,
+	},
+	{
+		id = 115, category = CAT.PVP, points = 10,
+		icon = ICONS .. "Achievement_PVP_P_14",
+		criteria = { { type = "statistic", id = 588, value = 50000, combine = "sum" } },
+		previous = 114,
+	},
+	{
+		id = 116, category = CAT.PVP, points = 10,
+		icon = ICONS .. "Achievement_PVP_P_15",
+		criteria = { { type = "statistic", id = 588, value = 100000, combine = "sum" } },
+		previous = 115,
+	},
+	{
+		id = 117, category = CAT.PVP, points = 10,
+		icon = ICONS .. "Ability_DualWieldSpecialization",
+		criteria = { { type = "statistic", id = 319, value = 1, combine = "sum" } },
+	},
+
+	---------------------------------------------------------------------------
+	-- JcJ : goulet des Chanteguerres
+	-- 105 victoires, 395 drapeaux capturés, 586 drapeaux ramenés
+	---------------------------------------------------------------------------
+	{
+		id = 118, category = CAT.WARSONG_GULCH, points = 10,
+		icon = ICONS .. "Achievement_BG_winWSG",
+		criteria = { { type = "statistic", id = 105, value = 1, combine = "sum" } },
+	},
+	{
+		id = 119, category = CAT.WARSONG_GULCH, points = 10,
+		icon = ICONS .. "Achievement_BG_win_WSG_X_times",
+		criteria = { { type = "statistic", id = 105, value = 100, combine = "sum" } },
+		previous = 118,
+	},
+	{
+		id = 120, category = CAT.WARSONG_GULCH, points = 10,
+		icon = ICONS .. "Achievement_BG_captureflag_WSG",
+		criteria = { { type = "statistic", id = 395, value = 1, combine = "sum" } },
+	},
+	{
+		id = 121, category = CAT.WARSONG_GULCH, points = 10,
+		icon = ICONS .. "Achievement_BG_interruptX_flagcapture_attempts",
+		criteria = { { type = "statistic", id = 586, value = 50, combine = "sum" } },
+	},
+
+	---------------------------------------------------------------------------
+	-- JcJ : bassin Arathi
+	-- 51 victoires, 64349 bases défendues, 64348 bases attaquées (Forever)
+	---------------------------------------------------------------------------
+	{
+		id = 122, category = CAT.ARATHI_BASIN, points = 10,
+		icon = ICONS .. "Achievement_BG_winAB",
+		criteria = { { type = "statistic", id = 51, value = 1, combine = "sum" } },
+	},
+	{
+		id = 123, category = CAT.ARATHI_BASIN, points = 10,
+		icon = ICONS .. "Achievement_BG_win_AB_X_times",
+		criteria = { { type = "statistic", id = 51, value = 100, combine = "sum" } },
+		previous = 122,
+	},
+	{
+		id = 124, category = CAT.ARATHI_BASIN, points = 10,
+		icon = ICONS .. "Ability_Warrior_VictoryRush",
+		criteria = { { type = "statistic", id = 64349, value = 50, combine = "sum" } },
+	},
+	{
+		id = 125, category = CAT.ARATHI_BASIN, points = 10,
+		icon = ICONS .. "Achievement_BG_takeXflags_AB",
+		criteria = { { type = "statistic", id = 64348, value = 50, combine = "sum" } },
+	},
+
+	---------------------------------------------------------------------------
+	-- JcJ : vallée d'Alterac
+	-- 49 victoires, 393 tours défendues
+	---------------------------------------------------------------------------
+	{
+		id = 126, category = CAT.ALTERAC_VALLEY, points = 10,
+		icon = ICONS .. "Achievement_BG_winAV",
+		criteria = { { type = "statistic", id = 49, value = 1, combine = "sum" } },
+	},
+	{
+		id = 127, category = CAT.ALTERAC_VALLEY, points = 10,
+		icon = ICONS .. "Achievement_BG_win_AV_X_times",
+		criteria = { { type = "statistic", id = 49, value = 100, combine = "sum" } },
+		previous = 126,
+	},
+	{
+		id = 128, category = CAT.ALTERAC_VALLEY, points = 10,
+		icon = ICONS .. "Achievement_BG_defendXtowers_AV",
+		criteria = { { type = "statistic", id = 393, value = 50, combine = "sum" } },
 	},
 
 	---------------------------------------------------------------------------
 	-- Métiers (skillLine = id de la ligne de compétence du métier)
 	---------------------------------------------------------------------------
 	{
-		id = 4001, category = 4, points = 10,
+		id = 58, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "INV_Misc_Note_01",
-		name = "Compagnon",
-		description = "Atteindre 150 dans un métier principal.",
 		criteria = { { type = "profession", value = 150 } },
 	},
 	{
-		id = 4002, category = 4, points = 10,
+		id = 59, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "INV_Misc_Note_01",
-		name = "Expert",
-		description = "Atteindre 225 dans un métier principal.",
 		criteria = { { type = "profession", value = 225 } },
-		previous = 4001,
+		previous = 58,
 	},
 	{
-		id = 4003, category = 4, points = 10,
+		id = 60, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "INV_Misc_Note_01",
-		name = "Artisan",
-		description = "Atteindre 300 dans un métier principal.",
 		criteria = { { type = "profession", value = 300 } },
-		previous = 4002,
+		previous = 59,
 	},
 	{
-		id = 4011, category = 4, points = 10,
+		id = 61, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Trade_Alchemy",
-		name = "Maître alchimiste",
-		description = "Atteindre 300 en Alchimie.",
 		criteria = { { type = "profession", skillLine = 171, value = 300 } },
 	},
 	{
-		id = 4012, category = 4, points = 10,
+		id = 62, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Trade_BlackSmithing",
-		name = "Maître forgeron",
-		description = "Atteindre 300 en Forge.",
 		criteria = { { type = "profession", skillLine = 164, value = 300 } },
 	},
 	{
-		id = 4013, category = 4, points = 10,
+		id = 63, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Trade_Engraving",
-		name = "Maître enchanteur",
-		description = "Atteindre 300 en Enchantement.",
 		criteria = { { type = "profession", skillLine = 333, value = 300 } },
 	},
 	{
-		id = 4014, category = 4, points = 10,
+		id = 64, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Trade_Engineering",
-		name = "Maître ingénieur",
-		description = "Atteindre 300 en Ingénierie.",
 		criteria = { { type = "profession", skillLine = 202, value = 300 } },
 	},
 	{
-		id = 4015, category = 4, points = 10,
+		id = 65, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Trade_Herbalism",
-		name = "Maître herboriste",
-		description = "Atteindre 300 en Herboristerie.",
 		criteria = { { type = "profession", skillLine = 182, value = 300 } },
 	},
 	{
-		id = 4016, category = 4, points = 10,
+		id = 66, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Trade_LeatherWorking",
-		name = "Maître travailleur du cuir",
-		description = "Atteindre 300 en Travail du cuir.",
 		criteria = { { type = "profession", skillLine = 165, value = 300 } },
 	},
 	{
-		id = 4017, category = 4, points = 10,
+		id = 67, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Trade_Mining",
-		name = "Maître mineur",
-		description = "Atteindre 300 en Minage.",
 		criteria = { { type = "profession", skillLine = 186, value = 300 } },
 	},
 	{
-		id = 4018, category = 4, points = 10,
+		id = 68, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "INV_Misc_Pelt_Wolf_01",
-		name = "Maître dépeceur",
-		description = "Atteindre 300 en Dépeçage.",
 		criteria = { { type = "profession", skillLine = 393, value = 300 } },
 	},
 	{
-		id = 4019, category = 4, points = 10,
+		id = 69, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Trade_Tailoring",
-		name = "Maître tailleur",
-		description = "Atteindre 300 en Couture.",
 		criteria = { { type = "profession", skillLine = 197, value = 300 } },
 	},
 	{
-		id = 4021, category = 4, points = 10,
+		id = 70, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "INV_Misc_Food_15",
-		name = "Grand chef",
-		description = "Atteindre 300 en Cuisine.",
 		criteria = { { type = "profession", skillLine = 185, value = 300 } },
 	},
 	{
-		id = 4022, category = 4, points = 10,
+		id = 71, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Trade_Fishing",
-		name = "Maître pêcheur",
-		description = "Atteindre 300 en Pêche.",
 		criteria = { { type = "profession", skillLine = 356, value = 300 } },
 	},
 	{
-		id = 4023, category = 4, points = 10,
+		id = 72, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Spell_Holy_SealOfSacrifice",
-		name = "Maître secouriste",
-		description = "Atteindre 300 en Secourisme.",
 		criteria = { { type = "profession", skillLine = 129, value = 300 } },
 	},
 
 	---------------------------------------------------------------------------
-	-- Donjons classiques : statistique « Morts de <boss> » >= 1
-	-- (text = nom du boss affiché dans le critère)
+	-- Métiers : pêche, statistique 1456 « Poissons et autres objets pêchés »,
+	-- additionnée sur le compte
 	---------------------------------------------------------------------------
-	-- 5001 Gouffre de Ragefeu : retiré. Sur Forever, la statistique 15027
-	-- (Bazzalan) augmente aussi en finissant la salle des Thanes : on ne peut
-	-- pas savoir lequel des deux donjons a été fait. Id réservé.
 	{
-		id = 5002, category = 51, points = 10,
+		id = 129, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "INV_Misc_Fish_50",
+		criteria = { { type = "statistic", id = 1456, value = 25, combine = "sum" } },
+	},
+	{
+		id = 130, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "INV_Misc_Fish_50",
+		criteria = { { type = "statistic", id = 1456, value = 50, combine = "sum" } },
+		previous = 129,
+	},
+	{
+		id = 131, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "INV_Misc_Fish_50",
+		criteria = { { type = "statistic", id = 1456, value = 100, combine = "sum" } },
+		previous = 130,
+	},
+	{
+		id = 132, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "INV_Misc_Fish_50",
+		criteria = { { type = "statistic", id = 1456, value = 250, combine = "sum" } },
+		previous = 131,
+	},
+	{
+		id = 133, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "INV_Misc_Fish_50",
+		criteria = { { type = "statistic", id = 1456, value = 500, combine = "sum" } },
+		previous = 132,
+	},
+	{
+		id = 134, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "INV_Misc_Fish_50",
+		criteria = { { type = "statistic", id = 1456, value = 1000, combine = "sum" } },
+		previous = 133,
+	},
+
+	---------------------------------------------------------------------------
+	-- Donjons classiques : statistique « Morts de <boss> » >= 1. Le nom du
+	-- boss affiché dans le critère vient de L.CRITERIA_TEXTS.
+	-- Gouffre de Ragefeu n'y est pas : sur Forever, la statistique 15027
+	-- (Bazzalan) augmente aussi en finissant la salle des Thanes, on ne peut
+	-- pas savoir lequel des deux donjons a été fait.
+	---------------------------------------------------------------------------
+	{
+		id = 73, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_EdwinVancleef",
-		name = "Les Mortemines",
-		description = "Vaincre Edwin VanCleef dans les Mortemines.",
-		criteria = { { type = "statistic", id = 63570, value = 1, text = "Edwin VanCleef" } },
+		criteria = { { type = "statistic", id = 63570, value = 1 } }, -- Mortemines
 	},
 	{
-		id = 5003, category = 51, points = 10,
+		id = 74, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_Mutanus_the_Devourer",
-		name = "Cavernes des Lamentations",
-		description = "Vaincre Mutanus le Dévoreur dans les cavernes des Lamentations.",
-		criteria = { { type = "statistic", id = 15028, value = 1, text = "Mutanus le Dévoreur" } },
+		criteria = { { type = "statistic", id = 15028, value = 1 } }, -- Cavernes des Lamentations
 	},
 	{
-		id = 5004, category = 51, points = 10,
+		id = 75, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_ArchmageArugal",
-		name = "Donjon d'Ombrecroc",
-		description = "Vaincre l'archimage Arugal dans le donjon d'Ombrecroc.",
-		criteria = { { type = "statistic", id = 1092, value = 1, text = "Archimage Arugal" } },
+		criteria = { { type = "statistic", id = 1092, value = 1 } }, -- Donjon d'Ombrecroc
 	},
 	{
-		id = 5005, category = 51, points = 10,
+		id = 76, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_Bazil_Thredd",
-		name = "La Prison",
-		description = "Vaincre Bazil Thredd dans la prison de Hurlevent.",
-		criteria = { { type = "statistic", id = 15029, value = 1, text = "Bazil Thredd" } },
+		criteria = { { type = "statistic", id = 15029, value = 1 } }, -- La Prison
 	},
 	{
-		id = 5006, category = 51, points = 10,
+		id = 77, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_Bazil_Akumai",
-		name = "Profondeurs de Brassenoire",
-		description = "Vaincre Aku'mai dans les profondeurs de Brassenoire.",
-		criteria = { { type = "statistic", id = 6137, value = 1, text = "Aku'mai" } },
+		criteria = { { type = "statistic", id = 6137, value = 1 } }, -- Profondeurs de Brassenoire
 	},
 	{
-		id = 5007, category = 51, points = 10,
+		id = 78, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "INV_Gizmo_02",
-		name = "Gnomeregan",
-		description = "Vaincre le mekgénieur Thermojoncteur dans Gnomeregan.",
-		criteria = { { type = "statistic", id = 6140, value = 1, text = "Mekgénieur Thermojoncteur" } },
+		criteria = { { type = "statistic", id = 6140, value = 1 } }, -- Gnomeregan
 	},
 	{
-		id = 5008, category = 51, points = 10,
+		id = 79, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_CharlgaRazorflank",
-		name = "Kraal de Tranchebauge",
-		description = "Vaincre Charlga Trancheflanc dans le kraal de Tranchebauge.",
-		criteria = { { type = "statistic", id = 6139, value = 1, text = "Charlga Trancheflanc" } },
+		criteria = { { type = "statistic", id = 6139, value = 1 } }, -- Kraal de Tranchebauge
 	},
 	{
-		id = 5009, category = 51, points = 10,
+		id = 80, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Spell_Fire_FlameBolt",
-		name = "Salles Écarlates",
-		description = "Vaincre le tisseur de flammes Koegler dans les salles Écarlates.",
-		criteria = { { type = "statistic", id = 6786, value = 1, text = "Tisseur de flammes Koegler" } },
+		criteria = { { type = "statistic", id = 6786, value = 1 } }, -- Salles Écarlates
 	},
 	{
-		id = 5010, category = 51, points = 10,
+		id = 81, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Spell_Holy_SealOfMight",
-		name = "Monastère écarlate",
-		description = "Vaincre le commandant écarlate Mograine dans le Monastère écarlate.",
-		criteria = { { type = "statistic", id = 1093, value = 1, text = "Commandant écarlate Mograine" } },
+		criteria = { { type = "statistic", id = 1093, value = 1 } }, -- Monastère écarlate
 	},
 	{
-		id = 5011, category = 51, points = 10,
+		id = 82, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Spell_Frost_FrostNova",
-		name = "Souilles de Tranchebauge",
-		description = "Vaincre Amnennar le Porte-Froid dans les souilles de Tranchebauge.",
-		criteria = { { type = "statistic", id = 6141, value = 1, text = "Amnennar le Porte-Froid" } },
+		criteria = { { type = "statistic", id = 6141, value = 1 } }, -- Souilles de Tranchebauge
 	},
 	{
-		id = 5012, category = 51, points = 10,
+		id = 83, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_Archaedas",
-		name = "Uldaman",
-		description = "Vaincre Archaedas dans Uldaman.",
-		criteria = { { type = "statistic", id = 6142, value = 1, text = "Archaedas" } },
+		criteria = { { type = "statistic", id = 6142, value = 1 } }, -- Uldaman
 	},
 	{
-		id = 5013, category = 51, points = 10,
+		id = 84, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_ChiefUkorzSandscalp",
-		name = "Zul'Farrak",
-		description = "Vaincre le chef Ukorz Scalpessable dans Zul'Farrak.",
-		criteria = { { type = "statistic", id = 1094, value = 1, text = "Chef Ukorz Scalpessable" } },
+		criteria = { { type = "statistic", id = 1094, value = 1 } }, -- Zul'Farrak
 	},
 	{
-		id = 5014, category = 51, points = 10,
+		id = 85, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_PrincessTheradras",
-		name = "Maraudon",
-		description = "Vaincre la princesse Theradras dans Maraudon.",
-		criteria = { { type = "statistic", id = 6143, value = 1, text = "Princesse Theradras" } },
+		criteria = { { type = "statistic", id = 6143, value = 1 } }, -- Maraudon
 	},
 	{
-		id = 5015, category = 51, points = 10,
+		id = 86, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_ShadeOfEranikus",
-		name = "Temple englouti",
-		description = "Vaincre l'ombre d'Eranikus dans le temple englouti.",
-		criteria = { { type = "statistic", id = 6144, value = 1, text = "Ombre d'Eranikus" } },
+		criteria = { { type = "statistic", id = 6144, value = 1 } }, -- Temple englouti
 	},
 	{
-		id = 5016, category = 51, points = 10,
+		id = 87, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_EmperorDagranThaurissan",
-		name = "Profondeurs de Rochenoire",
-		description = "Vaincre l'empereur Dagran Thaurissan dans les profondeurs de Rochenoire.",
-		criteria = { { type = "statistic", id = 1095, value = 1, text = "Empereur Dagran Thaurissan" } },
+		criteria = { { type = "statistic", id = 1095, value = 1 } }, -- Profondeurs de Rochenoire
 	},
 	{
-		id = 5017, category = 51, points = 10,
+		id = 88, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "INV_Crown_01",
-		name = "Hache-Tripes",
-		description = "Vaincre le roi Gordok dans Hache-Tripes.",
-		criteria = { { type = "statistic", id = 6146, value = 1, text = "Roi Gordok" } },
+		criteria = { { type = "statistic", id = 6146, value = 1 } }, -- Hache-Tripes
 	},
 	{
-		id = 5018, category = 51, points = 10,
+		id = 89, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_Overlord_Wyrmthalak",
-		name = "Pic Rochenoire inférieur",
-		description = "Vaincre le seigneur Wyrmthalak dans le pic Rochenoire inférieur.",
-		criteria = { { type = "statistic", id = 6145, value = 1, text = "Seigneur Wyrmthalak" } },
+		criteria = { { type = "statistic", id = 6145, value = 1 } }, -- Pic Rochenoire inférieur
 	},
 	{
-		id = 5019, category = 51, points = 10,
+		id = 90, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_GeneralDrakkisath",
-		name = "Pic Rochenoire supérieur",
-		description = "Vaincre le général Drakkisath dans le pic Rochenoire supérieur.",
-		criteria = { { type = "statistic", id = 1096, value = 1, text = "Général Drakkisath" } },
+		criteria = { { type = "statistic", id = 1096, value = 1 } }, -- Pic Rochenoire supérieur
 	},
 	{
-		id = 5020, category = 51, points = 10,
+		id = 91, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Spell_Shadow_Charm",
-		name = "Scholomance",
-		description = "Vaincre le sombre maître Gandling dans la Scholomance.",
-		criteria = { { type = "statistic", id = 15030, value = 1, text = "Sombre maître Gandling" } },
+		criteria = { { type = "statistic", id = 15030, value = 1 } }, -- Scholomance
 	},
 	{
-		id = 5021, category = 51, points = 10,
+		id = 92, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Spell_Shadow_RaiseDead",
-		name = "Stratholme",
-		description = "Vaincre le baron Vaillefendre dans Stratholme.",
-		criteria = { { type = "statistic", id = 15031, value = 1, text = "Baron Vaillefendre" } },
+		criteria = { { type = "statistic", id = 15031, value = 1 } }, -- Stratholme
 	},
 
 	---------------------------------------------------------------------------
 	-- Donjons de Forever : statistique « Morts de <boss> » >= 1
+	-- Salle des Thanes n'y est pas : sa statistique 63573 (Durgen) reste à 0
+	-- après le donjon terminé ; la victoire est comptée dans celle de Ragefeu.
 	---------------------------------------------------------------------------
-	-- 5101 Salle des Thanes : retiré. Sa statistique 63573 (Durgen) reste à 0
-	-- après le donjon terminé ; la victoire est comptée dans la statistique de
-	-- Ragefeu (15027). Id réservé.
 	{
-		id = 5102, category = 52, points = 10,
+		id = 93, category = CAT.DUNGEONS_FOREVER, points = 10,
 		icon = ICONS .. "INV_Misc_Head_Undead_01",
-		name = "Ruines de Lordaeron",
-		description = "Vaincre Rath'mael dans les ruines de Lordaeron.",
-		criteria = { { type = "statistic", id = 63571, value = 1, text = "Rath'mael" } },
+		criteria = { { type = "statistic", id = 63571, value = 1 } }, -- Ruines de Lordaeron
 	},
 	{
-		id = 5103, category = 52, points = 10,
+		id = 94, category = CAT.DUNGEONS_FOREVER, points = 10,
 		icon = ICONS .. "Spell_Arcane_PortalDalaran",
-		name = "Cité de Dalaran",
-		description = "Vaincre l'Ombre de l'archimage dans la cité de Dalaran.",
-		criteria = { { type = "statistic", id = 63572, value = 1, text = "Ombre de l'archimage" } },
+		criteria = { { type = "statistic", id = 63572, value = 1 } }, -- Cité de Dalaran
 	},
 	{
-		id = 5104, category = 52, points = 10,
+		id = 95, category = CAT.DUNGEONS_FOREVER, points = 10,
 		icon = ICONS .. "INV_Misc_Key_14",
-		name = "Prison d'Alcaz",
-		description = "Vaincre Rugiflamme dans la prison d'Alcaz.",
-		criteria = { { type = "statistic", id = 63575, value = 1, text = "Rugiflamme" } },
+		criteria = { { type = "statistic", id = 63575, value = 1 } }, -- Prison d'Alcaz
 	},
 	{
-		id = 5105, category = 52, points = 10,
+		id = 96, category = CAT.DUNGEONS_FOREVER, points = 10,
 		icon = ICONS .. "INV_Misc_Gem_Variety_02",
-		name = "Terrasse du Façonneur",
-		description = "Vaincre Nanaya sur la terrasse du Façonneur.",
-		criteria = { { type = "statistic", id = 63574, value = 1, text = "Nanaya" } },
+		criteria = { { type = "statistic", id = 63574, value = 1 } }, -- Terrasse du Façonneur
 	},
 }

@@ -8,7 +8,35 @@ ns.Database = Database
 
 -- À incrémenter si la forme des données change, pour pouvoir migrer les
 -- anciennes sauvegardes.
-local SCHEMA_VERSION = 1
+-- 2 : progression enregistrée par personnage (avant : meilleure valeur seule).
+-- 3 : hauts faits renumérotés de 1 à 96 (avant : 1001, 2001, 3001...).
+local SCHEMA_VERSION = 3
+
+-- Schéma 3 : [ancien id] = nouvel id. Sert uniquement à convertir une
+-- sauvegarde plus ancienne ; ne pas modifier.
+local RENUMBERED_IDS = {
+	[1001] = 1, [1002] = 2, [1003] = 3, [1004] = 4, [1005] = 5, [1006] = 6,
+	[2001] = 7, [2002] = 8, [2003] = 9, [2004] = 10, [2005] = 11,
+	[3001] = 12, [3002] = 13, [3003] = 14, [3004] = 15, [3005] = 16,
+	[3006] = 17, [3007] = 18, [3008] = 19, [3009] = 20, [3010] = 21,
+	[3011] = 22, [3012] = 23, [3013] = 24, [3014] = 25, [3015] = 26,
+	[3016] = 27, [3017] = 28, [3018] = 29, [3019] = 30, [3020] = 31,
+	[3021] = 32, [3022] = 33, [3023] = 34, [3050] = 35,
+	[3101] = 36, [3102] = 37, [3103] = 38, [3104] = 39, [3105] = 40,
+	[3106] = 41, [3107] = 42, [3108] = 43, [3109] = 44, [3110] = 45,
+	[3111] = 46, [3112] = 47, [3113] = 48, [3114] = 49, [3115] = 50,
+	[3117] = 51, [3118] = 52, [3119] = 53, [3120] = 54, [3150] = 55,
+	[3201] = 56, [3300] = 57,
+	[4001] = 58, [4002] = 59, [4003] = 60,
+	[4011] = 61, [4012] = 62, [4013] = 63, [4014] = 64, [4015] = 65,
+	[4016] = 66, [4017] = 67, [4018] = 68, [4019] = 69,
+	[4021] = 70, [4022] = 71, [4023] = 72,
+	[5002] = 73, [5003] = 74, [5004] = 75, [5005] = 76, [5006] = 77,
+	[5007] = 78, [5008] = 79, [5009] = 80, [5010] = 81, [5011] = 82,
+	[5012] = 83, [5013] = 84, [5014] = 85, [5015] = 86, [5016] = 87,
+	[5017] = 88, [5018] = 89, [5019] = 90, [5020] = 91, [5021] = 92,
+	[5102] = 93, [5103] = 94, [5104] = 95, [5105] = 96,
+}
 
 -- Complétées dans la sauvegarde quand elles manquent.
 local DEFAULTS = {
@@ -29,8 +57,9 @@ local DEFAULTS = {
 	-- Pour un haut fait rétroactif, la date est celle de la détection : la
 	-- vraie date d'obtention n'est pas connue.
 	completed = {},
-	-- Meilleure progression vue, tous personnages confondus :
-	-- [achievementID] = { [criteriaIndex] = quantité }
+	-- Meilleure valeur vue pour chaque personnage (clé : son GUID) :
+	-- [achievementID] = { [criteriaIndex] = { [guid] = quantité } }
+	-- Les personnages sont combinés à la lecture, voir Database:GetProgress.
 	progress = {},
 }
 
@@ -61,6 +90,30 @@ local function RemoveInvalidCompletions(completed)
 	end
 end
 
+-- Met à jour une sauvegarde d'un ancien schéma. La progression est effacée
+-- (le scan de la connexion la relit) ; les hauts faits obtenus sont gardés.
+--   2 : la progression du schéma 1 ne dit pas de quel personnage elle vient.
+--   3 : les hauts faits obtenus passent à leur nouvel id ; un id inconnu
+--       (haut fait retiré avant la v1) est abandonné.
+local function Migrate(db)
+	local version = db.schemaVersion or SCHEMA_VERSION
+	if version < 2 then
+		db.progress = {}
+	end
+	if version < 3 then
+		local renumbered = {}
+		for oldID, record in pairs(type(db.completed) == "table" and db.completed or {}) do
+			local newID = RENUMBERED_IDS[oldID]
+			if newID then
+				renumbered[newID] = record
+			end
+		end
+		db.completed = renumbered
+		db.progress = {}
+	end
+	db.schemaVersion = SCHEMA_VERSION
+end
+
 -- nil jusqu'à ADDON_LOADED.
 local data = nil
 
@@ -69,6 +122,7 @@ function Database:Init()
 	if type(HFForeverDB) ~= "table" then
 		HFForeverDB = {}
 	end
+	Migrate(HFForeverDB)
 	ApplyDefaults(HFForeverDB, DEFAULTS)
 	RemoveInvalidCompletions(HFForeverDB.completed)
 	data = HFForeverDB
@@ -134,23 +188,63 @@ function Database:SetCompleted(achievementID, character, retroactive)
 	}
 end
 
--- 0 si aucune progression enregistrée.
-function Database:GetProgress(achievementID, criteriaIndex)
+-- Progression d'un critère, tous personnages confondus. combine vient du
+-- critère (Data/Achievements.lua) : "sum" additionne les personnages, sinon
+-- le meilleur personnage compte. 0 si aucune progression enregistrée.
+function Database:GetProgress(achievementID, criteriaIndex, combine)
 	local entry = data.progress[achievementID]
-	return entry and entry[criteriaIndex] or 0
+	local perCharacter = entry and entry[criteriaIndex]
+	if type(perCharacter) ~= "table" then
+		return 0
+	end
+	local result = 0
+	for _, quantity in pairs(perCharacter) do
+		if type(quantity) == "number" then
+			if combine == "sum" then
+				result = result + quantity
+			else
+				result = math.max(result, quantity)
+			end
+		end
+	end
+	return result
 end
 
--- Garde la meilleure valeur vue et la renvoie.
-function Database:UpdateProgress(achievementID, criteriaIndex, quantity)
+-- Garde la meilleure valeur vue pour ce personnage, puis renvoie la
+-- progression combinée (voir GetProgress).
+function Database:UpdateProgress(achievementID, criteriaIndex, guid, quantity, combine)
 	local entry = data.progress[achievementID]
 	if not entry then
 		entry = {}
 		data.progress[achievementID] = entry
 	end
-	if quantity > (entry[criteriaIndex] or 0) then
-		entry[criteriaIndex] = quantity
+	local perCharacter = entry[criteriaIndex]
+	if type(perCharacter) ~= "table" then
+		perCharacter = {}
+		entry[criteriaIndex] = perCharacter
 	end
-	return entry[criteriaIndex] or 0
+	if quantity > (perCharacter[guid] or 0) then
+		perCharacter[guid] = quantity
+	end
+	return self:GetProgress(achievementID, criteriaIndex, combine)
+end
+
+-- Nombre de personnages différents vus dans la progression (/hff etat).
+function Database:GetNumCharacters()
+	local seen, count = {}, 0
+	for _, entry in pairs(data.progress) do
+		for _, perCharacter in pairs(entry) do
+			if type(perCharacter) == "table" then
+				for guid in pairs(perCharacter) do
+					if not seen[guid] then
+						seen[guid] = true
+						count = count + 1
+					end
+				end
+			end
+		end
+	end
+	return count
 end
 
 -- Efface hauts faits et progression ; les réglages sont conservés.
