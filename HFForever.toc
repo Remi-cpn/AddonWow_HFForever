@@ -6,6 +6,8 @@
 # Remplacé par le nom du tag (v1.0.0...) dans le zip publié par le packager.
 ## Version: @project-version@
 ## X-License: MIT
+# Projet CurseForge : le packager y envoie le zip.
+## X-Curse-Project-ID: 1798686
 ## SavedVariables: HFForeverDB
 ## IconTexture: Interface\AddOns\HFForever\Media\HFForever_Icon
 # Rangé avec les addons de collection dans la liste des addons (mêmes
