@@ -10,7 +10,7 @@ Base commune : messages d'addon (`C_ChatInfo.SendAddonMessage`), avec un protoco
 ## Interface
 - Logo à retravailler (`docs/HFForever_Logo.png`, `Media/HFForever_Icon.tga`) : acceptable pour la v1, pas parfait.
 - Toasts déplaçables (position sauvegardée), en plus de la position par défaut au-dessus des alertes Blizzard.
-- Autres langues que le français et l'anglais : un `Locales/xxXX.lua` sur le modèle de `frFR.lua` (interface), et un `Locales/Achievements_xxXX.lua` chargé après `Achievements_enUS.lua`, qui remplace `ns.Data.translation` sur ce client.
+- Autres langues que le français et l'anglais : un `Locales/xxXX.lua` sur le modèle de `frFR.lua`, avec l'interface et les dictionnaires par id (`L.ACHIEVEMENT_NAMES`, etc.) passés à `Override`.
 
 ## Hauts faits
 - Avant tout haut fait « à nous » (détecté par un événement en direct, pas par une statistique) : export / import de la sauvegarde par un texte à copier (`/hff export`, `/hff import`), et un indicateur dans la fenêtre pour ces hauts faits. La sauvegarde (`WTF/Account/<compte>/SavedVariables/HFForever.lua`) serait leur seule trace : elle se perd en supprimant `WTF`, sur un autre PC ou un autre compte WoW. Les hauts faits actuels, eux, se redétectent.
@@ -19,4 +19,4 @@ Base commune : messages d'addon (`C_ChatInfo.SendAddonMessage`), avec un protoco
 - Explorer Reflet-de-Lune : piste `C_MapExplorationInfo.GetExploredAreaIDsAtPosition`.
 - Catégorie Raids : statistiques déjà repérées (Onyxia 1098, roi sauvage 63580, Sonya Sanctombre 63581).
 - HF bonus (ex. Lyn l'Ignoré, statistique 63589).
-- Autres catégories prévues : JcJ, Réputation, Tours de force.
+- Autres catégories prévues : Tours de force, Combat (victimes, morts). JcJ et Réputation sont faites.
