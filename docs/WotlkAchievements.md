@@ -48,7 +48,7 @@ fenêtre du jeu.
 |  | 15 | De nombreux familiers | Collecter 15 mascottes différentes. | 10 |
 |  | 16 | Qui a commandé une salade de phalanges ? | Obtenir un score de 400 avec la compétence Mains nues. | 10 |
 |  | 545 | Coupe et brushing | Aller dans un salon de coiffure et changer de coupe. | 10 |
-|  | 546 | Chambre forte | Acheter 7 emplacements de sac supplémentaires. | 10 |
+| 🟢 | 546 | Chambre forte | Acheter 7 emplacements de sac supplémentaires. | 10 |
 |  | 556 | Qualité épique | Équiper un objet de niveau 213 et de qualité épique dans chaque emplacement. | 25 |
 |  | 557 | Qualité supérieure | Équiper un objet de niveau 187 et de qualité supérieure dans chaque emplacement. | 10 |
 |  | 558 | Cupide | Gagner un jet de cupidité sur un objet supérieur au niveau 185 et de qualité supérieure ou mieux en obtenant 100. | 10 |
@@ -64,11 +64,11 @@ fenêtre du jeu.
 |  | 1020 | Dix tabards | Equiper 10 tabards différents. | 10 |
 |  | 1021 | Timbré de tabards | Equiper 25 tabards différents. Récompense : Récompense : tabard des hauts faits. | 10 |
 |  | 1165 | Ma réserve est gigantesque ! | Équiper le Sac "gigantesque" de Haris Pilton. | 10 |
-|  | 1176 | Le fric, c'est chic | Ramasser 100 pièces d'or en butin. | 10 |
-|  | 1177 | Le fric, c'est chic | Ramasser 1 000 pièces d'or en butin. | 10 |
-|  | 1178 | Le fric, c'est chic | Ramasser 5 000 pièces d'or en butin. | 10 |
-|  | 1180 | Le fric, c'est chic | Ramasser 10 000 pièces d'or en butin. | 10 |
-|  | 1181 | Le fric, c'est chic | Ramasser 25 000 pièces d'or en butin. | 10 |
+| 🟢 | 1176 | Le fric, c'est chic | Ramasser 100 pièces d'or en butin. | 10 |
+| 🟢 | 1177 | Le fric, c'est chic | Ramasser 1 000 pièces d'or en butin. | 10 |
+| 🟢 | 1178 | Le fric, c'est chic | Ramasser 5 000 pièces d'or en butin. | 10 |
+| 🟢 | 1180 | Le fric, c'est chic | Ramasser 10 000 pièces d'or en butin. | 10 |
+| 🟢 | 1181 | Le fric, c'est chic | Ramasser 25 000 pièces d'or en butin. | 10 |
 |  | 1187 | Le maître des clés | Obtenir les clés listées ci-dessous. | 10 |
 |  | 1206 | À tous les écureuils que j'ai aimés, avant | Montrer tout votre /amour aux bestioles d'Azeroth. | 10 |
 |  | 1244 | Bonne lecture | Lire les livres listés ci-dessous. | 10 |
@@ -83,12 +83,12 @@ fenêtre du jeu.
 |  | 2078 | Mammouth de voyage de la toundra | Obtenir un mammouth de voyage de la toundra auprès de Mei Francis à Dalaran. | 10 |
 |  | 2084 | Anneau du Kirin Tor | Acheter une chevalière du Kirin Tor, une bague du Kirin Tor, un jonc du Kirin Tor ou un anneau du Kirin Tor à Dalaran. | 10 |
 |  | 2097 | T'as vu ma bécane ! | Obtenir une bécane de mekgénieur ou une mécabécane. | 10 |
-|  | 2141 | Gardien d'écuries | Obtenir 10 montures. | 10 |
-|  | 2142 | L'écurie se remplit | Obtenir 25 montures. | 10 |
-|  | 2143 | À la tête de la cavalerie | Obtenir 50 montures. Récompense : Récompense : drake albinos. | 10 |
+| 🟢 | 2141 | Gardien d'écuries | Obtenir 10 montures. | 10 |
+| 🟢 | 2142 | L'écurie se remplit | Obtenir 25 montures. | 10 |
+| 🟢 | 2143 | À la tête de la cavalerie | Obtenir 50 montures. Récompense : Récompense : drake albinos. | 10 |
 |  | 2516 | La chasse au p'tit gibier | Collecter 75 mascottes différentes. Récompense : Récompense : morceau de sel du petit faon. | 10 |
-|  | 2536 | Une montagne de montures (Alliance) | Obtenir 100 montures. Récompense : Récompense : faucon-dragon de monte bleu. | 10 |
-|  | 2537 | Une montagne de montures (Horde) | Obtenir 100 montures. Récompense : Récompense : faucon-dragon de monte rouge. | 10 |
+| 🟢 | 2536 | Une montagne de montures (Alliance) | Obtenir 100 montures. Récompense : Récompense : faucon-dragon de monte bleu. | 10 |
+| 🟢 | 2537 | Une montagne de montures (Horde) | Obtenir 100 montures. Récompense : Récompense : faucon-dragon de monte rouge. | 10 |
 |  | 2556 | Désinsectisation | Tuer les nuisibles listés ci-dessous. | 10 |
 |  | 2557 | À tous les écureuils qui ont partagé ma vie | Montrer tout votre /amour à encore plus de bestioles d'Azeroth. | 10 |
 |  | 2716 | Double spécialisation des talents | Rendez-vous auprès de votre maître de classe à partir du niveau 40 et activez la double spécialisation des talents. | 10 |
@@ -112,7 +112,7 @@ fenêtre du jeu.
 |  | 976 | 500 quêtes journalières achevées | Achever 500 quêtes journalières. | 10 |
 |  | 977 | 1 000 quêtes journalières achevées | Achever 1 000 quêtes journalières. | 10 |
 |  | 978 | 3 000 quêtes achevées | Achever 3 000 quêtes. Récompense : Titre : chercheur. | 50 |
-|  | 1182 | Gagne-pain | Obtenir 10 000 pièces d'or en récompenses de quêtes. | 10 |
+| 🟢 | 1182 | Gagne-pain | Obtenir 10 000 pièces d'or en récompenses de quêtes. | 10 |
 |  | 1576 | De sang et d'angoisse | Achever les quêtes de l'arène de sang à Nagrand et les quêtes de l'amphithéatre de l'Angoisse à Zul'Drak. | 10 |
 |  | 1681 | Maître des traditions (Alliance) | Accomplir les hauts faits de quêtes listés ci-dessous. Récompense : Récompenses : titre et tabard de maître des traditions. | 10 |
 |  | 1682 | Maître des traditions (Horde) | Accomplir les hauts faits de quêtes listés ci-dessous. Récompense : Récompenses : titre et tabard de maître des traditions. | 10 |
@@ -198,19 +198,19 @@ fenêtre du jeu.
 |  | 229 | Le Faucheur | Obtenir 30 victoires honorables au cours d'un même champ de bataille. | 10 |
 |  | 230 | Maître de guerre (Alliance) | Accomplir les hauts faits de champ de bataille listés ci-dessous. Récompense : Titre : maître de guerre. | 50 |
 |  | 231 | Boulet de démolition | Asséner 20 coups fatals sans mourir au cours de la même bataille sur n'importe quel champ de bataille. | 10 |
-|  | 238 | Une victoire honorable | Obtenir une victoire honorable. | 10 |
-|  | 239 | 25 000 victoires honorables | Obtenir 25 000 victoires honorables. | 10 |
+| 🟢 | 238 | Une victoire honorable | Obtenir une victoire honorable. | 10 |
+| 🟢 | 239 | 25 000 victoires honorables | Obtenir 25 000 victoires honorables. | 10 |
 |  | 245 | Ça, c'est la classe | Asséner un coup fatal apportant une victoire honorable sur un membre de chaque classe. | 10 |
 |  | 246 | Connais ton ennemi... (Alliance) | Asséner un coup fatal apportant une victoire honorable sur cinq représentants de différentes races. | 10 |
 |  | 247 | Faites l'amour, pas la guerre | Faire l'emote /serrer sur un ennemi mort avant qu'il ne libère l'esprit. | 10 |
 |  | 388 | Défenseur de la ville (Alliance) | Tuer 50 personnages ennemis dans n'importe laquelle de vos capitales. | 10 |
 |  | 389 | Maître de l'arène des Gurubashi | Obtenir le bijou Maître de l'arène dans l'arène des Gurubashi. | 10 |
 |  | 396 | Grand maître de l'arène des Gurubashi | Achever la quête de Court John Mithril pour obtenir le bijou Grand maître de l'arène. | 10 |
-|  | 509 | 10 000 victoires honorables | Obtenir 10 000 victoires honorables. | 10 |
-|  | 512 | 5 000 victoires honorables | Obtenir 5 000 victoires honorables. | 10 |
-|  | 513 | 100 victoires honorables | Obtenir 100 victoires honorables. | 10 |
-|  | 515 | 500 victoires honorables | Obtenir 500 victoires honorables. | 10 |
-|  | 516 | 1 000 victoires honorables | Obtenir 1 000 victoires honorables. | 10 |
+| 🟢 | 509 | 10 000 victoires honorables | Obtenir 10 000 victoires honorables. | 10 |
+| 🟢 | 512 | 5 000 victoires honorables | Obtenir 5 000 victoires honorables. | 10 |
+| 🟢 | 513 | 100 victoires honorables | Obtenir 100 victoires honorables. | 10 |
+| 🟢 | 515 | 500 victoires honorables | Obtenir 500 victoires honorables. | 10 |
+| 🟢 | 516 | 1 000 victoires honorables | Obtenir 1 000 victoires honorables. | 10 |
 |  | 603 | Courroux de la Horde (Horde) | Tuer 5 personnages de l'Alliance dans chacune des villes listées ci-dessous. | 10 |
 |  | 604 | Courroux de l'Alliance (Alliance) | Tuer 5 personnages de la Horde dans chacune des villes listées ci-dessous. | 10 |
 |  | 610 | Mort au chef de guerre ! (Alliance) | Tuer Thrall. | 10 |
@@ -225,16 +225,16 @@ fenêtre du jeu.
 |  | 619 | Pour la Horde ! (Horde) | Tuer les chefs de l'Alliance. Récompense : Récompense : ours de guerre noir. | 20 |
 |  | 700 | Liberté de la Horde (Horde) | Obtenir un insigne ou un médaillon de la Horde. | 10 |
 |  | 701 | Liberté de l'Alliance (Alliance) | Obtenir un insigne ou un médaillon de l'Alliance. | 10 |
-|  | 714 | Conquérant (Horde) | Être exalté auprès des factions du goulet des Chanteguerres, du bassin Arathi et de la vallée d'Alterac. Récompense : Titre : conquérant. | 20 |
+| 🟢 | 714 | Conquérant (Horde) | Être exalté auprès des factions du goulet des Chanteguerres, du bassin Arathi et de la vallée d'Alterac. Récompense : Titre : conquérant. | 20 |
 |  | 727 | Voilà la cavalerie | Obtenir l'une des montures de guerre par le système d'honneur. | 10 |
-|  | 869 | 50 000 victoires honorables | Obtenir 50 000 victoires honorables. | 10 |
-|  | 870 | 100 000 victoires honorables | Obtenir 100 000 victoires honorables. Récompense : Titre : de la Horde ou de l'Alliance. | 10 |
-|  | 907 | Le justicier (Alliance) | Être exalté auprès des factions du goulet des Chanteguerres, du bassin Arathi et de la vallée d'Alterac. Récompense : Titre : justicier. | 20 |
+| 🟢 | 869 | 50 000 victoires honorables | Obtenir 50 000 victoires honorables. | 10 |
+| 🟢 | 870 | 100 000 victoires honorables | Obtenir 100 000 victoires honorables. Récompense : Titre : de la Horde ou de l'Alliance. | 10 |
+| 🟢 | 907 | Le justicier (Alliance) | Être exalté auprès des factions du goulet des Chanteguerres, du bassin Arathi et de la vallée d'Alterac. Récompense : Titre : justicier. | 20 |
 |  | 908 | Appel aux armes ! (Alliance) | Achever les versions de niveau 80 de chacune des quêtes journalières de champ de bataille Appel aux armes listées ci-dessous. | 10 |
 |  | 909 | Appel aux armes ! (Horde) | Achever les versions de niveau 80 de chacune des quêtes journalières de champ de bataille Appel aux armes listées ci-dessous. | 10 |
 |  | 1005 | Connaître son ennemi (Horde) | Asséner un coup fatal apportant une victoire honorable sur cinq races différentes. | 10 |
 |  | 1006 | Défenseur de la ville (Horde) | Tuer 50 personnages ennemis dans n'importe laquelle de vos capitales. | 10 |
-|  | 1157 | Duel-icieux | Gagner un duel contre un autre personnage. | 10 |
+| 🟢 | 1157 | Duel-icieux | Gagner un duel contre un autre personnage. | 10 |
 |  | 1175 | Maître de guerre (Horde) | Accomplir les hauts faits de champ de bataille listés ci-dessous. Récompense : Titre : maître de guerre. | 50 |
 |  | 2016 | Vétéran grisé (Alliance) | Achever les quêtes JcJ journalières des Grisonnes listées ci-dessous. | 10 |
 |  | 2017 | Vétéran grisé (Horde) | Achever les quêtes JcJ journalières des Grisonnes listées ci-dessous. | 10 |
@@ -266,19 +266,19 @@ fenêtre du jeu.
 
 | Statut | id | Nom | Description | Pts |
 | --- | --- | --- | --- | --- |
-|  | 166 | Victoire dans le goulet des Chanteguerres | Gagner dans le goulet des Chanteguerres. | 10 |
-|  | 167 | Vétéran du goulet des Chanteguerres | Obtenir 100 victoires dans le goulet des Chanteguerres. | 10 |
+| 🟢 | 166 | Victoire dans le goulet des Chanteguerres | Gagner dans le goulet des Chanteguerres. | 10 |
+| 🟢 | 167 | Vétéran du goulet des Chanteguerres | Obtenir 100 victoires dans le goulet des Chanteguerres. | 10 |
 |  | 168 | Goulet des Chanteguerres parfait | Gagner une bataille pour le goulet des Chanteguerres par 3 à 0. | 10 |
-|  | 199 | Capture du drapeau | Porter et capturer soi-même le drapeau dans le goulet des Chanteguerres. | 10 |
-|  | 200 | Défenseur obstiné | Ramener 50 drapeaux en défense dans le goulet des Chanteguerres. | 10 |
+| 🟢 | 199 | Capture du drapeau | Porter et capturer soi-même le drapeau dans le goulet des Chanteguerres. | 10 |
+| 🟢 | 200 | Défenseur obstiné | Ramener 50 drapeaux en défense dans le goulet des Chanteguerres. | 10 |
 |  | 201 | Goulet expédié | Gagner une bataille pour le goulet des Chanteguerres en moins de 7 minutes. | 10 |
 |  | 202 | À toute vitesse (Alliance) | Prendre le drapeau et le capturer en moins de 75 secondes. | 10 |
 |  | 203 | Pas de ça chez moi (Alliance) | Dans un même goulet des Chanteguerres, tuer 2 porteurs de drapeau avant qu'ils ne quittent la salle du drapeau des Ailes-d'argent. | 10 |
 |  | 204 | L'homme de fer | Dans une même bataille pour le goulet des Chanteguerres, porter et capturer 3 fois le drapeau sans mourir. | 10 |
 |  | 206 | Défenseur suprême (Alliance) | Tuer 100 porteurs de drapeau dans le goulet des Chanteguerres. | 10 |
 |  | 207 | Sauveur du jour | Tuer l'ennemi qui porte le drapeau dans la pièce du drapeau du camp ennemi, alors que le drapeau ennemi est dans leur base et sous leur contrôle. | 10 |
-|  | 712 | Voltigeur Chanteguerre (Horde) | Être exalté auprès des voltigeurs Chanteguerre. | 10 |
-|  | 713 | Sentinelle d'Aile-argent (Alliance) | Être exalté auprès des sentinelles d'Aile-argent. | 10 |
+| 🟢 | 712 | Voltigeur Chanteguerre (Horde) | Être exalté auprès des voltigeurs Chanteguerre. | 10 |
+| 🟢 | 713 | Sentinelle d'Aile-argent (Alliance) | Être exalté auprès des sentinelles d'Aile-argent. | 10 |
 |  | 872 | Défenseur effréné | Ramener 5 drapeaux dans une même bataille pour le goulet des Chanteguerres. | 10 |
 |  | 1172 | Maîtrise du goulet des Chanteguerres (Alliance) | Achever les hauts faits du goulet des Chanteguerres listés ci-dessous. | 25 |
 |  | 1173 | Maîtrise du goulet des Chanteguerres (Horde) | Achever les hauts faits du goulet des Chanteguerres listés ci-dessous. | 25 |
@@ -292,19 +292,19 @@ fenêtre du jeu.
 | Statut | id | Nom | Description | Pts |
 | --- | --- | --- | --- | --- |
 |  | 73 | Déshonorer le bassin | Attaquer 3 bases dans une même bataille pour le bassin Arathi. | 10 |
-|  | 154 | Victoire dans le bassin Arathi | Gagner dans le bassin Arathi. | 10 |
-|  | 155 | Vétéran du bassin Arathi | Obtenir 100 victoires au bassin Arathi. | 10 |
+| 🟢 | 154 | Victoire dans le bassin Arathi | Gagner dans le bassin Arathi. | 10 |
+| 🟢 | 155 | Vétéran du bassin Arathi | Obtenir 100 victoires au bassin Arathi. | 10 |
 |  | 156 | Domination territoriale | Gagner 10 batailles dans le bassin Arathi en contrôlant les 5 drapeaux. | 10 |
-|  | 157 | À la rescousse ! | Venir 50 fois à la rescousse d'une base du bassin Arathi en récupérant le drapeau. | 10 |
-|  | 158 | Cap ou pas cap ? | Capturer 50 drapeaux au bassin Arathi. | 10 |
+| 🟢 | 157 | À la rescousse ! | Venir 50 fois à la rescousse d'une base du bassin Arathi en récupérant le drapeau. | 10 |
+| 🟢 | 158 | Cap ou pas cap ? | Capturer 50 drapeaux au bassin Arathi. | 10 |
 |  | 159 | Une formalité à régler | Gagner dans le bassin Arathi en 6 minutes. | 10 |
 |  | 161 | Victoire arrachée | Rattraper un retard de 500 ressources dans une bataille pour le bassin Arathi et obtenir la victoire. | 10 |
 |  | 162 | C'était gagné d'avance *hum hum* | Gagner dans le bassin Arathi avec une différence de 10 points (1600 à 1590). | 10 |
 |  | 165 | Bassin Arathi parfait | Gagner dans le bassin Arathi par 1600 à 0. | 20 |
 |  | 583 | Vedette du bassin Arathi | Attaquer et défendre 2 bases dans une même bataille pour le bassin Arathi. | 20 |
 |  | 584 | Assassin du bassin Arathi | Obtenir 5 victoires honorables dans chacune des bases dans une même bataille pour le bassin Arathi. | 20 |
-|  | 710 | Profanateur (Horde) | Être exalté auprès des Profanateurs réprouvés. | 10 |
-|  | 711 | Chevalier d'Arathor (Alliance) | Être exalté auprès de la ligue d'Arathor. | 10 |
+| 🟢 | 710 | Profanateur (Horde) | Être exalté auprès des Profanateurs réprouvés. | 10 |
+| 🟢 | 711 | Chevalier d'Arathor (Alliance) | Être exalté auprès de la ligue d'Arathor. | 10 |
 |  | 1153 | La défense à tout prix | Défendre 3 bases dans une même bataille pour le bassin Arathi. | 10 |
 |  | 1169 | Maîtrise du bassin Arathi (Alliance) | Accomplir les hauts faits du bassin Arathi listés ci-dessous. | 25 |
 |  | 1170 | Maîtrise du bassin Arathi (Horde) | Accomplir les hauts faits du bassin Arathi listés ci-dessous. | 25 |
@@ -331,11 +331,11 @@ fenêtre du jeu.
 
 | Statut | id | Nom | Description | Pts |
 | --- | --- | --- | --- | --- |
-|  | 218 | Victoire dans la vallée d'Alterac | Gagner dans la vallée d'Alterac. | 10 |
-|  | 219 | Vétéran de la vallée d'Alterac | Obtenir 100 victoires dans la vallée d'Alterac. | 10 |
+| 🟢 | 218 | Victoire dans la vallée d'Alterac | Gagner dans la vallée d'Alterac. | 10 |
+| 🟢 | 219 | Vétéran de la vallée d'Alterac | Obtenir 100 victoires dans la vallée d'Alterac. | 10 |
 |  | 220 | La perfection selon les Foudrepiques (Alliance) | Gagner la bataille pour la vallée d'Alterac sans perdre une tour ou un capitaine. Vous devez également contrôler toutes les tours de la Horde. | 20 |
 |  | 221 | Pilleur de tombes d'Alterac | Prendre 50 cimetières dans la vallée d'Alterac. | 10 |
-|  | 222 | Défense des tours | Défendre 50 tours dans la vallée d'Alterac. | 10 |
+| 🟢 | 222 | Défense des tours | Défendre 50 tours dans la vallée d'Alterac. | 10 |
 |  | 223 | La proie la plus faible | Dans la vallée d'Alterac, tuer un ennemi dans le Champ sanglant avant qu'il ne soit descendu de monture. | 10 |
 |  | 224 | Défenseur loyal (Horde) | Dans la vallée d'Alterac, tuer 50 ennemis dans le hall des Loups-de-givre. | 10 |
 |  | 225 | Chaque détail compte (Alliance) | Gagner dans la vallée d'Alterac tandis que votre équipe contrôle les deux mines. | 10 |
@@ -343,8 +343,8 @@ fenêtre du jeu.
 |  | 582 | Vedette de la vallée d'Alterac | Dans une même bataille pour la vallée d'Alterac, attaquer un cimetière, défendre un cimetière, attaquer une tour, défendre une tour et tuer quelqu'un sur le Champ sanglant. | 20 |
 |  | 706 | Hurleur loup-de-givre (Horde) | Obtenir un hurleur loup-de-givre. | 10 |
 |  | 707 | Destrier de bataille foudrepique (Alliance) | Obtenir un destrier de bataille foudrepique. | 10 |
-|  | 708 | Héros du clan Loup-de-givre (Horde) | Être exalté auprès du clan Loup-de-givre. | 10 |
-|  | 709 | Héros de la garde Foudrepique (Alliance) | Être exalté auprès de la garde Foudrepique. | 10 |
+| 🟢 | 708 | Héros du clan Loup-de-givre (Horde) | Être exalté auprès du clan Loup-de-givre. | 10 |
+| 🟢 | 709 | Héros de la garde Foudrepique (Alliance) | Être exalté auprès de la garde Foudrepique. | 10 |
 |  | 873 | La perfection selon les Loups-de-givre (Horde) | Gagner une bataille pour la vallée d'Alterac sans perdre une tour ou un capitaine. Vous devez également contrôler toutes les tours de l'Alliance. | 20 |
 |  | 1151 | Défenseur loyal (Alliance) | Dans la vallée d'Alterac, tuer 50 ennemis dans le hall des Foudrepiques. | 10 |
 |  | 1164 | Chaque détail compte (Horde) | Gagner dans la vallée d'Alterac tandis que votre équipe contrôle les deux mines. | 10 |
@@ -536,8 +536,8 @@ fenêtre du jeu.
 
 | Statut | id | Nom | Description | Pts |
 | --- | --- | --- | --- | --- |
-|  | 131 | Compagnon secouriste | Devenir un compagnon secouriste. | 10 |
-|  | 132 | Expert secouriste | Devenir expert secouriste. | 10 |
+| 🟢 | 131 | Compagnon secouriste | Devenir un compagnon secouriste. | 10 |
+| 🟢 | 132 | Expert secouriste | Devenir expert secouriste. | 10 |
 | 🟢 | 133 | Artisan secouriste | Devenir artisan secouriste. | 10 |
 |  | 134 | Maître secouriste | Devenir un maître secouriste. | 10 |
 |  | 135 | Grand maître secouriste | Devenir un grand maître secouriste. | 10 |
@@ -548,8 +548,8 @@ fenêtre du jeu.
 
 | Statut | id | Nom | Description | Pts |
 | --- | --- | --- | --- | --- |
-|  | 121 | Compagnon cuisinier | Devenir un compagnon cuisinier. | 10 |
-|  | 122 | Expert cuisinier | Devenir un expert cuisinier. | 10 |
+| 🟢 | 121 | Compagnon cuisinier | Devenir un compagnon cuisinier. | 10 |
+| 🟢 | 122 | Expert cuisinier | Devenir un expert cuisinier. | 10 |
 | 🟢 | 123 | Artisan cuisinier | Devenir un artisan cuisinier. | 10 |
 |  | 124 | Maître cuisinier | Devenir un maître cuisinier. | 10 |
 |  | 125 | Grand maître cuisinier | Devenir un grand maître cuisinier. | 10 |
@@ -583,8 +583,8 @@ fenêtre du jeu.
 
 | Statut | id | Nom | Description | Pts |
 | --- | --- | --- | --- | --- |
-|  | 126 | Compagnon pêcheur | Devenir un compagnon pêcheur. | 10 |
-|  | 127 | Expert pêcheur | Devenir un expert pêcheur. | 10 |
+| 🟢 | 126 | Compagnon pêcheur | Devenir un compagnon pêcheur. | 10 |
+| 🟢 | 127 | Expert pêcheur | Devenir un expert pêcheur. | 10 |
 | 🟢 | 128 | Artisan pêcheur | Devenir un artisan pêcheur. | 10 |
 |  | 129 | Maître pêcheur | Devenir un maître pêcheur. | 10 |
 |  | 130 | Grand maître pêcheur | Devenir un grand maître pêcheur. | 10 |
@@ -601,12 +601,12 @@ fenêtre du jeu.
 |  | 1257 | Chiffonnier | Pêcher avec succès dans chacun des débris listés ci-dessous. | 10 |
 |  | 1516 | Pêcheur accompli | Accomplir les hauts faits de pêche listés ci-dessous. Récompense : Titre : loup de mer. | 10 |
 |  | 1517 | Pêcheur en Norfendre | Pêcher un poisson dans chacun des bancs de poissons listés ci-dessous. | 10 |
-|  | 1556 | 25 poissons | Pêcher 25 objets. | 10 |
-|  | 1557 | 50 poissons | Pêcher 50 objets. | 10 |
-|  | 1558 | 100 poissons | Pêcher 100 objets. | 10 |
-|  | 1559 | 250 poissons | Pêcher 250 objets. | 10 |
-|  | 1560 | 500 poissons | Pêcher 500 objets. | 10 |
-|  | 1561 | 1 000 poissons | Pêcher 1 000 objets. | 10 |
+| 🟢 | 1556 | 25 poissons | Pêcher 25 objets. | 10 |
+| 🟢 | 1557 | 50 poissons | Pêcher 50 objets. | 10 |
+| 🟢 | 1558 | 100 poissons | Pêcher 100 objets. | 10 |
+| 🟢 | 1559 | 250 poissons | Pêcher 250 objets. | 10 |
+| 🟢 | 1560 | 500 poissons | Pêcher 500 objets. | 10 |
+| 🟢 | 1561 | 1 000 poissons | Pêcher 1 000 objets. | 10 |
 |  | 1836 | Vieux malin | Pêcher Vieux malin à Orgrimmar. | 10 |
 |  | 1837 | Vieux gueule-de-fer | Pêcher Vieux gueule-de-fer dans Forgefer. | 10 |
 |  | 1957 | Une fontaine en or | Pêcher les pièces d'or listées ci-dessous dans la fontaine de Dalaran. | 10 |
@@ -621,31 +621,31 @@ fenêtre du jeu.
 
 | Statut | id | Nom | Description | Pts |
 | --- | --- | --- | --- | --- |
-|  | 518 | 30 réputations exaltées | Monter 30 réputations jusqu'à Exalté. | 10 |
-|  | 519 | 25 réputations exaltées | Monter 25 réputations jusqu'à Exalté. | 10 |
-|  | 520 | 20 réputations exaltées | Monter 20 réputations jusqu'à Exalté. | 10 |
-|  | 521 | 15 réputations exaltées | Monter 15 réputations jusqu'à Exalté. | 10 |
-|  | 522 | Quelqu'un m'aime | Monter une réputation jusqu'à Exalté. | 10 |
-|  | 523 | 5 réputations exaltées | Monter 5 réputations jusqu'à Exalté. | 10 |
-|  | 524 | 10 réputations exaltées | Monter 10 réputations jusqu'à Exalté. | 10 |
-|  | 762 | Ambassadeur de la Horde (Horde) | Être exalté auprès des 5 races de sa faction. Récompense : Titre : ambassadeur. | 10 |
+| 🟢 | 518 | 30 réputations exaltées | Monter 30 réputations jusqu'à Exalté. | 10 |
+| 🟢 | 519 | 25 réputations exaltées | Monter 25 réputations jusqu'à Exalté. | 10 |
+| 🟢 | 520 | 20 réputations exaltées | Monter 20 réputations jusqu'à Exalté. | 10 |
+| 🟢 | 521 | 15 réputations exaltées | Monter 15 réputations jusqu'à Exalté. | 10 |
+| 🟢 | 522 | Quelqu'un m'aime | Monter une réputation jusqu'à Exalté. | 10 |
+| 🟢 | 523 | 5 réputations exaltées | Monter 5 réputations jusqu'à Exalté. | 10 |
+| 🟢 | 524 | 10 réputations exaltées | Monter 10 réputations jusqu'à Exalté. | 10 |
+| 🟢 | 762 | Ambassadeur de la Horde (Horde) | Être exalté auprès des 5 races de sa faction. Récompense : Titre : ambassadeur. | 10 |
 |  | 942 | Diplomate (Alliance) | Augmenter votre réputation d'inamical à exalté auprès des Grumegueules, de Sporeggar et des Kurenaï. Récompense : Titre : diplomate. | 25 |
 |  | 943 | Diplomate (Horde) | Augmenter votre réputation d'inamical à exalté auprès des Grumegueules, de Sporeggar et des Mag'har. Récompense : Titre : diplomate. | 25 |
 |  | 945 | Le champion d'argent | Être exalté auprès de l'Aube d'argent et de la Croisade d'argent. Récompense : Titre : champion d'argent. | 25 |
-|  | 948 | Ambassadeur de l'Alliance (Alliance) | Être exalté auprès des 5 races de sa faction. Récompense : Titre : ambassadeur. | 10 |
+| 🟢 | 948 | Ambassadeur de l'Alliance (Alliance) | Être exalté auprès des 5 races de sa faction. Récompense : Titre : ambassadeur. | 10 |
 |  | 953 | Gardien de Cénarius | Être exalté auprès du Cercle cénarien et de l'Expédition cénarienne. Récompense : Titre : gardien de Cénarius. | 25 |
-|  | 1014 | 35 réputations exaltées | Être exalté auprès de 35 factions. | 10 |
-|  | 1015 | 40 réputations exaltées | Être exalté auprès de 40 factions. | 10 |
+| 🟢 | 1014 | 35 réputations exaltées | Être exalté auprès de 35 factions. | 10 |
+| 🟢 | 1015 | 40 réputations exaltées | Être exalté auprès de 40 factions. | 10 |
 
 ### Classique (5)
 
 | Statut | id | Nom | Description | Pts |
 | --- | --- | --- | --- | --- |
-|  | 944 | Il y a de l'amour dans ce tunnel | Être exalté auprès des Grumegueules. | 15 |
-|  | 946 | L'Aube d'argent | Être exalté auprès de l'Aube d'argent. | 15 |
-|  | 955 | Les Hydraxiens | Être exalté auprès des Hydraxiens. | 10 |
-|  | 956 | Progéniture de Nozdormu | Être exalté auprès de la Progéniture de Nozdormu. | 10 |
-|  | 957 | Héros de la tribu Zandalar | Être exalté auprès de la tribu Zandalar. | 10 |
+| 🟢 | 944 | Il y a de l'amour dans ce tunnel | Être exalté auprès des Grumegueules. | 15 |
+| 🟢 | 946 | L'Aube d'argent | Être exalté auprès de l'Aube d'argent. | 15 |
+| 🟢 | 955 | Les Hydraxiens | Être exalté auprès des Hydraxiens. | 10 |
+| 🟢 | 956 | Progéniture de Nozdormu | Être exalté auprès de la Progéniture de Nozdormu. | 10 |
+| 🟢 | 957 | Héros de la tribu Zandalar | Être exalté auprès de la tribu Zandalar. | 10 |
 
 ### The Burning Crusade (16)
 
@@ -1148,7 +1148,7 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 
 | Statut | id | Nom | Description |
 | --- | --- | --- | --- |
-|  | 377 | Plus grand nombre de réputations exaltées | Plus grand nombre de réputations exaltées |
+| 🟢 | 377 | Plus grand nombre de réputations exaltées | Plus grand nombre de réputations exaltées |
 |  | 378 | Plus grand nombre de réputations révérées ou supérieures | Plus grand nombre de réputations révérées ou supérieures |
 |  | 529 | Plus grand nombre de réputations honorées ou supérieures | Plus grand nombre de réputations honorées ou supérieures |
 |  | 924 | Plus grand nombre de réputations exaltées en Norfendre | Plus grand nombre de réputations exaltées en Norfendre |
@@ -1163,11 +1163,11 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 | --- | --- | --- | --- |
 |  | 336 | Objets légendaires obtenus | Objets légendaires obtenus |
 |  | 338 | Mascottes possédées | Mascottes possédées |
-|  | 339 | Montures possédées | Montures possédées |
+| 🟢 | 339 | Montures possédées | Montures possédées |
 |  | 341 | Objets épiques ramassés | Objets épiques ramassés |
 |  | 342 | Objets épiques obtenus | Objets épiques obtenus |
 |  | 927 | Objets épiques équipés dans des emplacements d'objets | Objets épiques équipés dans des emplacements d'objets |
-|  | 928 | Emplacements en banque supplémentaires achetés | Emplacements en banque supplémentaires achetés |
+| 🟢 | 928 | Emplacements en banque supplémentaires achetés | Emplacements en banque supplémentaires achetés |
 |  | 1043 | Nombre de jets de cupidité sur du butin | Nombre de jets de cupidité sur du butin |
 |  | 1044 | Nombre de jets de besoin sur du butin | Nombre de jets de besoin sur du butin |
 |  | 4778 | Nombre de jets de désenchantement sur du butin | Nombre de jets de désenchantement sur du butin |
@@ -1176,13 +1176,13 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 
 | Statut | id | Nom | Description |
 | --- | --- | --- | --- |
-|  | 326 | Argent obtenu en récompense de quêtes | Argent obtenu en récompense de quêtes |
+| 🟢 | 326 | Argent obtenu en récompense de quêtes | Argent obtenu en récompense de quêtes |
 |  | 328 | Quantité totale d’argent obtenu | Quantité totale d’argent obtenu |
 |  | 329 | Mises en vente à l’hôtel des ventes | Mises en vente à l’hôtel des ventes |
 |  | 330 | Nombre d’achats à l’hôtel des ventes | Nombre d’achats à l’hôtel des ventes |
 |  | 331 | Enchère la plus importante à l’hôtel des ventes | Enchère la plus importante à l’hôtel des ventes |
 |  | 332 | Plus grosse vente à l’hôtel des ventes | Plus grosse vente à l’hôtel des ventes |
-|  | 333 | Argent ramassé | Argent ramassé |
+| 🟢 | 333 | Argent ramassé | Argent ramassé |
 |  | 334 | Plus grande quantité d’argent possédée | Plus grande quantité d’argent possédée |
 |  | 753 | Argent gagné en moyenne par jour | Argent gagné en moyenne par jour |
 |  | 919 | Argent gagné à l’hôtel des ventes | Argent gagné à l’hôtel des ventes |
@@ -1255,7 +1255,7 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 |  | 381 | Victoires honorables en extérieur | Victoires honorables en extérieur |
 |  | 382 | Victoires honorables en champs de bataille | Victoires honorables en champs de bataille |
 |  | 383 | Victoires honorables en arène | Victoires honorables en arène |
-|  | 588 | Nombre total de victoires honorables | Nombre total de victoires honorables |
+| 🟢 | 588 | Nombre total de victoires honorables | Nombre total de victoires honorables |
 |  | 1109 | Victoires honorables en arène de 5c5 | Victoires honorables en arène de 5c5 |
 |  | 1110 | Victoires honorables en arène de 3c3 | Victoires honorables en arène de 3c3 |
 |  | 1111 | Victoires honorables en arène de 2c2 | Victoires honorables en arène de 2c2 |
@@ -1419,7 +1419,7 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 | Statut | id | Nom | Description |
 | --- | --- | --- | --- |
 |  | 281 | Compétence en secourisme | Compétence en secourisme |
-|  | 1456 | Poissons et autres objets pêchés | Poissons et autres objets pêchés |
+| 🟢 | 1456 | Poissons et autres objets pêchés | Poissons et autres objets pêchés |
 |  | 1518 | Poissons pêchés | Poissons pêchés |
 |  | 1519 | Compétence en pêche | Compétence en pêche |
 |  | 1524 | Compétence en cuisine | Compétence en cuisine |
@@ -1518,19 +1518,19 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 
 | Statut | id | Nom | Description |
 | --- | --- | --- | --- |
-|  | 49 | Victoires dans la vallée d’Alterac | Victoires dans la vallée d’Alterac |
+| 🟢 | 49 | Victoires dans la vallée d’Alterac | Victoires dans la vallée d’Alterac |
 |  | 50 | Victoires dans l’Œil du cyclone | Victoires dans l’Œil du cyclone |
-|  | 51 | Victoires dans le bassin Arathi | Victoires dans le bassin Arathi |
+| 🟢 | 51 | Victoires dans le bassin Arathi | Victoires dans le bassin Arathi |
 |  | 52 | Batailles pour le goulet des Chanteguerres | Batailles pour le goulet des Chanteguerres |
 |  | 53 | Batailles pour la vallée d’Alterac | Batailles pour la vallée d’Alterac |
 |  | 54 | Batailles pour l’Œil du cyclone | Batailles pour l’Œil du cyclone |
 |  | 55 | Batailles pour le bassin Arathi | Batailles pour le bassin Arathi |
-|  | 105 | Victoires dans le goulet des Chanteguerres | Victoires dans le goulet des Chanteguerres |
-|  | 393 | Tours de la vallée d’Alterac défendues | Tours de la vallée d’Alterac défendues |
+| 🟢 | 105 | Victoires dans le goulet des Chanteguerres | Victoires dans le goulet des Chanteguerres |
+| 🟢 | 393 | Tours de la vallée d’Alterac défendues | Tours de la vallée d’Alterac défendues |
 |  | 394 | Tours de la vallée d’Alterac capturées | Tours de la vallée d’Alterac capturées |
-|  | 395 | Drapeaux du goulet des Chanteguerres capturés | Drapeaux du goulet des Chanteguerres capturés |
+| 🟢 | 395 | Drapeaux du goulet des Chanteguerres capturés | Drapeaux du goulet des Chanteguerres capturés |
 |  | 585 | Drapeaux de l’Œil du cyclone capturés | Drapeaux de l’Œil du cyclone capturés |
-|  | 586 | Drapeaux du goulet des Chanteguerres ramenés | Drapeaux du goulet des Chanteguerres ramenés |
+| 🟢 | 586 | Drapeaux du goulet des Chanteguerres ramenés | Drapeaux du goulet des Chanteguerres ramenés |
 |  | 839 | Participations à des champs de bataille | Participations à des champs de bataille |
 |  | 840 | Champs de bataille gagnés | Champs de bataille gagnés |
 |  | 1549 | Batailles pour le rivage des Anciens |  |
@@ -1544,17 +1544,22 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 
 | Statut | id | Nom | Description |
 | --- | --- | --- | --- |
-|  | 319 | Duels gagnés | Duels gagnés |
+| 🟢 | 319 | Duels gagnés | Duels gagnés |
 |  | 320 | Duels perdus | Duels perdus |
 
 ## Notes sur les 🟢
 
-- 46 Grand explorateur : notre « Explorateur » (3300) ne demande que les Royaumes de l'Est et Kalimdor (pas d'Outreterre ni de Norfendre sur Forever).
+- 46 Grand explorateur : notre « Explorateur » (57) ne demande que les Royaumes de l'Est et Kalimdor (pas d'Outreterre ni de Norfendre sur Forever).
 - 42 / 43 : nos métas de continent n'ont pas les zones de Burning Crusade (Terres fantômes, Chants éternels, Quel'Danas, Brume-azur, Brume-sang) ni Reflet-de-Lune, mais ont les zones de Forever.
 - 637 Monastère écarlate : couvert par nos deux HF (Salles Écarlates, Mograine).
-- 644 Roi de Haches-Tripes : chez nous, seul le roi Gordok est demandé.
-- Nos « Maître X » (300 dans un métier) n'ont pas d'équivalent : en WotLK, les HF par métier sont à 450 (grand maître). Seuls Artisan cuisinier, Artisan pêcheur et Artisan secouriste (300) correspondent.
-- Statistiques : 🟢 sur celles que nos HF lisent et qui existent aussi en WotLK.
+- 644 Roi de Haches-Tripes : chez nous (« Hache-Tripes », 88), seul le roi Gordok est demandé.
+- Nos « Artisan X » (300 dans un métier principal, 61 à 69) n'ont pas d'équivalent : en WotLK, les HF par métier sont à 450 (grand maître). Seuls Artisan cuisinier, Artisan pêcheur et Artisan secouriste (300) correspondent.
+- 2536 / 2537 Une montagne de montures : un seul HF chez nous (107), pour les deux camps.
+- 948 / 762 Ambassadeur de l'Alliance / de la Horde (163 / 164) : 4 races par camp sur Forever au lieu de 5 (pas d'Exodar ni de Lune-d'argent). Méta de 4 HF « exalté auprès de <capitale> » (165 à 172), qui n'existent pas dans WotLK.
+- 714 / 907 Conquérant / Le justicier (147 / 148) : méta des 3 HF de réputation de champ de bataille de son camp. Le titre en récompense n'est pas donné (impossible pour un addon).
+- HF réservés à un camp (« (Alliance) », « (Horde) ») : invisibles pour les personnages de l'autre camp, comme dans WoW.
+- Correspondance des id WotLK avec les nôtres : voir [WotlkFaisables.md](WotlkFaisables.md) et les commentaires de `Data/Achievements.lua`.
+- Statistiques : 🟢 sur celles que nos HF lisent et qui existent aussi en WotLK. Nos HF lisent aussi 64348 et 64349 (bassin Arathi), propres à Forever.
 
 # Impossibles sur Forever (🔴)
 

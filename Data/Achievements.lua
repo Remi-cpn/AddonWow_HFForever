@@ -3,7 +3,7 @@
 -- La liste validée est décrite dans docs/ProposedAchievements.md.
 --
 --   id          : numéro unique et DÉFINITIF, la sauvegarde s'en sert. Un
---                 nouveau haut fait prend le numéro libre suivant (135), quel
+--                 nouveau haut fait prend le numéro libre suivant (173), quel
 --                 que soit l'endroit où il est rangé. Ne jamais changer ni
 --                 réutiliser un numéro.
 --   category    : une constante CAT de Data/Categories.lua
@@ -16,6 +16,8 @@
 --                 tués...). Par défaut "max" : le meilleur personnage compte
 --                 (niveau, métier, exploration, boss vaincu une fois).
 --   previous    : (facultatif) id du haut fait précédent d'une série
+--   faction     : (facultatif) "Horde" ou "Alliance" : haut fait réservé à
+--                 ce camp, invisible pour les personnages de l'autre camp
 --
 -- Les textes sont dans Locales/enUS.lua et Locales/frFR.lua, rangés par id :
 -- L.ACHIEVEMENT_NAMES, L.ACHIEVEMENT_DESCRIPTIONS, L.ACHIEVEMENT_REWARDS et
@@ -509,6 +511,26 @@ ns.Data.achievements = {
 		icon = ICONS .. "Ability_DualWieldSpecialization",
 		criteria = { { type = "statistic", id = 319, value = 1, combine = "sum" } },
 	},
+	{
+		-- Conquérant (Horde) : méta des trois réputations de champ de bataille
+		id = 147, category = CAT.PVP, points = 20, faction = "Horde",
+		icon = ICONS .. "INV_Misc_TabardPVP_04",
+		criteria = {
+			{ type = "achievement", id = 141 }, -- Voltigeur Chanteguerre
+			{ type = "achievement", id = 143 }, -- Profanateur
+			{ type = "achievement", id = 145 }, -- Héros du clan Loup-de-givre
+		},
+	},
+	{
+		-- Le justicier (Alliance)
+		id = 148, category = CAT.PVP, points = 20, faction = "Alliance",
+		icon = ICONS .. "INV_Misc_TabardPVP_03",
+		criteria = {
+			{ type = "achievement", id = 142 }, -- Sentinelle d'Aile-argent
+			{ type = "achievement", id = 144 }, -- Chevalier d'Arathor
+			{ type = "achievement", id = 146 }, -- Héros de la garde Foudrepique
+		},
+	},
 
 	---------------------------------------------------------------------------
 	-- JcJ : goulet des Chanteguerres
@@ -534,6 +556,16 @@ ns.Data.achievements = {
 		id = 121, category = CAT.WARSONG_GULCH, points = 10,
 		icon = ICONS .. "Achievement_BG_interruptX_flagcapture_attempts",
 		criteria = { { type = "statistic", id = 586, value = 50, combine = "sum" } },
+	},
+	{
+		id = 141, category = CAT.WARSONG_GULCH, points = 10, faction = "Horde",
+		icon = ICONS .. "Ability_Warrior_WarCry",
+		criteria = { { type = "reputation", factionID = 889 } }, -- Voltigeurs Chanteguerre
+	},
+	{
+		id = 142, category = CAT.WARSONG_GULCH, points = 10, faction = "Alliance",
+		icon = ICONS .. "Ability_Racial_ShadowMeld",
+		criteria = { { type = "reputation", factionID = 890 } }, -- Sentinelles d'Aile-argent
 	},
 
 	---------------------------------------------------------------------------
@@ -561,6 +593,16 @@ ns.Data.achievements = {
 		icon = ICONS .. "Achievement_BG_takeXflags_AB",
 		criteria = { { type = "statistic", id = 64348, value = 50, combine = "sum" } },
 	},
+	{
+		id = 143, category = CAT.ARATHI_BASIN, points = 10, faction = "Horde",
+		icon = ICONS .. "Spell_Shadow_PsychicHorrors",
+		criteria = { { type = "reputation", factionID = 510 } }, -- Profanateurs
+	},
+	{
+		id = 144, category = CAT.ARATHI_BASIN, points = 10, faction = "Alliance",
+		icon = ICONS .. "Ability_Warrior_RallyingCry",
+		criteria = { { type = "reputation", factionID = 509 } }, -- Ligue d'Arathor
+	},
 
 	---------------------------------------------------------------------------
 	-- JcJ : vallée d'Alterac
@@ -581,6 +623,16 @@ ns.Data.achievements = {
 		id = 128, category = CAT.ALTERAC_VALLEY, points = 10,
 		icon = ICONS .. "Achievement_BG_defendXtowers_AV",
 		criteria = { { type = "statistic", id = 393, value = 50, combine = "sum" } },
+	},
+	{
+		id = 145, category = CAT.ALTERAC_VALLEY, points = 10, faction = "Horde",
+		icon = ICONS .. "INV_Jewelry_FrostwolfTrinket_05",
+		criteria = { { type = "reputation", factionID = 729 } }, -- Clan Loup-de-givre
+	},
+	{
+		id = 146, category = CAT.ALTERAC_VALLEY, points = 10, faction = "Alliance",
+		icon = ICONS .. "INV_Jewelry_StormPikeTrinket_05",
+		criteria = { { type = "reputation", factionID = 730 } }, -- Garde Foudrepique
 	},
 
 	---------------------------------------------------------------------------
@@ -648,20 +700,57 @@ ns.Data.achievements = {
 		icon = ICONS .. "Trade_Tailoring",
 		criteria = { { type = "profession", skillLine = 197, value = 300 } },
 	},
+	-- Métiers secondaires : séries 150, 225, 300 comme dans WotLK
+	{
+		id = 135, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "INV_Misc_Food_15",
+		criteria = { { type = "profession", skillLine = 185, value = 150 } },
+	},
+	{
+		id = 136, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "INV_Misc_Food_15",
+		criteria = { { type = "profession", skillLine = 185, value = 225 } },
+		previous = 135,
+	},
 	{
 		id = 70, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "INV_Misc_Food_15",
 		criteria = { { type = "profession", skillLine = 185, value = 300 } },
+		previous = 136,
+	},
+	{
+		id = 137, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "Trade_Fishing",
+		criteria = { { type = "profession", skillLine = 356, value = 150 } },
+	},
+	{
+		id = 138, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "Trade_Fishing",
+		criteria = { { type = "profession", skillLine = 356, value = 225 } },
+		previous = 137,
 	},
 	{
 		id = 71, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Trade_Fishing",
 		criteria = { { type = "profession", skillLine = 356, value = 300 } },
+		previous = 138,
+	},
+	{
+		id = 139, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "Spell_Holy_SealOfSacrifice",
+		criteria = { { type = "profession", skillLine = 129, value = 150 } },
+	},
+	{
+		id = 140, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "Spell_Holy_SealOfSacrifice",
+		criteria = { { type = "profession", skillLine = 129, value = 225 } },
+		previous = 139,
 	},
 	{
 		id = 72, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Spell_Holy_SealOfSacrifice",
 		criteria = { { type = "profession", skillLine = 129, value = 300 } },
+		previous = 140,
 	},
 
 	---------------------------------------------------------------------------
@@ -702,6 +791,150 @@ ns.Data.achievements = {
 		icon = ICONS .. "INV_Misc_Fish_50",
 		criteria = { { type = "statistic", id = 1456, value = 1000, combine = "sum" } },
 		previous = 133,
+	},
+
+	---------------------------------------------------------------------------
+	-- Réputation : être exalté (le meilleur personnage compte)
+	-- Série : statistique 377 « Plus grand nombre de réputations exaltées »
+	---------------------------------------------------------------------------
+	{
+		id = 154, category = CAT.REPUTATION, points = 10,
+		icon = ICONS .. "Achievement_Reputation_01",
+		criteria = { { type = "statistic", id = 377, value = 1 } },
+	},
+	{
+		id = 155, category = CAT.REPUTATION, points = 10,
+		icon = ICONS .. "Achievement_Reputation_01",
+		criteria = { { type = "statistic", id = 377, value = 5 } },
+		previous = 154,
+	},
+	{
+		id = 156, category = CAT.REPUTATION, points = 10,
+		icon = ICONS .. "Achievement_Reputation_02",
+		criteria = { { type = "statistic", id = 377, value = 10 } },
+		previous = 155,
+	},
+	{
+		id = 157, category = CAT.REPUTATION, points = 10,
+		icon = ICONS .. "Achievement_Reputation_03",
+		criteria = { { type = "statistic", id = 377, value = 15 } },
+		previous = 156,
+	},
+	{
+		id = 158, category = CAT.REPUTATION, points = 10,
+		icon = ICONS .. "Achievement_Reputation_04",
+		criteria = { { type = "statistic", id = 377, value = 20 } },
+		previous = 157,
+	},
+	{
+		id = 159, category = CAT.REPUTATION, points = 10,
+		icon = ICONS .. "Achievement_Reputation_05",
+		criteria = { { type = "statistic", id = 377, value = 25 } },
+		previous = 158,
+	},
+	{
+		id = 160, category = CAT.REPUTATION, points = 10,
+		icon = ICONS .. "Achievement_Reputation_06",
+		criteria = { { type = "statistic", id = 377, value = 30 } },
+		previous = 159,
+	},
+	{
+		id = 161, category = CAT.REPUTATION, points = 10,
+		icon = ICONS .. "Achievement_Reputation_07",
+		criteria = { { type = "statistic", id = 377, value = 35 } },
+		previous = 160,
+	},
+	{
+		id = 162, category = CAT.REPUTATION, points = 10,
+		icon = ICONS .. "Achievement_Reputation_08",
+		criteria = { { type = "statistic", id = 377, value = 40 } },
+		previous = 161,
+	},
+	-- Capitales de l'Alliance (pas dans WotLK : étapes de l'Ambassadeur)
+	{
+		id = 165, category = CAT.REPUTATION, points = 10, faction = "Alliance",
+		icon = ICONS .. "Spell_Arcane_TeleportStormWind",
+		criteria = { { type = "reputation", factionID = 72 } }, -- Stormwind
+	},
+	{
+		id = 166, category = CAT.REPUTATION, points = 10, faction = "Alliance",
+		icon = ICONS .. "Spell_Arcane_TeleportIronForge",
+		criteria = { { type = "reputation", factionID = 47 } }, -- Forgefer
+	},
+	{
+		id = 167, category = CAT.REPUTATION, points = 10, faction = "Alliance",
+		icon = ICONS .. "Achievement_Character_Gnome_Male",
+		criteria = { { type = "reputation", factionID = 54 } }, -- Exilés de Gnomeregan
+	},
+	{
+		id = 168, category = CAT.REPUTATION, points = 10, faction = "Alliance",
+		icon = ICONS .. "Spell_Arcane_TeleportDarnassus",
+		criteria = { { type = "reputation", factionID = 69 } }, -- Darnassus
+	},
+	{
+		-- Ambassadeur de l'Alliance : WotLK demande 5 races, Forever n'en a
+		-- que 4 (pas d'Exodar).
+		id = 163, category = CAT.REPUTATION, points = 10, faction = "Alliance",
+		icon = ICONS .. "Achievement_PVP_A_16",
+		criteria = {
+			{ type = "achievement", id = 165 }, { type = "achievement", id = 166 },
+			{ type = "achievement", id = 167 }, { type = "achievement", id = 168 },
+		},
+	},
+	-- Capitales de la Horde (pas dans WotLK : étapes de l'Ambassadeur)
+	{
+		id = 169, category = CAT.REPUTATION, points = 10, faction = "Horde",
+		icon = ICONS .. "Spell_Arcane_TeleportOrgrimmar",
+		criteria = { { type = "reputation", factionID = 76 } }, -- Orgrimmar
+	},
+	{
+		id = 170, category = CAT.REPUTATION, points = 10, faction = "Horde",
+		icon = ICONS .. "Spell_Arcane_TeleportThunderBluff",
+		criteria = { { type = "reputation", factionID = 81 } }, -- Thunder Bluff
+	},
+	{
+		id = 171, category = CAT.REPUTATION, points = 10, faction = "Horde",
+		icon = ICONS .. "Spell_Arcane_TeleportUnderCity",
+		criteria = { { type = "reputation", factionID = 68 } }, -- Fossoyeuse
+	},
+	{
+		id = 172, category = CAT.REPUTATION, points = 10, faction = "Horde",
+		icon = ICONS .. "Achievement_Character_Troll_Male",
+		criteria = { { type = "reputation", factionID = 530 } }, -- Trolls Darkspear
+	},
+	{
+		-- Ambassadeur de la Horde : 4 races sur Forever (pas de Lune-d'argent).
+		id = 164, category = CAT.REPUTATION, points = 10, faction = "Horde",
+		icon = ICONS .. "Achievement_PVP_H_16",
+		criteria = {
+			{ type = "achievement", id = 169 }, { type = "achievement", id = 170 },
+			{ type = "achievement", id = 171 }, { type = "achievement", id = 172 },
+		},
+	},
+	{
+		id = 149, category = CAT.REPUTATION, points = 15,
+		icon = ICONS .. "Achievement_Reputation_Timbermaw",
+		criteria = { { type = "reputation", factionID = 576 } }, -- Grumegueules
+	},
+	{
+		id = 150, category = CAT.REPUTATION, points = 15,
+		icon = ICONS .. "INV_Jewelry_Talisman_07",
+		criteria = { { type = "reputation", factionID = 529 } }, -- Aube d'argent
+	},
+	{
+		id = 151, category = CAT.REPUTATION, points = 10,
+		icon = ICONS .. "Spell_Frost_SummonWaterElemental_2",
+		criteria = { { type = "reputation", factionID = 749 } }, -- Hydraxiens
+	},
+	{
+		id = 152, category = CAT.REPUTATION, points = 10,
+		icon = ICONS .. "INV_Misc_Head_Dragon_Bronze",
+		criteria = { { type = "reputation", factionID = 910 } }, -- Progéniture de Nozdormu
+	},
+	{
+		id = 153, category = CAT.REPUTATION, points = 10,
+		icon = ICONS .. "INV_Bijou_Green",
+		criteria = { { type = "reputation", factionID = 270 } }, -- Tribu Zandalar
 	},
 
 	---------------------------------------------------------------------------

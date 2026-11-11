@@ -613,10 +613,10 @@
 				</Layers>
 				<Frames>
 					<Frame setAllPoints="true" inherits="HFFGoldBorderBackdropTemplate"/>
-					<!-- Derniers hauts faits obtenus. Hauteur prévue pour 5 lignes
+					<!-- Derniers hauts faits obtenus. Hauteur prévue pour 4 lignes
 					     (Blizzard Mainline : 210 pour 3). -->
 					<Frame parentKey="Achievements">
-						<Size x="0" y="250"/>
+						<Size x="0" y="205"/>
 						<Anchors>
 							<Anchor point="TOPLEFT" x="5" y="-10"/>
 							<Anchor point="TOPRIGHT" x="-5" y="-10"/>

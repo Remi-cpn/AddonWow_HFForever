@@ -110,9 +110,8 @@ dans la table `Faction` de Forever.
 | 714 | Conquérant (Horde) | Être exalté auprès des factions du goulet, du bassin Arathi et de la vallée d'Alterac. | 20 | 889, 510, 729 |
 | 907 | Le justicier (Alliance) | Être exalté auprès des factions du goulet, du bassin Arathi et de la vallée d'Alterac. | 20 | 890, 509, 730 |
 
-Ceux-là sont réservés à une faction : à fusionner en HF communs (« exalté auprès
-de la faction du goulet de son camp »), avec un critère qui accepte l'une ou
-l'autre faction.
+Gardés séparés comme dans WoW : chaque personnage ne voit que ceux de son camp
+(champ `faction` des données). 714 / 907 sont des métas des 3 HF de leur camp.
 
 ### Réputation classique (5)
 
@@ -135,15 +134,77 @@ l'autre faction.
 | 131 | Compagnon secouriste | Devenir un compagnon secouriste. | 10 | Secourisme 150 |
 | 132 | Expert secouriste | Devenir expert secouriste. | 10 | Secourisme 225 |
 
-Ils complètent nos HF à 300 (Grand chef, Maître pêcheur, Maître secouriste).
+Ils forment une série avec nos HF à 300 (Artisan cuisinier, Artisan pêcheur,
+Artisan secouriste).
+
+## 3. Oubliés par le premier croisement (11 HF)
+
+Trouvés ensuite en relisant la catégorie Réputation.
+
+### Réputations exaltées (9), statistique 377
+
+| id | Nom | Description | Pts | Seuil |
+| --- | --- | --- | --- | --- |
+| 522 | Quelqu'un m'aime | Monter une réputation jusqu'à Exalté. | 10 | 1 |
+| 523 | 5 réputations exaltées | Monter 5 réputations jusqu'à Exalté. | 10 | 5 |
+| 524 | 10 réputations exaltées | Monter 10 réputations jusqu'à Exalté. | 10 | 10 |
+| 521 | 15 réputations exaltées | Monter 15 réputations jusqu'à Exalté. | 10 | 15 |
+| 520 | 20 réputations exaltées | Monter 20 réputations jusqu'à Exalté. | 10 | 20 |
+| 519 | 25 réputations exaltées | Monter 25 réputations jusqu'à Exalté. | 10 | 25 |
+| 518 | 30 réputations exaltées | Monter 30 réputations jusqu'à Exalté. | 10 | 30 |
+| 1014 | 35 réputations exaltées | Être exalté auprès de 35 factions. | 10 | 35 |
+| 1015 | 40 réputations exaltées | Être exalté auprès de 40 factions. | 10 | 40 |
+
+Forever a 75 factions avec une réputation : 35 et 40 sont durs mais possibles.
+
+### Ambassadeurs (2), réputation
+
+| id | Nom | Description | Pts | Factions |
+| --- | --- | --- | --- | --- |
+| 948 | Ambassadeur de l'Alliance (Alliance) | Être exalté auprès des 5 races de sa faction. | 10 | 72, 47, 54, 69 |
+| 762 | Ambassadeur de la Horde (Horde) | Être exalté auprès des 5 races de sa faction. | 10 | 76, 81, 68, 530 |
+
+Adaptés : 4 races par camp sur Forever (pas d'Exodar ni de Lune-d'argent).
+Chez nous, méta de 4 HF « exalté auprès de <capitale> », un par faction (pas
+dans WotLK).
 
 ## Bilan
 
-| Groupe | HF |
+| Groupe | HF WotLK |
 | --- | --- |
 | Par statistique | 39 |
 | Par API (réputation, métier) | 19 |
-| **Total faisable** | **58** |
+| Oubliés, ajoutés ensuite | 11 |
+| **Total faisable** | **69** |
+
+Tous sont faits dans HF Forever : 76 HF chez nous (id 97 à 172), les deux
+« Une montagne de montures » n'en faisant qu'un, plus les 8 HF de capitale.
+
+## Correspondance avec HF Forever
+
+| WotLK | HF Forever |
+| --- | --- |
+| 546 | 97 |
+| 1176, 1177, 1178, 1180, 1181 | 98 à 102 |
+| 1182 | 103 |
+| 2141, 2142, 2143 | 104 à 106 |
+| 2536, 2537 | 107 |
+| 238, 513, 515, 516, 512, 509, 239, 869, 870 | 108 à 116 |
+| 1157 | 117 |
+| 166, 167, 199, 200 | 118 à 121 |
+| 154, 155, 157, 158 | 122 à 125 |
+| 218, 219, 222 | 126 à 128 |
+| 1556 à 1561 | 129 à 134 |
+| 121, 122 | 135, 136 |
+| 126, 127 | 137, 138 |
+| 131, 132 | 139, 140 |
+| 712, 713 | 141, 142 |
+| 710, 711 | 143, 144 |
+| 708, 709 | 145, 146 |
+| 714, 907 | 147, 148 |
+| 944, 946, 955, 956, 957 | 149 à 153 |
+| 522, 523, 524, 521, 520, 519, 518, 1014, 1015 | 154 à 162 |
+| 948, 762 | 163, 164 (capitales : 165 à 172) |
 
 Sur les 829 lignes encore sans statut, les autres demandent des quêtes précises,
 des objets, des sorts, des PNJ précis ou des conditions de combat : pas de

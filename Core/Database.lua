@@ -10,7 +10,14 @@ ns.Database = Database
 -- anciennes sauvegardes.
 -- 2 : progression enregistrée par personnage (avant : meilleure valeur seule).
 -- 3 : hauts faits renumérotés de 1 à 96 (avant : 1001, 2001, 3001...).
-local SCHEMA_VERSION = 3
+-- 4 : progression rangée par ce que mesure le critère (avant : sa position).
+local SCHEMA_VERSION = 4
+
+-- Schéma 4 : hauts faits dont les critères ont changé avant la v1 (barres
+-- de réputation devenues des métas). Avec l'ancienne progression relue, ils
+-- ont pu être donnés à tort : la migration les retire, le scan les redonne
+-- s'ils sont vraiment obtenus.
+local REDEFINED_IDS = { 147, 148, 163, 164 }
 
 -- Schéma 3 : [ancien id] = nouvel id. Sert uniquement à convertir une
 -- sauvegarde plus ancienne ; ne pas modifier.
@@ -58,7 +65,8 @@ local DEFAULTS = {
 	-- vraie date d'obtention n'est pas connue.
 	completed = {},
 	-- Meilleure valeur vue pour chaque personnage (clé : son GUID) :
-	-- [achievementID] = { [criteriaIndex] = { [guid] = quantité } }
+	-- [achievementID] = { [progressKey] = { [guid] = quantité } }
+	-- progressKey : "type:cible" du critère, voir Core/Registry.lua.
 	-- Les personnages sont combinés à la lecture, voir Database:GetProgress.
 	progress = {},
 }
@@ -95,6 +103,7 @@ end
 --   2 : la progression du schéma 1 ne dit pas de quel personnage elle vient.
 --   3 : les hauts faits obtenus passent à leur nouvel id ; un id inconnu
 --       (haut fait retiré avant la v1) est abandonné.
+--   4 : les clés de progression changent ; REDEFINED_IDS sont retirés.
 local function Migrate(db)
 	local version = db.schemaVersion or SCHEMA_VERSION
 	if version < 2 then
@@ -109,6 +118,14 @@ local function Migrate(db)
 			end
 		end
 		db.completed = renumbered
+		db.progress = {}
+	end
+	if version < 4 then
+		if type(db.completed) == "table" then
+			for _, id in ipairs(REDEFINED_IDS) do
+				db.completed[id] = nil
+			end
+		end
 		db.progress = {}
 	end
 	db.schemaVersion = SCHEMA_VERSION
@@ -191,9 +208,9 @@ end
 -- Progression d'un critère, tous personnages confondus. combine vient du
 -- critère (Data/Achievements.lua) : "sum" additionne les personnages, sinon
 -- le meilleur personnage compte. 0 si aucune progression enregistrée.
-function Database:GetProgress(achievementID, criteriaIndex, combine)
+function Database:GetProgress(achievementID, progressKey, combine)
 	local entry = data.progress[achievementID]
-	local perCharacter = entry and entry[criteriaIndex]
+	local perCharacter = entry and entry[progressKey]
 	if type(perCharacter) ~= "table" then
 		return 0
 	end
@@ -212,21 +229,21 @@ end
 
 -- Garde la meilleure valeur vue pour ce personnage, puis renvoie la
 -- progression combinée (voir GetProgress).
-function Database:UpdateProgress(achievementID, criteriaIndex, guid, quantity, combine)
+function Database:UpdateProgress(achievementID, progressKey, guid, quantity, combine)
 	local entry = data.progress[achievementID]
 	if not entry then
 		entry = {}
 		data.progress[achievementID] = entry
 	end
-	local perCharacter = entry[criteriaIndex]
+	local perCharacter = entry[progressKey]
 	if type(perCharacter) ~= "table" then
 		perCharacter = {}
-		entry[criteriaIndex] = perCharacter
+		entry[progressKey] = perCharacter
 	end
 	if quantity > (perCharacter[guid] or 0) then
 		perCharacter[guid] = quantity
 	end
-	return self:GetProgress(achievementID, criteriaIndex, combine)
+	return self:GetProgress(achievementID, progressKey, combine)
 end
 
 -- Nombre de personnages différents vus dans la progression (/hff etat).

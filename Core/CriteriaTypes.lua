@@ -62,6 +62,27 @@ local function GetStatisticGold(statisticID)
 	return 0
 end
 
+-- Réputation d'une faction : nom, rang (1 = Haï ... 8 = Exalté) et valeur
+-- absolue (0 = début de Neutre, 42000 = début d'Exalté), ou nil si la faction
+-- est inconnue. C_Reputation si le client l'a, sinon l'ancienne fonction.
+local EXALTED_STANDING = 8
+local EXALTED_VALUE = 42000
+
+local function GetReputation(factionID)
+	if C_Reputation and C_Reputation.GetFactionDataByID then
+		local data = C_Reputation.GetFactionDataByID(factionID)
+		if data and data.name then
+			return data.name, data.reaction, data.currentStanding
+		end
+	end
+	if GetFactionInfoByID then
+		local name, _, standingID, _, _, barValue = GetFactionInfoByID(factionID)
+		if name then
+			return name, standingID, barValue
+		end
+	end
+end
+
 -- Rang d'un métier du personnage. skillLine = nil : meilleur des deux
 -- métiers principaux. GetProfessions renvoie les index des métiers
 -- (2 principaux puis les secondaires), nil pour un emplacement vide.
@@ -183,6 +204,33 @@ CriteriaTypes.profession = {
 	end,
 	current = function(criterion)
 		return GetProfessionRank(criterion.skillLine)
+	end,
+}
+
+-- Être exalté auprès d'une faction. factionID = id de la table Faction.
+-- Exemple : { type = "reputation", factionID = 529 }
+-- La barre va de Neutre (0) à Exalté (42000) ; en dessous de Neutre, 0.
+-- Pas de contrôle au chargement : la réputation n'est peut-être pas encore
+-- connue à ADDON_LOADED, une faction introuvable reste simplement à 0.
+CriteriaTypes.reputation = {
+	fields = { "factionID" },
+	progressBar = true,
+	describe = function(criterion)
+		local name = GetReputation(criterion.factionID)
+		return criterion.text or name or tostring(criterion.factionID)
+	end,
+	goal = function()
+		return EXALTED_VALUE
+	end,
+	current = function(criterion)
+		local name, standing, value = GetReputation(criterion.factionID)
+		if not name then
+			return 0
+		end
+		if (standing or 0) >= EXALTED_STANDING then
+			return EXALTED_VALUE
+		end
+		return math.max(0, math.min(EXALTED_VALUE - 1, value or 0))
 	end,
 }
 

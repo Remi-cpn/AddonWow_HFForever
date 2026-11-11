@@ -12,8 +12,9 @@ local API = ns.API
 local Summary = {}
 ns.Summary = Summary
 
--- Blizzard Mainline en affiche 3 ; HF Forever en veut 5.
-local MAX_ACHIEVEMENTS = 5
+-- Blizzard Mainline en affiche 3 ; HF Forever en affiche 4, pour laisser
+-- la place à 4 rangées de barres de catégorie en dessous.
+local MAX_ACHIEVEMENTS = 4
 
 -- Places libres : les premiers hauts faits non obtenus de cette liste,
 -- grisés. Équivalent de ACHIEVEMENTUI_DEFAULTSUMMARYACHIEVEMENTS.

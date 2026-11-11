@@ -15,6 +15,7 @@ local achievementsById = {}
 local achievementsByCategory = {} -- [categoryID] = liste, dans l'ordre de Data/Achievements.lua
 local nextById = {}               -- [id] = haut fait suivant dans la série
 local achievementCount = 0
+local hiddenCount = 0             -- hauts faits de l'autre camp, ignorés
 local errorCount = 0
 
 local function ReportError(fmt, ...)
@@ -80,6 +81,12 @@ local function ValidateCriterion(achievementID, index, criterion)
 			return false
 		end
 	end
+	-- Clé de la progression dans la sauvegarde : ce que mesure le critère
+	-- (type et cible), pas sa position. Si on change un critère, l'ancienne
+	-- valeur enregistrée n'est pas relue pour le nouveau. Changer seulement
+	-- le seuil (value) garde la progression.
+	local target = criterion.id or criterion.mapID or criterion.factionID or criterion.skillLine
+	criterion.progressKey = criterion.type .. ":" .. tostring(target or "")
 	return true
 end
 
@@ -95,6 +102,11 @@ local function ValidateAchievement(achievement)
 	end
 	if type(achievement.points) ~= "number" then
 		ReportError(L.DATA_ERR_ACH_FIELD, id, "points")
+		return false
+	end
+	if achievement.faction ~= nil and achievement.faction ~= "Horde"
+			and achievement.faction ~= "Alliance" then
+		ReportError(L.DATA_ERR_ACH_FIELD, id, "faction")
 		return false
 	end
 	if not categoriesById[achievement.category] then
@@ -122,14 +134,26 @@ local function CheckIcon(achievement)
 	end
 end
 
+-- Comme dans WoW, un haut fait réservé à un camp (faction = "Horde" ou
+-- "Alliance") n'existe pas pour les personnages de l'autre camp, ni pour un
+-- personnage neutre. Ses données dans la sauvegarde sont gardées.
+local function IsOtherFaction(achievement, playerFaction)
+	return achievement.faction ~= nil and achievement.faction ~= playerFaction
+end
+
 local function BuildAchievements()
+	local playerFaction = UnitFactionGroup("player")
 	for index, achievement in ipairs(ns.Data.achievements or {}) do
 		local id = achievement.id
 		if not IsValidId(id) then
 			ReportError(L.DATA_ERR_ACH_ID, index)
 		elseif achievementsById[id] then
 			ReportError(L.DATA_ERR_ACH_DUP, id)
-		elseif ValidateAchievement(achievement) then
+		elseif not ValidateAchievement(achievement) then
+			-- Erreur déjà signalée.
+		elseif IsOtherFaction(achievement, playerFaction) then
+			hiddenCount = hiddenCount + 1
+		else
 			CheckIcon(achievement)
 			achievementsById[id] = achievement
 			local list = achievementsByCategory[achievement.category]
@@ -206,7 +230,7 @@ function Registry:Build()
 	BuildCategories()
 	BuildAchievements()
 	Log.Debug("Registry:", #categoryOrder, "catégories,", achievementCount,
-		"hauts faits,", errorCount, "erreur(s)")
+		"hauts faits,", hiddenCount, "de l'autre camp,", errorCount, "erreur(s)")
 end
 
 function Registry:GetCategory(categoryID)

@@ -31,6 +31,7 @@ local WATCHED_EVENTS = {
 	"CRITERIA_UPDATE",          -- statistiques (boss vaincus, quêtes)
 	"MAP_EXPLORATION_UPDATED",  -- exploration
 	"SKILL_LINES_CHANGED",      -- métiers
+	"UPDATE_FACTION",           -- réputations
 }
 
 local eventFrame = CreateFrame("Frame")
@@ -69,8 +70,8 @@ local function EvaluateAchievement(achievement)
 			Log.Error(L.ENGINE_CRITERIA_ERROR, achievement.id, index, current)
 			current = 0
 		end
-		local total = ns.Database:UpdateProgress(achievement.id, index, playerGUID,
-			current, criterion.combine)
+		local total = ns.Database:UpdateProgress(achievement.id, criterion.progressKey,
+			playerGUID, current, criterion.combine)
 		if total < criteriaType.goal(criterion) then
 			allDone = false
 		end
