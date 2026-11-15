@@ -45,7 +45,7 @@ fenêtre du jeu.
 | 🟢 | 9 | Niveau 40 | Atteindre le niveau 40. | 10 |
 | 🟢 | 10 | Niveau 50 | Atteindre le niveau 50. | 10 |
 | 🟢 | 11 | Niveau 60 | Atteindre le niveau 60. | 10 |
-|  | 15 | De nombreux familiers | Collecter 15 mascottes différentes. | 10 |
+| 🟢 | 15 | De nombreux familiers | Collecter 15 mascottes différentes. | 10 |
 |  | 16 | Qui a commandé une salade de phalanges ? | Obtenir un score de 400 avec la compétence Mains nues. | 10 |
 |  | 545 | Coupe et brushing | Aller dans un salon de coiffure et changer de coupe. | 10 |
 | 🟢 | 546 | Chambre forte | Acheter 7 emplacements de sac supplémentaires. | 10 |
@@ -60,7 +60,7 @@ fenêtre du jeu.
 |  | 891 | En selle ! | Apprendre la compétence Apprenti cavalier. | 10 |
 |  | 892 | L'étoffe des héros | Apprendre la compétence Artisan cavalier. | 10 |
 |  | 964 | On descend ? | Faire une chute de 65 mètres sans mourir. | 10 |
-|  | 1017 | Je peux le garder ? | Obtenir une mascotte. | 10 |
+| 🟢 | 1017 | Je peux le garder ? | Obtenir une mascotte. | 10 |
 |  | 1020 | Dix tabards | Equiper 10 tabards différents. | 10 |
 |  | 1021 | Timbré de tabards | Equiper 25 tabards différents. Récompense : Récompense : tabard des hauts faits. | 10 |
 |  | 1165 | Ma réserve est gigantesque ! | Équiper le Sac "gigantesque" de Haris Pilton. | 10 |
@@ -72,8 +72,8 @@ fenêtre du jeu.
 |  | 1187 | Le maître des clés | Obtenir les clés listées ci-dessous. | 10 |
 |  | 1206 | À tous les écureuils que j'ai aimés, avant | Montrer tout votre /amour aux bestioles d'Azeroth. | 10 |
 |  | 1244 | Bonne lecture | Lire les livres listés ci-dessous. | 10 |
-|  | 1248 | Pléthore de familiers | Collecter 25 mascottes différentes. | 10 |
-|  | 1250 | Les aimer comme ils vous aiment | Collecter 50 mascottes différentes. Récompense : Récompense : cage à compagnon nauséabonde. | 10 |
+| 🟢 | 1248 | Pléthore de familiers | Collecter 25 mascottes différentes. | 10 |
+| 🟢 | 1250 | Les aimer comme ils vous aiment | Collecter 50 mascottes différentes. Récompense : Récompense : cage à compagnon nauséabonde. | 10 |
 |  | 1254 | Le dindon de la farce | Tuer 15 dindes en 3 minutes. | 10 |
 |  | 1832 | On dirait du poulet | Goûter 50 types de délicieux plats d'Azeroth. | 10 |
 |  | 1833 | C'est ma tournée ! | Boire 25 boissons différentes. | 10 |
@@ -86,7 +86,7 @@ fenêtre du jeu.
 | 🟢 | 2141 | Gardien d'écuries | Obtenir 10 montures. | 10 |
 | 🟢 | 2142 | L'écurie se remplit | Obtenir 25 montures. | 10 |
 | 🟢 | 2143 | À la tête de la cavalerie | Obtenir 50 montures. Récompense : Récompense : drake albinos. | 10 |
-|  | 2516 | La chasse au p'tit gibier | Collecter 75 mascottes différentes. Récompense : Récompense : morceau de sel du petit faon. | 10 |
+| 🟢 | 2516 | La chasse au p'tit gibier | Collecter 75 mascottes différentes. Récompense : Récompense : morceau de sel du petit faon. | 10 |
 | 🟢 | 2536 | Une montagne de montures (Alliance) | Obtenir 100 montures. Récompense : Récompense : faucon-dragon de monte bleu. | 10 |
 | 🟢 | 2537 | Une montagne de montures (Horde) | Obtenir 100 montures. Récompense : Récompense : faucon-dragon de monte rouge. | 10 |
 |  | 2556 | Désinsectisation | Tuer les nuisibles listés ci-dessous. | 10 |
@@ -1163,7 +1163,7 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 | --- | --- | --- | --- |
 |  | 336 | Objets légendaires obtenus | Objets légendaires obtenus |
 |  | 338 | Mascottes possédées | Mascottes possédées |
-| 🟢 | 339 | Montures possédées | Montures possédées |
+|  | 339 | Montures possédées | Montures possédées |
 |  | 341 | Objets épiques ramassés | Objets épiques ramassés |
 |  | 342 | Objets épiques obtenus | Objets épiques obtenus |
 |  | 927 | Objets épiques équipés dans des emplacements d'objets | Objets épiques équipés dans des emplacements d'objets |
@@ -1558,6 +1558,11 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 - 948 / 762 Ambassadeur de l'Alliance / de la Horde (163 / 164) : 4 races par camp sur Forever au lieu de 5 (pas d'Exodar ni de Lune-d'argent). Méta de 4 HF « exalté auprès de <capitale> » (165 à 172), qui n'existent pas dans WotLK.
 - 714 / 907 Conquérant / Le justicier (147 / 148) : méta des 3 HF de réputation de champ de bataille de son camp. Le titre en récompense n'est pas donné (impossible pour un addon).
 - HF réservés à un camp (« (Alliance) », « (Horde) ») : invisibles pour les personnages de l'autre camp, comme dans WoW.
+- 16 / 705 Mains nues et Maître d'armes (180 / 181) : 300 au lieu de 400, le maximum sur Forever.
+- 557 / 556 Qualité supérieure / épique (183 / 185) : sans niveau d'objet minimum, sur 16 emplacements (sans chemise, tabard ni objet à distance).
+- 889 / 891 Monte (178 / 179) : rangs 75 et 150 ; Expert et Artisan cavalier n'existent pas sur Forever.
+- 940 Les vertes collines de Strangleronce (184) : quête 208 « La chasse au gros gibier » terminée.
+- 684 Le repaire d'Onyxia : notre 173, dans Donjons > Raids.
 - Correspondance des id WotLK avec les nôtres : voir [WotlkFaisables.md](WotlkFaisables.md) et les commentaires de `Data/Achievements.lua`.
 - Statistiques : 🟢 sur celles que nos HF lisent et qui existent aussi en WotLK. Nos HF lisent aussi 64348 et 64349 (bassin Arathi), propres à Forever.
 

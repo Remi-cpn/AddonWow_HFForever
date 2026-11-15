@@ -3,7 +3,7 @@
 -- La liste validée est décrite dans docs/ProposedAchievements.md.
 --
 --   id          : numéro unique et DÉFINITIF, la sauvegarde s'en sert. Un
---                 nouveau haut fait prend le numéro libre suivant (186), quel
+--                 nouveau haut fait prend le numéro libre suivant (191), quel
 --                 que soit l'endroit où il est rangé. Ne jamais changer ni
 --                 réutiliser un numéro.
 --   category    : une constante CAT de Data/Categories.lua
@@ -113,30 +113,60 @@ ns.Data.achievements = {
 		criteria = { { type = "money", id = 326, value = 10000, combine = "sum" } },
 	},
 	{
-		-- Statistique 339 « Montures possédées » : le meilleur personnage compte
-		-- (une même monture sur deux personnages ne compte qu'une fois).
+		-- Montures et mascottes : nombre lu dans les journaux du jeu (les
+		-- statistiques 338 / 339 ne sont pas tenues à jour sur Forever). Le
+		-- meilleur personnage compte.
 		id = 104, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "Ability_Mount_RidingElekk",
-		criteria = { { type = "statistic", id = 339, value = 10 } },
+		criteria = { { type = "collection", what = "mounts", value = 10 } },
 	},
 	{
 		id = 105, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "Ability_Mount_RidingElekkElite_Green",
-		criteria = { { type = "statistic", id = 339, value = 25 } },
+		criteria = { { type = "collection", what = "mounts", value = 25 } },
 		previous = 104,
 	},
 	{
 		id = 106, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "Ability_Mount_Mammoth_Black",
-		criteria = { { type = "statistic", id = 339, value = 50 } },
+		criteria = { { type = "collection", what = "mounts", value = 50 } },
 		previous = 105,
 	},
 	{
 		-- Commun aux deux camps.
 		id = 107, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "Ability_Hunter_Pet_DragonHawk",
-		criteria = { { type = "statistic", id = 339, value = 100 } },
+		criteria = { { type = "collection", what = "mounts", value = 100 } },
 		previous = 106,
+	},
+	{
+		id = 186, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Box_PetCarrier_01",
+		criteria = { { type = "collection", what = "pets", value = 1 } },
+	},
+	{
+		id = 187, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Box_PetCarrier_01",
+		criteria = { { type = "collection", what = "pets", value = 15 } },
+		previous = 186,
+	},
+	{
+		id = 188, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Box_Birdcage_01",
+		criteria = { { type = "collection", what = "pets", value = 25 } },
+		previous = 187,
+	},
+	{
+		id = 189, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Box_Birdcage_01",
+		criteria = { { type = "collection", what = "pets", value = 50 } },
+		previous = 188,
+	},
+	{
+		id = 190, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "Ability_Hunter_BeastCall",
+		criteria = { { type = "collection", what = "pets", value = 75 } },
+		previous = 189,
 	},
 
 	---------------------------------------------------------------------------

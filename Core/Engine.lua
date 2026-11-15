@@ -33,6 +33,8 @@ local WATCHED_EVENTS = {
 	"SKILL_LINES_CHANGED",      -- métiers
 	"UPDATE_FACTION",           -- réputations
 	"PLAYER_EQUIPMENT_CHANGED", -- tabard, qualité de l'équipement
+	"NEW_PET_ADDED",            -- mascottes
+	"NEW_MOUNT_ADDED",          -- montures
 }
 
 local eventFrame = CreateFrame("Frame")

@@ -2,9 +2,10 @@
 
 ## 1.1.0 (in progress)
 
-### New achievements (8)
+### New achievements (13)
 
 **General**
+- **Can I Keep Him?**, **Plenty of Pets**, **Plethora of Pets**, **Shop Smart, Shop Pet... Smart** and **Lil' Game Hunter**: collect 1, 15, 25, 50 and 75 vanity pets.
 - **Giddy Up!**: learn the Apprentice riding skill.
 - **Fast and Furious**: learn the Journeyman riding skill.
 - **Did Somebody Order a Knuckle Sandwich?**: raise your unarmed skill to 300.
@@ -16,7 +17,11 @@
 **Quests**
 - **The Green Hills of Stranglethorn**: complete Hemet Nesingwary's quests in Stranglethorn Vale.
 
-Riding, unarmed and weapon skills, and the quest are detected from what your characters have already done. Tabard and gear achievements unlock as soon as you wear the items, even once.
+Pets, riding, unarmed and weapon skills, and the quest are detected from what your characters have already done. Tabard and gear achievements unlock as soon as you wear the items, even once.
+
+### Fixes
+
+- Mount achievements now count the mounts shown in your Mount Journal. The game statistic they used before is not kept up to date on WoW: Forever.
 
 ## 1.0.0
 

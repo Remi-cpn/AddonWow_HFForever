@@ -195,6 +195,35 @@ local function CountGearSlotsOfQuality(minQuality)
 	return count
 end
 
+-- Nombre de mascottes ou de montures possédées, lu dans les journaux de
+-- Forever : le même chiffre que celui affiché en haut de chaque journal.
+-- (Les statistiques 338 et 339 ne sont pas tenues à jour sur Forever.)
+local function CountPets()
+	if not (C_PetJournal and C_PetJournal.GetNumPets) then
+		return 0
+	end
+	local _, numOwned = C_PetJournal.GetNumPets()
+	return numOwned or 0
+end
+
+-- Même calcul que Blizzard_MountCollection.lua : montures obtenues, sans
+-- celles masquées pour ce personnage.
+local function CountMounts()
+	if not (C_MountJournal and C_MountJournal.GetMountIDs) then
+		return 0
+	end
+	local count = 0
+	for _, mountID in ipairs(C_MountJournal.GetMountIDs()) do
+		local _, _, _, _, _, _, _, _, _, hideOnChar, isCollected = C_MountJournal.GetMountInfoByID(mountID)
+		if isCollected and hideOnChar ~= true then
+			count = count + 1
+		end
+	end
+	return count
+end
+
+local COLLECTION_COUNTERS = { pets = CountPets, mounts = CountMounts }
+
 -- Atteindre un niveau. Exemple : { type = "level", value = 10 }
 CriteriaTypes.level = {
 	fields = { "value" },
@@ -351,6 +380,29 @@ CriteriaTypes.weaponSkills = {
 	end,
 	current = function(criterion)
 		return CountWeaponSkills(criterion.value)
+	end,
+}
+
+-- Collection : what = "pets" (mascottes) ou "mounts" (montures).
+-- Exemple : { type = "collection", what = "pets", value = 15 }
+CriteriaTypes.collection = {
+	fields = { "what", "value" },
+	progressBar = function(criterion)
+		return criterion.value > 1
+	end,
+	describe = function(criterion)
+		return L.CRITERIA_COLLECTION[criterion.what] or tostring(criterion.what)
+	end,
+	goal = function(criterion)
+		return criterion.value
+	end,
+	validate = function(criterion)
+		if not COLLECTION_COUNTERS[criterion.what] then
+			return L.DATA_ERR_COLLECTION:format(tostring(criterion.what))
+		end
+	end,
+	current = function(criterion)
+		return COLLECTION_COUNTERS[criterion.what]()
 	end,
 }
 

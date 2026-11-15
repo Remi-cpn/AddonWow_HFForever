@@ -128,6 +128,11 @@ L.CRITERIA_PROFESSION_ANY = "A primary profession: %d"
 L.CRITERIA_QUEST = "Quest %d"
 L.CRITERIA_WEAPON_SKILLS = "Weapon skills at %d"
 L.CRITERIA_TABARD = "Tabard equipped"
+-- [what] = texte du critère « collection »
+L.CRITERIA_COLLECTION = {
+	pets = "Vanity pets",
+	mounts = "Mounts",
+}
 -- [qualité minimale] = texte du critère « gearQuality »
 L.CRITERIA_GEAR_QUALITY = {
 	[3] = "Slots with a superior item or better",
@@ -168,6 +173,7 @@ L.DATA_ERR_CRITERIA_INVALID = "achievement %s, criteria %s: %s"
 L.DATA_ERR_CRITERIA_COMBINE = "achievement %s, criteria %s: combine \"%s\" unknown (max or sum)"
 L.DATA_ERR_META_TARGET = "achievement %s, criteria %s: target achievement %s does not exist, meta removed"
 L.DATA_ERR_STATISTIC = "statistic %s not found in the game"
+L.DATA_ERR_COLLECTION = "unknown collection \"%s\" (pets or mounts)"
 L.DATA_ERR_MAP = "map %s not found in the game"
 L.DATA_ERR_EXPLORE_TOTAL = "no exploration total for map %s (art %s), see Data/ExplorationTotals.lua"
 
@@ -403,6 +409,12 @@ L.ACHIEVEMENT_NAMES = {
 	[183] = "Superior",
 	[184] = "The Green Hills of Stranglethorn",
 	[185] = "Epic",
+	-- Mascottes
+	[186] = "Can I Keep Him?",
+	[187] = "Plenty of Pets",
+	[188] = "Plethora of Pets",
+	[189] = "Shop Smart, Shop Pet... Smart",
+	[190] = "Lil' Game Hunter",
 }
 
 -- [id de haut fait] = description
@@ -607,6 +619,11 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[183] = "Equip a superior item in every slot.",
 	[184] = "Complete Hemet Nesingwary's quests in Stranglethorn Vale, up to and including Big Game Hunter.",
 	[185] = "Equip an epic item in every slot.",
+	[186] = "Obtain a vanity pet.",
+	[187] = "Collect 15 unique vanity pets.",
+	[188] = "Collect 25 unique vanity pets.",
+	[189] = "Collect 50 unique vanity pets.",
+	[190] = "Collect 75 unique vanity pets.",
 }
 
 -- [id de haut fait] = texte de récompense, purement décoratif (titre, objet...).

@@ -120,6 +120,10 @@ L.CRITERIA_PROFESSION_ANY = "Un métier principal : %d"
 L.CRITERIA_QUEST = "Quête %d"
 L.CRITERIA_WEAPON_SKILLS = "Compétences d'armes à %d"
 L.CRITERIA_TABARD = "Tabard équipé"
+L.CRITERIA_COLLECTION = {
+	pets = "Mascottes",
+	mounts = "Montures",
+}
 L.CRITERIA_GEAR_QUALITY = {
 	[3] = "Emplacements en qualité supérieure ou mieux",
 	[4] = "Emplacements en qualité épique",
@@ -158,6 +162,7 @@ L.DATA_ERR_CRITERIA_INVALID = "haut fait %s, critère %s : %s"
 L.DATA_ERR_CRITERIA_COMBINE = "haut fait %s, critère %s : combine « %s » inconnu (max ou sum)"
 L.DATA_ERR_META_TARGET = "haut fait %s, critère %s : haut fait visé %s inexistant, méta retiré"
 L.DATA_ERR_STATISTIC = "statistique %s introuvable dans le jeu"
+L.DATA_ERR_COLLECTION = "collection « %s » inconnue (pets ou mounts)"
 L.DATA_ERR_MAP = "carte %s introuvable dans le jeu"
 L.DATA_ERR_EXPLORE_TOTAL = "pas de total d'exploration pour la carte %s (art %s), voir Data/ExplorationTotals.lua"
 
@@ -395,6 +400,12 @@ Override(L.ACHIEVEMENT_NAMES, {
 	[183] = "Qualité supérieure",
 	[184] = "Les vertes collines de Strangleronce",
 	[185] = "Qualité épique",
+	-- Mascottes
+	[186] = "Je peux le garder ?",
+	[187] = "De nombreux familiers",
+	[188] = "Pléthore de familiers",
+	[189] = "Les aimer comme ils vous aiment",
+	[190] = "La chasse au p'tit gibier",
 })
 
 Override(L.ACHIEVEMENT_DESCRIPTIONS, {
@@ -598,6 +609,11 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[183] = "Équiper un objet de qualité supérieure dans chaque emplacement.",
 	[184] = "Achever les quêtes d'Hemet Nesingwary dans la vallée de Strangleronce, jusqu'à « La chasse au gros gibier ».",
 	[185] = "Équiper un objet de qualité épique dans chaque emplacement.",
+	[186] = "Obtenir une mascotte.",
+	[187] = "Collecter 15 mascottes différentes.",
+	[188] = "Collecter 25 mascottes différentes.",
+	[189] = "Collecter 50 mascottes différentes.",
+	[190] = "Collecter 75 mascottes différentes.",
 })
 
 Override(L.CRITERIA_TEXTS, {
