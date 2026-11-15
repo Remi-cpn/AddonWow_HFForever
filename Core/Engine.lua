@@ -32,6 +32,7 @@ local WATCHED_EVENTS = {
 	"MAP_EXPLORATION_UPDATED",  -- exploration
 	"SKILL_LINES_CHANGED",      -- métiers
 	"UPDATE_FACTION",           -- réputations
+	"PLAYER_EQUIPMENT_CHANGED", -- tabard, qualité de l'équipement
 }
 
 local eventFrame = CreateFrame("Frame")

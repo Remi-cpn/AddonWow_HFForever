@@ -105,6 +105,96 @@ local function GetProfessionRank(skillLine)
 	return 0
 end
 
+-- Quête terminée par le personnage (rétroactif : le jeu garde la liste).
+local function IsQuestDone(questID)
+	if C_QuestLog and C_QuestLog.IsQuestFlaggedCompleted then
+		return C_QuestLog.IsQuestFlaggedCompleted(questID) == true
+	end
+	return IsQuestFlaggedCompleted ~= nil and IsQuestFlaggedCompleted(questID) == true
+end
+
+-- Compétences de la fenêtre Compétences de Forever (C_SkillInfo), lues par
+-- leur id : pas de nom traduit à comparer. nil si la compétence n'est pas
+-- apprise.
+local function GetSkillInfo(skillID)
+	if not (C_SkillInfo and C_SkillInfo.GetSkillLineInfoByID) then
+		return nil
+	end
+	return C_SkillInfo.GetSkillLineInfoByID(skillID)
+end
+
+local RIDING_SKILL_ID = 762
+
+-- Sorts de monte, au cas où Forever les donne sans la compétence 762 :
+-- [sort] = rang de monte qu'il représente.
+local RIDING_SPELLS = { [33388] = 75, [33391] = 150 }
+
+local function GetSkillRank(skillID)
+	local info = GetSkillInfo(skillID)
+	local rank = info and info.rank or 0
+	if skillID == RIDING_SKILL_ID and C_SpellBook and C_SpellBook.IsSpellKnown then
+		for spellID, spellRank in pairs(RIDING_SPELLS) do
+			if C_SpellBook.IsSpellKnown(spellID) then
+				rank = math.max(rank, spellRank)
+			end
+		end
+	end
+	return rank
+end
+
+-- Compétences d'armes, liste de la fenêtre Compétences de Forever
+-- (Blizzard_UIPanels_Game/Camelot/SkillsFrame.lua), sans Combat farouche.
+-- 162 = armes de pugilat et mains nues.
+local WEAPON_SKILL_IDS = {
+	43, 44, 45, 46, 54, 55, 136, 160, 162, 172, 173, 176, 226, 228, 229,
+}
+
+-- Nombre de compétences d'armes au moins au rang minRank.
+local function CountWeaponSkills(minRank)
+	local count = 0
+	for _, skillID in ipairs(WEAPON_SKILL_IDS) do
+		if GetSkillRank(skillID) >= minRank then
+			count = count + 1
+		end
+	end
+	return count
+end
+
+-- Emplacements comptés pour « un objet dans chaque emplacement » : tête,
+-- cou, épaules, dos, torse, poignets, mains, taille, jambes, pieds, 2
+-- anneaux, 2 bijoux, main droite, main gauche. Sans chemise, tabard ni
+-- objet à distance (pas toutes les classes en ont un).
+local GEAR_SLOTS = { 1, 2, 3, 15, 5, 9, 10, 6, 7, 8, 11, 12, 13, 14, 16, 17 }
+local MAIN_HAND_SLOT, OFF_HAND_SLOT, TABARD_SLOT = 16, 17, 19
+
+local function IsTwoHandedEquipped()
+	local itemID = GetInventoryItemID("player", MAIN_HAND_SLOT)
+	if not itemID then
+		return false
+	end
+	-- Sur Forever, la fonction n'existe plus qu'en C_Item.GetItemInfoInstant.
+	local getInfo = C_Item and C_Item.GetItemInfoInstant or GetItemInfoInstant
+	local equipLoc = select(4, getInfo(itemID))
+	return equipLoc == "INVTYPE_2HWEAPON"
+end
+
+-- Emplacements portant un objet de qualité minQuality ou mieux (3 = rare,
+-- bleu ; 4 = épique, violet). Avec une arme à deux mains, la main gauche
+-- vide compte comme remplie.
+local function CountGearSlotsOfQuality(minQuality)
+	local count = 0
+	for _, slot in ipairs(GEAR_SLOTS) do
+		local quality = GetInventoryItemQuality("player", slot)
+		if quality and quality >= minQuality then
+			count = count + 1
+		elseif slot == OFF_HAND_SLOT and not GetInventoryItemID("player", slot)
+				and IsTwoHandedEquipped() then
+			count = count + 1
+		end
+	end
+	return count
+end
+
 -- Atteindre un niveau. Exemple : { type = "level", value = 10 }
 CriteriaTypes.level = {
 	fields = { "value" },
@@ -204,6 +294,94 @@ CriteriaTypes.profession = {
 	end,
 	current = function(criterion)
 		return GetProfessionRank(criterion.skillLine)
+	end,
+}
+
+-- Quête terminée. Exemple : { type = "quest", id = 208 }
+-- text (facultatif) remplace le nom de la quête dans l'UI.
+CriteriaTypes.quest = {
+	fields = { "id" },
+	progressBar = false,
+	describe = function(criterion)
+		if criterion.text then
+			return criterion.text
+		end
+		local title = C_QuestLog and C_QuestLog.GetTitleForQuestID
+			and C_QuestLog.GetTitleForQuestID(criterion.id)
+		return title or L.CRITERIA_QUEST:format(criterion.id)
+	end,
+	goal = function()
+		return 1
+	end,
+	current = function(criterion)
+		return IsQuestDone(criterion.id) and 1 or 0
+	end,
+}
+
+-- Rang d'une compétence par son id (762 monte, 162 mains nues...).
+-- Exemple : { type = "skill", id = 762, value = 75 }
+-- text (facultatif) remplace le nom de la compétence, utile tant qu'elle
+-- n'est pas apprise (le jeu ne donne son nom qu'une fois apprise).
+CriteriaTypes.skill = {
+	fields = { "id", "value" },
+	progressBar = true,
+	describe = function(criterion)
+		local info = GetSkillInfo(criterion.id)
+		local name = criterion.text or (info and info.name) or tostring(criterion.id)
+		return L.CRITERIA_PROFESSION:format(name, criterion.value)
+	end,
+	goal = function(criterion)
+		return criterion.value
+	end,
+	current = function(criterion)
+		return GetSkillRank(criterion.id)
+	end,
+}
+
+-- count compétences d'armes au moins au rang value.
+-- Exemple : { type = "weaponSkills", count = 4, value = 300 }
+CriteriaTypes.weaponSkills = {
+	fields = { "count", "value" },
+	progressBar = true,
+	describe = function(criterion)
+		return L.CRITERIA_WEAPON_SKILLS:format(criterion.value)
+	end,
+	goal = function(criterion)
+		return criterion.count
+	end,
+	current = function(criterion)
+		return CountWeaponSkills(criterion.value)
+	end,
+}
+
+-- Porter un tabard. Exemple : { type = "tabard" }
+CriteriaTypes.tabard = {
+	fields = {},
+	progressBar = false,
+	describe = function()
+		return L.CRITERIA_TABARD
+	end,
+	goal = function()
+		return 1
+	end,
+	current = function()
+		return GetInventoryItemID("player", TABARD_SLOT) and 1 or 0
+	end,
+}
+
+-- Un objet de qualité quality ou mieux dans chaque emplacement de GEAR_SLOTS
+-- en même temps. Exemple : { type = "gearQuality", quality = 3 }
+CriteriaTypes.gearQuality = {
+	fields = { "quality" },
+	progressBar = true,
+	describe = function(criterion)
+		return L.CRITERIA_GEAR_QUALITY[criterion.quality] or tostring(criterion.quality)
+	end,
+	goal = function()
+		return #GEAR_SLOTS
+	end,
+	current = function(criterion)
+		return CountGearSlotsOfQuality(criterion.quality)
 	end,
 }
 

@@ -117,6 +117,13 @@ L.CRITERIA_LEVEL = "Atteindre le niveau %d"
 L.CRITERIA_EXPLORE = "Explorer : %s"
 L.CRITERIA_PROFESSION = "%s : %d"
 L.CRITERIA_PROFESSION_ANY = "Un métier principal : %d"
+L.CRITERIA_QUEST = "Quête %d"
+L.CRITERIA_WEAPON_SKILLS = "Compétences d'armes à %d"
+L.CRITERIA_TABARD = "Tabard équipé"
+L.CRITERIA_GEAR_QUALITY = {
+	[3] = "Emplacements en qualité supérieure ou mieux",
+	[4] = "Emplacements en qualité épique",
+}
 
 L.PROFESSION_NAMES = {
 	[129] = "Secourisme",
@@ -379,6 +386,15 @@ Override(L.ACHIEVEMENT_NAMES, {
 	-- Donjons de Forever
 	[176] = "Les gardiens de la terrasse",
 	[177] = "L'ignoré",
+	-- Monte, compétences, équipement, quêtes
+	[178] = "En selle !",
+	[179] = "L'équipée sauvage",
+	[180] = "Qui a commandé une salade de phalanges ?",
+	[181] = "Maître d'armes",
+	[182] = "Représentant",
+	[183] = "Qualité supérieure",
+	[184] = "Les vertes collines de Strangleronce",
+	[185] = "Qualité épique",
 })
 
 Override(L.ACHIEVEMENT_DESCRIPTIONS, {
@@ -574,6 +590,14 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[175] = "Vaincre Sonya Sanctombre dans les profondeurs des Saisons.",
 	[176] = "Vaincre Braise, Fulguro et Serre-neigeuse sur la terrasse du Façonneur.",
 	[177] = "Vaincre Lyn l'Ignoré dans la cité de Dalaran.",
+	[178] = "Apprendre la compétence Apprenti cavalier.",
+	[179] = "Apprendre la compétence Compagnon cavalier.",
+	[180] = "Obtenir un score de 300 avec la compétence Mains nues.",
+	[181] = "Obtenir un score de 300 dans 4 compétences d'armes.",
+	[182] = "Équiper un tabard.",
+	[183] = "Équiper un objet de qualité supérieure dans chaque emplacement.",
+	[184] = "Achever les quêtes d'Hemet Nesingwary dans la vallée de Strangleronce, jusqu'à « La chasse au gros gibier ».",
+	[185] = "Équiper un objet de qualité épique dans chaque emplacement.",
 })
 
 Override(L.CRITERIA_TEXTS, {
@@ -609,4 +633,8 @@ Override(L.CRITERIA_TEXTS, {
 	[175] = { "Sonya Sanctombre" },
 	[176] = { "Braise", "Fulguro", "Serre-neigeuse" },
 	[177] = { "Lyn l'Ignoré" },
+	[178] = { "Monte" },
+	[179] = { "Monte" },
+	[180] = { "Mains nues" },
+	[184] = { "La chasse au gros gibier" },
 })

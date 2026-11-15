@@ -86,6 +86,7 @@ local function ValidateCriterion(achievementID, index, criterion)
 	-- valeur enregistrée n'est pas relue pour le nouveau. Changer seulement
 	-- le seuil (value) garde la progression.
 	local target = criterion.id or criterion.mapID or criterion.factionID or criterion.skillLine
+		or criterion.quality
 	criterion.progressKey = criterion.type .. ":" .. tostring(target or "")
 	return true
 end

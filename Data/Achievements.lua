@@ -3,7 +3,7 @@
 -- La liste validée est décrite dans docs/ProposedAchievements.md.
 --
 --   id          : numéro unique et DÉFINITIF, la sauvegarde s'en sert. Un
---                 nouveau haut fait prend le numéro libre suivant (178), quel
+--                 nouveau haut fait prend le numéro libre suivant (186), quel
 --                 que soit l'endroit où il est rangé. Ne jamais changer ni
 --                 réutiliser un numéro.
 --   category    : une constante CAT de Data/Categories.lua
@@ -140,6 +140,50 @@ ns.Data.achievements = {
 	},
 
 	---------------------------------------------------------------------------
+	-- Général : monte, compétences, équipement (le meilleur personnage compte)
+	-- Compétences : 762 monte, 162 mains nues et armes de pugilat.
+	---------------------------------------------------------------------------
+	{
+		id = 178, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "Ability_Mount_RidingHorse",
+		criteria = { { type = "skill", id = 762, value = 75 } },
+	},
+	{
+		id = 179, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "Ability_Mount_JungleTiger",
+		criteria = { { type = "skill", id = 762, value = 150 } },
+		previous = 178,
+	},
+	{
+		id = 180, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Gauntlets_04",
+		criteria = { { type = "skill", id = 162, value = 300 } },
+	},
+	{
+		id = 181, category = CAT.GENERAL, points = 25,
+		icon = ICONS .. "INV_Sword_01",
+		criteria = { { type = "weaponSkills", count = 4, value = 300 } },
+	},
+	{
+		-- Détecté dès qu'un tabard est porté, même une seule fois.
+		id = 182, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Shirt_GuildTabard_01",
+		criteria = { { type = "tabard" } },
+	},
+	{
+		-- Tous les emplacements en même temps, vu au moins une fois.
+		id = 183, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Misc_Gem_Sapphire_02",
+		criteria = { { type = "gearQuality", quality = 3 } },
+	},
+	{
+		id = 185, category = CAT.GENERAL, points = 25,
+		icon = ICONS .. "INV_Misc_Gem_Amethyst_02",
+		criteria = { { type = "gearQuality", quality = 4 } },
+		previous = 183,
+	},
+
+	---------------------------------------------------------------------------
 	-- Quêtes : statistique 98 « Quêtes achevées », additionnée sur le compte
 	---------------------------------------------------------------------------
 	{
@@ -170,6 +214,13 @@ ns.Data.achievements = {
 		icon = ICONS .. "Achievement_Quests_Completed_05",
 		criteria = { { type = "statistic", id = 98, value = 1000, combine = "sum" } },
 		previous = 10,
+	},
+	{
+		-- Quête 208 « La chasse au gros gibier », la dernière d'Hemet
+		-- Nesingwary dans la vallée de Strangleronce.
+		id = 184, category = CAT.QUESTS, points = 10,
+		icon = ICONS .. "INV_Misc_Head_Tiger_01",
+		criteria = { { type = "quest", id = 208 } },
 	},
 
 	---------------------------------------------------------------------------

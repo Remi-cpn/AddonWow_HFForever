@@ -125,6 +125,14 @@ L.CRITERIA_LEVEL = "Reach level %d"
 L.CRITERIA_EXPLORE = "Explore: %s"
 L.CRITERIA_PROFESSION = "%s: %d"
 L.CRITERIA_PROFESSION_ANY = "A primary profession: %d"
+L.CRITERIA_QUEST = "Quest %d"
+L.CRITERIA_WEAPON_SKILLS = "Weapon skills at %d"
+L.CRITERIA_TABARD = "Tabard equipped"
+-- [qualité minimale] = texte du critère « gearQuality »
+L.CRITERIA_GEAR_QUALITY = {
+	[3] = "Slots with a superior item or better",
+	[4] = "Slots with an epic item",
+}
 
 -- [skillLine] = nom du métier
 L.PROFESSION_NAMES = {
@@ -386,6 +394,15 @@ L.ACHIEVEMENT_NAMES = {
 	-- Donjons de Forever
 	[176] = "Guardians of the Terrace",
 	[177] = "The Ignored",
+	-- Monte, compétences, équipement, quêtes
+	[178] = "Giddy Up!",
+	[179] = "Fast and Furious",
+	[180] = "Did Somebody Order a Knuckle Sandwich?",
+	[181] = "Master of Arms",
+	[182] = "Represent",
+	[183] = "Superior",
+	[184] = "The Green Hills of Stranglethorn",
+	[185] = "Epic",
 }
 
 -- [id de haut fait] = description
@@ -582,6 +599,14 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[175] = "Defeat Sonya Darkhallow in the Barrow Deeps.",
 	[176] = "Defeat Cinder, Bolt and Snowtalon on the Shaper's Terrace.",
 	[177] = "Defeat Lyn the Ignored in the City of Dalaran.",
+	[178] = "Learn the Apprentice riding skill.",
+	[179] = "Learn the Journeyman riding skill.",
+	[180] = "Raise your unarmed skill to 300.",
+	[181] = "Raise four weapon skills to 300.",
+	[182] = "Equip a tabard.",
+	[183] = "Equip a superior item in every slot.",
+	[184] = "Complete Hemet Nesingwary's quests in Stranglethorn Vale, up to and including Big Game Hunter.",
+	[185] = "Equip an epic item in every slot.",
 }
 
 -- [id de haut fait] = texte de récompense, purement décoratif (titre, objet...).
@@ -627,4 +652,9 @@ L.CRITERIA_TEXTS = {
 	[175] = { "Sonya Darkhallow" },
 	[176] = { "Cinder", "Bolt", "Snowtalon" },
 	[177] = { "Lyn the Ignored" },
+	-- Compétences : nom affiché même tant qu'elle n'est pas apprise
+	[178] = { "Riding" },
+	[179] = { "Riding" },
+	[180] = { "Unarmed" },
+	[184] = { "Big Game Hunter" },
 }
