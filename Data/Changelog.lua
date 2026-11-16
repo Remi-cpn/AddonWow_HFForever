@@ -48,6 +48,7 @@ Pets, riding, unarmed and weapon skills, recipes, quests and dungeons are detect
 ### New in the window
 
 - **Patch notes** tab: what changed in each version of HF Forever, right in the game. A red dot on the tab tells you when a new version brings news.
+- Larger minimap button, showing the HF Forever crest without the round frame.
 
 ### Removed
 
@@ -92,6 +93,7 @@ Les mascottes, la monte, les compétences d'armes et de mains nues, les recettes
 ### Nouveau dans la fenêtre
 
 - Onglet **Notes de version** : ce qui change à chaque version de HF Forever, directement en jeu. Une pastille rouge sur l'onglet vous prévient quand une nouvelle version apporte du nouveau.
+- Bouton de la minimap plus grand, avec le blason de HF Forever sans le cercle autour.
 
 ### Retirés
 

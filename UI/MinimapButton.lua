@@ -14,6 +14,9 @@ ns.MinimapButton = MinimapButton
 
 -- Aussi affiché tel quel dans le compartiment d'addons.
 local BUTTON_NAME = "HF Forever"
+-- Logo sans le cercle doré ni le fond rond de LibDBIcon, plus grand que
+-- l'icône par défaut (18), presque la taille du bouton (31).
+local ICON_SIZE = 29
 
 -- Accroché à UIParent et pas au cadre cliqué : dans le compartiment
 -- d'addons, ce cadre se ferme aussitôt et emporterait le menu.
@@ -56,6 +59,10 @@ function MinimapButton:Init()
 		OnTooltipShow = OnTooltipShow,
 	})
 	LDBIcon:Register(BUTTON_NAME, dataObject, ns.Database:GetMinimapSettings())
+	-- Le bouton existe dès Register, même masqué.
+	LDBIcon:RemoveButtonBorder(BUTTON_NAME)
+	LDBIcon:RemoveButtonBackground(BUTTON_NAME)
+	LDBIcon:SetButtonIcon(BUTTON_NAME, nil, ICON_SIZE, "CENTER")
 	Log.Debug("MinimapButton: enregistré, masqué =", ns.Database:GetMinimapSettings().hide)
 end
 

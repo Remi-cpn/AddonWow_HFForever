@@ -31,6 +31,7 @@ Pets, riding, unarmed and weapon skills, recipes, quests and dungeons are detect
 ### New in the window
 
 - **Patch notes** tab: what changed in each version of HF Forever, right in the game. A red dot on the tab tells you when a new version brings news.
+- Larger minimap button, showing the HF Forever crest without the round frame.
 
 ### Removed
 
