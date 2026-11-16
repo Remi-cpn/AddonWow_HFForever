@@ -8,6 +8,8 @@
 --                  ns.API.GetAchievementCriteriaInfo (ex. le haut fait d'un méta)
 --   validate(c)  : (facultatif) contrôle au chargement. Renvoie un message
 --                  d'erreur si le critère est inutilisable, nil sinon.
+--   key(c)       : (facultatif) clé de la progression dans la sauvegarde. Par
+--                  défaut "type:cible" (voir Core/Registry.lua).
 --   current(c)   : progression actuelle du personnage connecté (un nombre).
 --                  Le critère est rempli quand current(c) >= goal(c).
 --                  Appelée par le moteur (Core/Engine.lua), jamais en combat.
@@ -422,6 +424,80 @@ CriteriaTypes.collection = {
 	end,
 	current = function(criterion)
 		return COLLECTION_COUNTERS[criterion.what]()
+	end,
+}
+
+-- Critère d'un haut fait natif de Forever rempli ? On le cherche par l'id que
+-- le jeu donne (assetID, 8e valeur de GetAchievementCriteriaInfo), pas par
+-- sa position dans la liste.
+local function IsNativeCriterionDone(achievementID, assetID)
+	if not (GetAchievementNumCriteria and GetAchievementCriteriaInfo) then
+		return false
+	end
+	for index = 1, GetAchievementNumCriteria(achievementID) or 0 do
+		local _, _, completed, _, _, _, _, asset = GetAchievementCriteriaInfo(achievementID, index)
+		if asset == assetID and completed then
+			return true
+		end
+	end
+	return false
+end
+
+-- Boss vaincu, par plusieurs sources : une seule suffit.
+--   native     : (facultatif) critère d'un haut fait natif de Forever
+--                (Spéléologue novice 62031, expérimenté 62032, expert 62033),
+--                { achievement = id, asset = id affiché par le jeu }.
+--                Rétroactif et tenu par le jeu : la source la plus sûre.
+--   statistic  : (facultatif) statistique « Morts de <boss> », rétroactive
+--                quand Forever la tient à jour.
+--   encounters : ids de rencontre (table DungeonEncounter) ; la victoire est
+--                vue en direct par le moteur (ENCOUNTER_END / BOSS_KILL),
+--                donc pas rétroactive.
+-- Exemple : { type = "boss", encounters = { 2755 }, statistic = 1092,
+--             native = { achievement = 62031, asset = 4275 } }
+-- text (facultatif) : nom du boss affiché dans l'UI.
+CriteriaTypes.boss = {
+	fields = { "encounters" },
+	progressBar = false,
+	-- Clé de progression : le premier id de rencontre (la cible du critère).
+	key = function(criterion)
+		return "boss:" .. tostring(criterion.encounters[1])
+	end,
+	describe = function(criterion)
+		return criterion.text
+			or (criterion.statistic and GetStatisticName(criterion.statistic))
+			or tostring(criterion.encounters[1])
+	end,
+	goal = function()
+		return 1
+	end,
+	validate = function(criterion)
+		if type(criterion.encounters) ~= "table" or #criterion.encounters == 0 then
+			return L.DATA_ERR_ENCOUNTERS
+		end
+		if criterion.statistic and not GetStatisticName(criterion.statistic) then
+			return L.DATA_ERR_STATISTIC:format(tostring(criterion.statistic))
+		end
+		local native = criterion.native
+		if native ~= nil and (type(native) ~= "table" or type(native.achievement) ~= "number"
+				or type(native.asset) ~= "number") then
+			return L.DATA_ERR_NATIVE
+		end
+	end,
+	current = function(criterion)
+		local native = criterion.native
+		if native and IsNativeCriterionDone(native.achievement, native.asset) then
+			return 1
+		end
+		if criterion.statistic and GetStatisticNumber(criterion.statistic) >= 1 then
+			return 1
+		end
+		for _, encounterID in ipairs(criterion.encounters) do
+			if ns.Database:HasBossKill(encounterID) then
+				return 1
+			end
+		end
+		return 0
 	end,
 }
 

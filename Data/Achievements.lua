@@ -3,9 +3,10 @@
 -- La liste validée est décrite dans docs/ProposedAchievements.md.
 --
 --   id          : numéro unique et DÉFINITIF, la sauvegarde s'en sert. Un
---                 nouveau haut fait prend le numéro libre suivant (198), quel
+--                 nouveau haut fait prend le numéro libre suivant (209), quel
 --                 que soit l'endroit où il est rangé. Ne jamais changer ni
---                 réutiliser un numéro.
+--                 réutiliser un numéro. Numéros retirés, à ne jamais
+--                 réutiliser : 76, 80, 176, 177.
 --   category    : une constante CAT de Data/Categories.lua
 --   points      : points du haut fait
 --   icon        : chemin de l'icône (Interface\\Icons\\...)
@@ -26,6 +27,10 @@ local _, ns = ...
 
 local CAT = ns.Data.CAT
 local ICONS = "Interface\\Icons\\"
+
+-- Hauts faits natifs de Forever qui listent les donjons, un critère par
+-- donjon ou par aile (critère « boss », champ native).
+local SPELEO_NOVICE, SPELEO_EXPERIENCED, SPELEO_EXPERT = 62031, 62032, 62033
 
 ns.Data.achievements = {
 	---------------------------------------------------------------------------
@@ -1065,162 +1070,266 @@ ns.Data.achievements = {
 	},
 
 	---------------------------------------------------------------------------
-	-- Donjons classiques : statistique « Morts de <boss> » >= 1. Le nom du
-	-- boss affiché dans le critère vient de L.CRITERIA_TEXTS.
-	-- Gouffre de Ragefeu n'y est pas : sur Forever, la statistique 15027
-	-- (Bazzalan) augmente aussi en finissant la salle des Thanes, on ne peut
-	-- pas savoir lequel des deux donjons a été fait.
+	-- Donjons classiques : critère « boss » = boss principal vaincu (celui que
+	-- retient le haut fait natif Spéléologue de Forever), par trois sources :
+	--   native     : critère du haut fait natif, rétroactif et tenu par le jeu ;
+	--   statistic  : « Morts de <boss> », rétroactive mais pas toujours tenue
+	--                à jour sur Forever ;
+	--   encounters : rencontre vue en direct (table DungeonEncounter, plusieurs
+	--                ids quand le boss existe en plusieurs difficultés).
+	-- asset de native : l'id affiché par le jeu (GetAchievementCriteriaInfo),
+	-- relevé en jeu le 2026-11-16. Le nom du boss vient de L.CRITERIA_TEXTS.
+	-- Monastère écarlate, Hache-Tripes et Stratholme : un haut fait par aile,
+	-- plus un méta comme les hauts faits officiels.
 	---------------------------------------------------------------------------
+	{
+		-- Critère natif commun aux deux donjons ; rencontres : Taragaman,
+		-- Bazzalan (Ragefeu), Durgen Mornemartel (Thanes).
+		id = 207, category = CAT.DUNGEONS_CLASSIC, points = 10,
+		icon = ICONS .. "Spell_Shadow_SummonFelGuard",
+		criteria = { { type = "boss", encounters = { 2733, 2735, 3496 },
+			native = { achievement = SPELEO_NOVICE, asset = 0 } } }, -- Gouffre de Ragefeu ou salle des Thanes
+	},
 	{
 		id = 73, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_EdwinVancleef",
-		criteria = { { type = "statistic", id = 63570, value = 1 } }, -- Mortemines
+		criteria = { { type = "boss", encounters = { 2747 }, statistic = 63570,
+			native = { achievement = SPELEO_NOVICE, asset = 639 } } }, -- Mortemines
 	},
 	{
 		id = 74, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_Mutanus_the_Devourer",
-		criteria = { { type = "statistic", id = 15028, value = 1 } }, -- Cavernes des Lamentations
+		criteria = { { type = "boss", encounters = { 592 }, statistic = 15028,
+			native = { achievement = SPELEO_NOVICE, asset = 3654 } } }, -- Cavernes des Lamentations
 	},
 	{
 		id = 75, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_ArchmageArugal",
-		criteria = { { type = "statistic", id = 1092, value = 1 } }, -- Donjon d'Ombrecroc
+		criteria = { { type = "boss", encounters = { 2755 }, statistic = 1092,
+			native = { achievement = SPELEO_NOVICE, asset = 4275 } } }, -- Donjon d'Ombrecroc
 	},
-	{
-		id = 76, category = CAT.DUNGEONS_CLASSIC, points = 10,
-		icon = ICONS .. "Achievement_Boss_Bazil_Thredd",
-		criteria = { { type = "statistic", id = 15029, value = 1 } }, -- La Prison
-	},
+	-- Le 76 (prison de Hurlevent) est retiré : donjon fermé à la Horde, et
+	-- absent des hauts faits natifs. Son numéro ne doit jamais être réutilisé.
 	{
 		id = 77, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_Bazil_Akumai",
-		criteria = { { type = "statistic", id = 6137, value = 1 } }, -- Profondeurs de Brassenoire
+		criteria = { { type = "boss", encounters = { 2910, 2767, 2891 }, statistic = 6137,
+			native = { achievement = SPELEO_EXPERIENCED, asset = 4829 } } }, -- Profondeurs de Brassenoire
 	},
 	{
 		id = 78, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "INV_Gizmo_02",
-		criteria = { { type = "statistic", id = 6140, value = 1 } }, -- Gnomeregan
+		criteria = { { type = "boss", encounters = { 2772, 2940 }, statistic = 6140,
+			native = { achievement = SPELEO_EXPERIENCED, asset = 7800 } } }, -- Gnomeregan
 	},
 	{
 		id = 79, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_CharlgaRazorflank",
-		criteria = { { type = "statistic", id = 6139, value = 1 } }, -- Kraal de Tranchebauge
+		criteria = { { type = "boss", encounters = { 2778 }, statistic = 6139,
+			native = { achievement = SPELEO_EXPERIENCED, asset = 4421 } } }, -- Kraal de Tranchebauge
+	},
+	-- Monastère écarlate : une aile par haut fait, puis le méta. Le 80
+	-- (« Salles Écarlates », statistique 6786) est retiré : doublon de la
+	-- cathédrale. Son numéro ne doit jamais être réutilisé.
+	{
+		id = 198, category = CAT.DUNGEONS_CLASSIC, points = 10,
+		icon = ICONS .. "INV_Misc_Bone_HumanSkull_01",
+		criteria = { { type = "boss", encounters = { 2779 },
+			native = { achievement = SPELEO_EXPERIENCED, asset = 4543 } } }, -- Cimetière : mage de sang Thalnos
 	},
 	{
-		id = 80, category = CAT.DUNGEONS_CLASSIC, points = 10,
-		icon = ICONS .. "Spell_Fire_FlameBolt",
-		criteria = { { type = "statistic", id = 6786, value = 1 } }, -- Salles Écarlates
+		id = 199, category = CAT.DUNGEONS_CLASSIC, points = 10,
+		icon = ICONS .. "INV_Misc_Book_09",
+		criteria = { { type = "boss", encounters = { 447 },
+			native = { achievement = SPELEO_EXPERIENCED, asset = 6487 } } }, -- Bibliothèque : arcaniste Doan
 	},
 	{
+		id = 200, category = CAT.DUNGEONS_CLASSIC, points = 10,
+		icon = ICONS .. "INV_Axe_10",
+		criteria = { { type = "boss", encounters = { 448 },
+			native = { achievement = SPELEO_EXPERIENCED, asset = 3975 } } }, -- Armurerie : Hérode
+	},
+	{
+		-- Le natif demande Mograine ; la rencontre 450 (Blanchetête) se
+		-- termine avec lui.
 		id = 81, category = CAT.DUNGEONS_CLASSIC, points = 10,
-		icon = ICONS .. "Spell_Holy_SealOfMight",
-		criteria = { { type = "statistic", id = 1093, value = 1 } }, -- Monastère écarlate
+		icon = ICONS .. "INV_Shield_05",
+		criteria = { { type = "boss", encounters = { 450 }, statistic = 1093,
+			native = { achievement = SPELEO_EXPERIENCED, asset = 3976 } } }, -- Cathédrale : commandant Mograine
+	},
+	{
+		id = 201, category = CAT.DUNGEONS_CLASSIC, points = 10,
+		icon = ICONS .. "INV_Helmet_52",
+		criteria = {
+			{ type = "achievement", id = 198 }, { type = "achievement", id = 199 },
+			{ type = "achievement", id = 200 }, { type = "achievement", id = 81 },
+		},
 	},
 	{
 		id = 82, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Spell_Frost_FrostNova",
-		criteria = { { type = "statistic", id = 6141, value = 1 } }, -- Souilles de Tranchebauge
+		criteria = { { type = "boss", encounters = { 2785 }, statistic = 6141,
+			native = { achievement = SPELEO_EXPERT, asset = 7358 } } }, -- Souilles de Tranchebauge
 	},
 	{
 		id = 83, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_Archaedas",
-		criteria = { { type = "statistic", id = 6142, value = 1 } }, -- Uldaman
+		criteria = { { type = "boss", encounters = { 554 }, statistic = 6142,
+			native = { achievement = SPELEO_EXPERT, asset = 2748 } } }, -- Uldaman
 	},
 	{
 		id = 84, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_ChiefUkorzSandscalp",
-		criteria = { { type = "statistic", id = 1094, value = 1 } }, -- Zul'Farrak
+		criteria = { { type = "boss", encounters = { 600 }, statistic = 1094,
+			native = { achievement = SPELEO_EXPERT, asset = 7267 } } }, -- Zul'Farrak
 	},
 	{
 		id = 85, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_PrincessTheradras",
-		criteria = { { type = "statistic", id = 6143, value = 1 } }, -- Maraudon
+		criteria = { { type = "boss", encounters = { 429 }, statistic = 6143,
+			native = { achievement = SPELEO_EXPERT, asset = 12201 } } }, -- Maraudon
 	},
 	{
 		id = 86, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_ShadeOfEranikus",
-		criteria = { { type = "statistic", id = 6144, value = 1 } }, -- Temple englouti
+		criteria = { { type = "boss", encounters = { 3584, 493, 2959 }, statistic = 6144,
+			native = { achievement = SPELEO_EXPERT, asset = 5709 } } }, -- Temple englouti
 	},
 	{
 		id = 87, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_EmperorDagranThaurissan",
-		criteria = { { type = "statistic", id = 1095, value = 1 } }, -- Profondeurs de Rochenoire
+		criteria = { { type = "boss", encounters = { 2790 }, statistic = 1095,
+			native = { achievement = SPELEO_EXPERT, asset = 9019 } } }, -- Profondeurs de Rochenoire
+	},
+	-- Hache-Tripes : une aile par haut fait, puis le méta.
+	{
+		id = 202, category = CAT.DUNGEONS_CLASSIC, points = 10,
+		icon = ICONS .. "INV_Misc_Key_14",
+		criteria = { { type = "boss", encounters = { 346 },
+			native = { achievement = SPELEO_EXPERT, asset = 11492 } } }, -- Est : Alzzin le Modeleur
+	},
+	{
+		-- Boss principal retenu par le natif et le haut fait officiel :
+		-- Immol'thar, pas le prince Tortheldrin (dernier de l'aile).
+		id = 203, category = CAT.DUNGEONS_CLASSIC, points = 10,
+		icon = ICONS .. "INV_Misc_Book_11",
+		criteria = { { type = "boss", encounters = { 349 },
+			native = { achievement = SPELEO_EXPERT, asset = 11496 } } }, -- Ouest : Immol'thar
 	},
 	{
 		id = 88, category = CAT.DUNGEONS_CLASSIC, points = 10,
-		icon = ICONS .. "INV_Crown_01",
-		criteria = { { type = "statistic", id = 6146, value = 1 } }, -- Hache-Tripes
+		icon = ICONS .. "INV_Misc_Bone_OrcSkull_01",
+		criteria = { { type = "boss", encounters = { 368 }, statistic = 6146,
+			native = { achievement = SPELEO_EXPERT, asset = 11501 } } }, -- Nord : roi Gordok
+	},
+	{
+		id = 204, category = CAT.DUNGEONS_CLASSIC, points = 10,
+		icon = ICONS .. "Ability_Warrior_DecisiveStrike",
+		criteria = {
+			{ type = "achievement", id = 202 }, { type = "achievement", id = 203 },
+			{ type = "achievement", id = 88 },
+		},
 	},
 	{
 		id = 89, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_Overlord_Wyrmthalak",
-		criteria = { { type = "statistic", id = 6145, value = 1 } }, -- Pic Rochenoire inférieur
+		criteria = { { type = "boss", encounters = { 275 }, statistic = 6145,
+			native = { achievement = SPELEO_EXPERT, asset = 9568 } } }, -- Pic Rochenoire inférieur
 	},
 	{
 		id = 90, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Achievement_Boss_GeneralDrakkisath",
-		criteria = { { type = "statistic", id = 1096, value = 1 } }, -- Pic Rochenoire supérieur
+		criteria = { { type = "boss", encounters = { 3069 }, statistic = 1096,
+			native = { achievement = SPELEO_EXPERT, asset = 10363 } } }, -- Pic Rochenoire supérieur
 	},
 	{
 		id = 91, category = CAT.DUNGEONS_CLASSIC, points = 10,
 		icon = ICONS .. "Spell_Shadow_Charm",
-		criteria = { { type = "statistic", id = 15030, value = 1 } }, -- Scholomance
+		criteria = { { type = "boss", encounters = { 2801 }, statistic = 15030,
+			native = { achievement = SPELEO_EXPERT, asset = 1853 } } }, -- Scholomance
+	},
+	-- Stratholme : un côté par haut fait, puis le méta.
+	{
+		-- Côté vivant : le jeu donne 478 comme id du critère natif (l'id de
+		-- la rencontre de Balnazzar), et non le PNJ 10813 de wago.tools.
+		id = 205, category = CAT.DUNGEONS_CLASSIC, points = 10,
+		icon = ICONS .. "INV_Misc_Bone_ElfSkull_01",
+		criteria = { { type = "boss", encounters = { 478 },
+			native = { achievement = SPELEO_EXPERT, asset = 478 } } }, -- Grande porte : Balnazzar
 	},
 	{
 		id = 92, category = CAT.DUNGEONS_CLASSIC, points = 10,
-		icon = ICONS .. "Spell_Shadow_RaiseDead",
-		criteria = { { type = "statistic", id = 15031, value = 1 } }, -- Stratholme
+		icon = ICONS .. "INV_Misc_Bone_HumanSkull_01",
+		criteria = { { type = "boss", encounters = { 484 }, statistic = 15031,
+			native = { achievement = SPELEO_EXPERT, asset = 10440 } } }, -- Entrée de service : baron Vaillefendre
+	},
+	{
+		id = 206, category = CAT.DUNGEONS_CLASSIC, points = 10,
+		icon = ICONS .. "Spell_DeathKnight_ArmyOfTheDead",
+		criteria = {
+			{ type = "achievement", id = 205 }, { type = "achievement", id = 92 },
+		},
 	},
 
 	---------------------------------------------------------------------------
-	-- Donjons de Forever : statistique « Morts de <boss> » >= 1
-	-- Salle des Thanes n'y est pas : sa statistique 63573 (Durgen) reste à 0
-	-- après le donjon terminé ; la victoire est comptée dans celle de Ragefeu.
+	-- Donjons de Forever : critère « boss », comme les donjons classiques.
+	-- La salle des Thanes est avec le gouffre de Ragefeu (207). Les hauts
+	-- faits 176 (gardiens de la terrasse) et 177 (Lyn l'Ignoré), boss
+	-- facultatifs, sont retirés : numéros à ne jamais réutiliser.
 	---------------------------------------------------------------------------
 	{
 		id = 93, category = CAT.DUNGEONS_FOREVER, points = 10,
 		icon = ICONS .. "INV_Misc_Head_Undead_01",
-		criteria = { { type = "statistic", id = 63571, value = 1 } }, -- Ruines de Lordaeron
+		criteria = { { type = "boss", encounters = { 3354 }, statistic = 63571,
+			native = { achievement = SPELEO_NOVICE, asset = 250657 } } }, -- Ruines de Lordaeron
 	},
 	{
 		id = 94, category = CAT.DUNGEONS_FOREVER, points = 10,
 		icon = ICONS .. "Spell_Arcane_PortalDalaran",
-		criteria = { { type = "statistic", id = 63572, value = 1 } }, -- Cité de Dalaran
+		criteria = { { type = "boss", encounters = { 3303 }, statistic = 63572,
+			native = { achievement = SPELEO_EXPERIENCED, asset = 246020 } } }, -- Cité de Dalaran
 	},
 	{
 		id = 95, category = CAT.DUNGEONS_FOREVER, points = 10,
 		icon = ICONS .. "INV_Misc_Key_14",
-		criteria = { { type = "statistic", id = 63575, value = 1 } }, -- Prison d'Alcaz
+		criteria = { { type = "boss", encounters = { 3409 }, statistic = 63575,
+			native = { achievement = SPELEO_EXPERT, asset = 255702 } } }, -- Prison d'Alcaz
 	},
 	{
 		id = 96, category = CAT.DUNGEONS_FOREVER, points = 10,
 		icon = ICONS .. "INV_Misc_Gem_Variety_02",
-		criteria = { { type = "statistic", id = 63574, value = 1 } }, -- Terrasse du Façonneur
+		criteria = { { type = "boss", encounters = { 3502 }, statistic = 63574,
+			native = { achievement = SPELEO_EXPERT, asset = 261809 } } }, -- Terrasse du Façonneur
 	},
 	{
-		-- Les trois gardiens de la terrasse du Façonneur
-		id = 176, category = CAT.DUNGEONS_FOREVER, points = 10,
-		icon = ICONS .. "Spell_Nature_Lightning",
+		-- Méta de tous les donjons, classiques et de Forever : rangé dans la
+		-- catégorie Donjons elle-même, pas dans une sous-catégorie.
+		id = 208, category = CAT.DUNGEONS, points = 20,
+		icon = ICONS .. "INV_Helmet_74",
 		criteria = {
-			{ type = "statistic", id = 63590, value = 1 }, -- Braise
-			{ type = "statistic", id = 63592, value = 1 }, -- Fulguro
-			{ type = "statistic", id = 63593, value = 1 }, -- Serre-neigeuse
+			{ type = "achievement", id = 207 }, { type = "achievement", id = 73 },
+			{ type = "achievement", id = 74 }, { type = "achievement", id = 75 },
+			{ type = "achievement", id = 77 }, { type = "achievement", id = 78 },
+			{ type = "achievement", id = 79 }, { type = "achievement", id = 201 },
+			{ type = "achievement", id = 82 }, { type = "achievement", id = 83 },
+			{ type = "achievement", id = 84 }, { type = "achievement", id = 85 },
+			{ type = "achievement", id = 86 }, { type = "achievement", id = 87 },
+			{ type = "achievement", id = 204 }, { type = "achievement", id = 89 },
+			{ type = "achievement", id = 90 }, { type = "achievement", id = 91 },
+			{ type = "achievement", id = 206 }, { type = "achievement", id = 93 },
+			{ type = "achievement", id = 94 }, { type = "achievement", id = 95 },
+			{ type = "achievement", id = 96 },
 		},
-	},
-	{
-		-- Boss facultatif de la cité de Dalaran
-		id = 177, category = CAT.DUNGEONS_FOREVER, points = 10,
-		icon = ICONS .. "Spell_Arcane_Blink",
-		criteria = { { type = "statistic", id = 63589, value = 1 } }, -- Lyn l'Ignoré
 	},
 
 	---------------------------------------------------------------------------
-	-- Raids : statistique « Morts de <boss> » >= 1
+	-- Raids : critère « boss ». Sommet d'Hyjal et profondeurs des Saisons
+	-- n'ont pas de rencontre dans les données de Forever : statistique seule.
 	---------------------------------------------------------------------------
 	{
 		id = 173, category = CAT.RAIDS, points = 10,
 		icon = ICONS .. "Achievement_Boss_Onyxia",
-		criteria = { { type = "statistic", id = 1098, value = 1 } }, -- Repaire d'Onyxia
+		criteria = { { type = "boss", encounters = { 1084 }, statistic = 1098 } }, -- Repaire d'Onyxia
 	},
 	{
 		id = 174, category = CAT.RAIDS, points = 10,

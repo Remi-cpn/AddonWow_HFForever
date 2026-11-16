@@ -74,6 +74,11 @@ local DEFAULTS = {
 	-- personnages du compte.
 	-- Les personnages sont combinés à la lecture, voir Database:GetProgress.
 	progress = {},
+	-- Boss vaincus vus en direct (ENCOUNTER_END / BOSS_KILL), pour les
+	-- donjons dont la statistique ne compte pas ou n'existe pas :
+	-- [encounterID] = { [guid] = date de la première victoire vue }
+	-- Seule trace de ces victoires : jamais effacée par /hff reset.
+	bossKills = {},
 }
 
 -- Ajoute récursivement les clés manquantes, sans écraser les valeurs présentes.
@@ -280,7 +285,27 @@ function Database:GetNumCharacters()
 	return count
 end
 
--- Efface hauts faits et progression ; les réglages sont conservés.
+-- Enregistre la victoire sur un boss vue en direct (la première date est
+-- gardée).
+function Database:RecordBossKill(encounterID, guid)
+	local kills = data.bossKills[encounterID]
+	if type(kills) ~= "table" then
+		kills = {}
+		data.bossKills[encounterID] = kills
+	end
+	if not kills[guid] then
+		kills[guid] = time()
+	end
+end
+
+-- true si un personnage du compte a déjà été vu vainqueur de ce boss.
+function Database:HasBossKill(encounterID)
+	local kills = data.bossKills[encounterID]
+	return type(kills) == "table" and next(kills) ~= nil
+end
+
+-- Efface hauts faits et progression ; les réglages et les boss vaincus vus
+-- en direct (bossKills, introuvables autrement) sont conservés.
 function Database:ResetAchievements()
 	data.completed = {}
 	data.progress = {}

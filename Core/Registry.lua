@@ -85,9 +85,15 @@ local function ValidateCriterion(achievementID, index, criterion)
 	-- (type et cible), pas sa position. Si on change un critère, l'ancienne
 	-- valeur enregistrée n'est pas relue pour le nouveau. Changer seulement
 	-- le seuil (value) garde la progression.
-	local target = criterion.id or criterion.mapID or criterion.factionID or criterion.skillLine
-		or criterion.quality or criterion.what
-	criterion.progressKey = criterion.type .. ":" .. tostring(target or "")
+	-- Un type peut fournir sa propre clé (key) quand sa cible n'est pas un
+	-- champ simple (ex. boss : une liste de rencontres).
+	if criteriaType.key then
+		criterion.progressKey = criteriaType.key(criterion)
+	else
+		local target = criterion.id or criterion.mapID or criterion.factionID or criterion.skillLine
+			or criterion.quality or criterion.what
+		criterion.progressKey = criterion.type .. ":" .. tostring(target or "")
+	end
 	return true
 end
 

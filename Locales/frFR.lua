@@ -165,6 +165,8 @@ L.DATA_ERR_META_TARGET = "haut fait %s, critère %s : haut fait visé %s inexist
 L.DATA_ERR_STATISTIC = "statistique %s introuvable dans le jeu"
 L.DATA_ERR_COLLECTION = "collection « %s » inconnue (pets ou mounts)"
 L.DATA_ERR_RECIPES = "pas de liste de recettes pour le métier %s, voir Data/Recipes.lua"
+L.DATA_ERR_ENCOUNTERS = "encounters doit contenir au moins un id de rencontre"
+L.DATA_ERR_NATIVE = "native doit être { achievement = id, asset = id }"
 L.DATA_ERR_MAP = "carte %s introuvable dans le jeu"
 L.DATA_ERR_EXPLORE_TOTAL = "pas de total d'exploration pour la carte %s (art %s), voir Data/ExplorationTotals.lua"
 
@@ -281,23 +283,21 @@ Override(L.ACHIEVEMENT_NAMES, {
 	[73] = "Mortemines",
 	[74] = "Cavernes des Lamentations",
 	[75] = "Donjon d'Ombrecroc",
-	[76] = "Prison de Hurlevent",
 	[77] = "Profondeurs de Brassenoire",
 	[78] = "Gnomeregan",
 	[79] = "Kraal de Tranchebauge",
-	[80] = "Salles Écarlates",
-	[81] = "Monastère écarlate",
+	[81] = "Monastère Écarlate - cathédrale",
 	[82] = "Souilles de Tranchebauge",
 	[83] = "Uldaman",
 	[84] = "Zul'Farrak",
 	[85] = "Maraudon",
 	[86] = "Temple englouti",
 	[87] = "Profondeurs de Rochenoire",
-	[88] = "Hache-Tripes", -- pas « Roi de Haches-Tripes » : roi Gordok seul
+	[88] = "Haches-Tripes - Nord",
 	[89] = "Bas du pic Rochenoire",
 	[90] = "Sommet du pic Rochenoire",
 	[91] = "Scholomance",
-	[92] = "Stratholme",
+	[92] = "Stratholme - Entrée de service",
 	-- Donjons de Forever
 	[93] = "Ruines de Lordaeron",
 	[94] = "Cité de Dalaran",
@@ -390,9 +390,6 @@ Override(L.ACHIEVEMENT_NAMES, {
 	[173] = "Repaire d'Onyxia",
 	[174] = "Sommet d'Hyjal",
 	[175] = "Profondeurs des Saisons",
-	-- Donjons de Forever
-	[176] = "Les gardiens de la terrasse",
-	[177] = "L'ignoré",
 	-- Monte, compétences, équipement, quêtes
 	[178] = "En selle !",
 	[179] = "L'équipée sauvage",
@@ -417,6 +414,18 @@ Override(L.ACHIEVEMENT_NAMES, {
 	[195] = "Cuistot",
 	[196] = "Chef de partie",
 	[197] = "Sous chef",
+	-- Donjons : ailes (noms du Dungeon Journal) et métas
+	[198] = "Monastère Écarlate - cimetière",
+	[199] = "Monastère Écarlate - bibliothèque",
+	[200] = "Monastère Écarlate - armurerie",
+	[201] = "Monastère écarlate",
+	[202] = "Haches-Tripes - Est",
+	[203] = "Haches-Tripes - Ouest",
+	[204] = "Roi de Haches-Tripes",
+	[205] = "Stratholme - Grande porte",
+	[206] = "Stratholme",
+	[207] = "Gouffre de Ragefeu ou salle des Thanes",
+	[208] = "L'écumeur pour toujours",
 })
 
 Override(L.ACHIEVEMENT_DESCRIPTIONS, {
@@ -502,23 +511,21 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[73] = "Vaincre Edwin VanCleef dans les Mortemines.",
 	[74] = "Vaincre Mutanus le Dévoreur dans les cavernes des Lamentations.",
 	[75] = "Vaincre l'archimage Arugal dans le donjon d'Ombrecroc.",
-	[76] = "Vaincre Bazil Thredd dans la prison de Hurlevent.",
 	[77] = "Vaincre Aku'mai dans les profondeurs de Brassenoire.",
 	[78] = "Vaincre le mekgénieur Thermojoncteur dans Gnomeregan.",
 	[79] = "Vaincre Charlga Trancheflanc dans le kraal de Tranchebauge.",
-	[80] = "Vaincre le tisseur de flammes Koegler dans les salles Écarlates.",
-	[81] = "Vaincre le commandant écarlate Mograine dans le Monastère écarlate.",
+	[81] = "Vaincre le commandant écarlate Mograine dans la cathédrale du Monastère écarlate.",
 	[82] = "Vaincre Amnennar le Porte-Froid dans les souilles de Tranchebauge.",
 	[83] = "Vaincre Archaedas dans Uldaman.",
 	[84] = "Vaincre le chef Ukorz Scalpessable dans Zul'Farrak.",
 	[85] = "Vaincre la princesse Theradras dans Maraudon.",
 	[86] = "Vaincre l'ombre d'Eranikus dans le temple englouti.",
 	[87] = "Vaincre l'empereur Dagran Thaurissan dans les profondeurs de Rochenoire.",
-	[88] = "Vaincre le roi Gordok dans Hache-Tripes.",
+	[88] = "Vaincre le roi Gordok dans l'aile nord de Hache-Tripes.",
 	[89] = "Vaincre le seigneur Wyrmthalak dans le pic Rochenoire inférieur.",
 	[90] = "Vaincre le général Drakkisath dans le pic Rochenoire supérieur.",
 	[91] = "Vaincre le sombre maître Gandling dans la Scholomance.",
-	[92] = "Vaincre le baron Vaillefendre dans Stratholme.",
+	[92] = "Vaincre le baron Vaillefendre dans Stratholme, par l'entrée de service.",
 	-- Donjons de Forever
 	[93] = "Vaincre Rath'mael dans les ruines de Lordaeron.",
 	[94] = "Vaincre l'Ombre de l'archimage dans la cité de Dalaran.",
@@ -610,8 +617,6 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[173] = "Vaincre Onyxia dans le repaire d'Onyxia.",
 	[174] = "Vaincre le roi sauvage au sommet d'Hyjal.",
 	[175] = "Vaincre Sonya Sanctombre dans les profondeurs des Saisons.",
-	[176] = "Vaincre Braise, Fulguro et Serre-neigeuse sur la terrasse du Façonneur.",
-	[177] = "Vaincre Lyn l'Ignoré dans la cité de Dalaran.",
 	[178] = "Apprendre la compétence Apprenti cavalier.",
 	[179] = "Apprendre la compétence Compagnon cavalier.",
 	[180] = "Obtenir un score de 300 avec la compétence Mains nues.",
@@ -632,6 +637,17 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[195] = "Apprendre 50 recettes de cuisine.",
 	[196] = "Apprendre 75 recettes de cuisine.",
 	[197] = "Apprendre 100 recettes de cuisine.",
+	[198] = "Vaincre le mage de sang Thalnos dans le cimetière du Monastère écarlate.",
+	[199] = "Vaincre l'arcaniste Doan dans la bibliothèque du Monastère écarlate.",
+	[200] = "Vaincre Hérode dans l'armurerie du Monastère écarlate.",
+	[201] = "Vaincre la Croisade écarlate dans le Monastère écarlate.",
+	[202] = "Vaincre Alzzin le Modeleur dans l'aile est de Hache-Tripes.",
+	[203] = "Vaincre Immol'thar dans l'aile ouest de Hache-Tripes.",
+	[204] = "Triompher de chaque aile de Hache-Tripes.",
+	[205] = "Vaincre Balnazzar dans Stratholme, par la grande porte.",
+	[206] = "Triompher des pièges maléfiques qui hantent Stratholme.",
+	[207] = "Vaincre le dernier boss du gouffre de Ragefeu ou de la salle des Thanes.",
+	[208] = "Accomplir les hauts faits de donjon listés ci-dessous.",
 })
 
 Override(L.CRITERIA_TEXTS, {
@@ -639,11 +655,9 @@ Override(L.CRITERIA_TEXTS, {
 	[73] = { "Edwin VanCleef" },
 	[74] = { "Mutanus le Dévoreur" },
 	[75] = { "Archimage Arugal" },
-	[76] = { "Bazil Thredd" },
 	[77] = { "Aku'mai" },
 	[78] = { "Mekgénieur Thermojoncteur" },
 	[79] = { "Charlga Trancheflanc" },
-	[80] = { "Tisseur de flammes Koegler" },
 	[81] = { "Commandant écarlate Mograine" },
 	[82] = { "Amnennar le Porte-Froid" },
 	[83] = { "Archaedas" },
@@ -665,10 +679,16 @@ Override(L.CRITERIA_TEXTS, {
 	[173] = { "Onyxia" },
 	[174] = { "Roi sauvage" },
 	[175] = { "Sonya Sanctombre" },
-	[176] = { "Braise", "Fulguro", "Serre-neigeuse" },
-	[177] = { "Lyn l'Ignoré" },
 	[178] = { "Monte" },
 	[179] = { "Monte" },
 	[180] = { "Mains nues" },
 	[184] = { "Les vertes collines de Strangleronce", "La chasse au gros gibier" },
+	-- Ailes de donjon
+	[198] = { "Mage de sang Thalnos" },
+	[199] = { "Arcaniste Doan" },
+	[200] = { "Hérode" },
+	[202] = { "Alzzin le Modeleur" },
+	[203] = { "Immol'thar" },
+	[205] = { "Balnazzar" },
+	[207] = { "Gouffre de Ragefeu ou salle des Thanes" },
 })

@@ -176,6 +176,8 @@ L.DATA_ERR_META_TARGET = "achievement %s, criteria %s: target achievement %s doe
 L.DATA_ERR_STATISTIC = "statistic %s not found in the game"
 L.DATA_ERR_COLLECTION = "unknown collection \"%s\" (pets or mounts)"
 L.DATA_ERR_RECIPES = "no recipe list for profession %s, see Data/Recipes.lua"
+L.DATA_ERR_ENCOUNTERS = "encounters must list at least one encounter ID"
+L.DATA_ERR_NATIVE = "native must be { achievement = ID, asset = ID }"
 L.DATA_ERR_MAP = "map %s not found in the game"
 L.DATA_ERR_EXPLORE_TOTAL = "no exploration total for map %s (art %s), see Data/ExplorationTotals.lua"
 
@@ -290,23 +292,21 @@ L.ACHIEVEMENT_NAMES = {
 	[73] = "Deadmines",
 	[74] = "Wailing Caverns",
 	[75] = "Shadowfang Keep",
-	[76] = "Stormwind Stockade",
 	[77] = "Blackfathom Deeps",
 	[78] = "Gnomeregan",
 	[79] = "Razorfen Kraul",
-	[80] = "Scarlet Halls",
-	[81] = "Scarlet Monastery",
+	[81] = "Scarlet Monastery - Cathedral",
 	[82] = "Razorfen Downs",
 	[83] = "Uldaman",
 	[84] = "Zul'Farrak",
 	[85] = "Maraudon",
 	[86] = "Sunken Temple",
 	[87] = "Blackrock Depths",
-	[88] = "Dire Maul",
+	[88] = "Dire Maul - North",
 	[89] = "Lower Blackrock Spire",
 	[90] = "Upper Blackrock Spire",
 	[91] = "Scholomance",
-	[92] = "Stratholme",
+	[92] = "Stratholme - Service Entrance",
 	-- Donjons de Forever
 	[93] = "Ruins of Lordaeron",
 	[94] = "City of Dalaran",
@@ -399,9 +399,6 @@ L.ACHIEVEMENT_NAMES = {
 	[173] = "Onyxia's Lair",
 	[174] = "Hyjal Summit",
 	[175] = "Barrow Deeps",
-	-- Donjons de Forever
-	[176] = "Guardians of the Terrace",
-	[177] = "The Ignored",
 	-- Monte, compétences, équipement, quêtes
 	[178] = "Giddy Up!",
 	[179] = "Fast and Furious",
@@ -426,6 +423,18 @@ L.ACHIEVEMENT_NAMES = {
 	[195] = "Short Order Cook",
 	[196] = "Chef de Partie",
 	[197] = "Sous Chef",
+	-- Donjons : ailes (noms du Dungeon Journal) et métas
+	[198] = "Scarlet Monastery - Graveyard",
+	[199] = "Scarlet Monastery - Library",
+	[200] = "Scarlet Monastery - Armory",
+	[201] = "Scarlet Monastery",
+	[202] = "Dire Maul - East",
+	[203] = "Dire Maul - West",
+	[204] = "King of Dire Maul",
+	[205] = "Stratholme - Main Gate",
+	[206] = "Stratholme",
+	[207] = "Ragefire Chasm or Hall of Thanes",
+	[208] = "Forever Raider",
 }
 
 -- [id de haut fait] = description
@@ -512,23 +521,21 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[73] = "Defeat Edwin VanCleef in the Deadmines.",
 	[74] = "Defeat Mutanus the Devourer in the Wailing Caverns.",
 	[75] = "Defeat Archmage Arugal in Shadowfang Keep.",
-	[76] = "Defeat Bazil Thredd in the Stormwind Stockade.",
 	[77] = "Defeat Aku'mai in Blackfathom Deeps.",
 	[78] = "Defeat Mekgineer Thermaplugg in Gnomeregan.",
 	[79] = "Defeat Charlga Razorflank in Razorfen Kraul.",
-	[80] = "Defeat Flameweaver Koegler in the Scarlet Halls.",
-	[81] = "Defeat Scarlet Commander Mograine in the Scarlet Monastery.",
+	[81] = "Defeat Scarlet Commander Mograine in the Scarlet Monastery Cathedral.",
 	[82] = "Defeat Amnennar the Coldbringer in Razorfen Downs.",
 	[83] = "Defeat Archaedas in Uldaman.",
 	[84] = "Defeat Chief Ukorz Sandscalp in Zul'Farrak.",
 	[85] = "Defeat Princess Theradras in Maraudon.",
 	[86] = "Defeat the Shade of Eranikus in the Sunken Temple.",
 	[87] = "Defeat Emperor Dagran Thaurissan in Blackrock Depths.",
-	[88] = "Defeat King Gordok in Dire Maul.",
+	[88] = "Defeat King Gordok in Dire Maul North.",
 	[89] = "Defeat Overlord Wyrmthalak in Lower Blackrock Spire.",
 	[90] = "Defeat General Drakkisath in Upper Blackrock Spire.",
 	[91] = "Defeat Darkmaster Gandling in Scholomance.",
-	[92] = "Defeat Baron Rivendare in Stratholme.",
+	[92] = "Defeat Baron Rivendare in Stratholme, through the Service Entrance.",
 	-- Donjons de Forever
 	[93] = "Defeat Rath'mael in the Ruins of Lordaeron.",
 	[94] = "Defeat the Shade of the Archmage in the City of Dalaran.",
@@ -620,8 +627,6 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[173] = "Defeat Onyxia in Onyxia's Lair.",
 	[174] = "Defeat the Wild King in Hyjal Summit.",
 	[175] = "Defeat Sonya Darkhallow in the Barrow Deeps.",
-	[176] = "Defeat Cinder, Bolt and Snowtalon on the Shaper's Terrace.",
-	[177] = "Defeat Lyn the Ignored in the City of Dalaran.",
 	[178] = "Learn the apprentice riding skill.",
 	[179] = "Learn the journeyman riding skill.",
 	[180] = "Raise your unarmed skill to 300.",
@@ -642,6 +647,17 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[195] = "Learn 50 cooking recipes.",
 	[196] = "Learn 75 cooking recipes.",
 	[197] = "Learn 100 cooking recipes.",
+	[198] = "Defeat Bloodmage Thalnos in the Scarlet Monastery Graveyard.",
+	[199] = "Defeat Arcanist Doan in the Scarlet Monastery Library.",
+	[200] = "Defeat Herod in the Scarlet Monastery Armory.",
+	[201] = "Defeat the Scarlet Crusade within the Scarlet Monastery.",
+	[202] = "Defeat Alzzin the Wildshaper in Dire Maul East.",
+	[203] = "Defeat Immol'thar in Dire Maul West.",
+	[204] = "Defeat each wing of Dire Maul.",
+	[205] = "Defeat Balnazzar in Stratholme, through the Main Gate.",
+	[206] = "Defeat the evil masterminds inhabiting Stratholme.",
+	[207] = "Defeat the final boss of Ragefire Chasm or the Hall of Thanes.",
+	[208] = "Complete the dungeon achievements listed below.",
 }
 
 -- [id de haut fait] = texte de récompense, purement décoratif (titre, objet...).
@@ -656,13 +672,9 @@ L.CRITERIA_TEXTS = {
 	[73] = { "Edwin VanCleef" },
 	[74] = { "Mutanus the Devourer" },
 	[75] = { "Archmage Arugal" },
-	[76] = { "Bazil Thredd" },
 	[77] = { "Aku'mai" },
 	[78] = { "Mekgineer Thermaplugg" },
 	[79] = { "Charlga Razorflank" },
-	-- Statistique 6786 : Koegler en frFR ; son titre enUS (Whitemane) est un
-	-- ancien libellé de Blizzard qui ne correspond plus.
-	[80] = { "Flameweaver Koegler" },
 	[81] = { "Scarlet Commander Mograine" },
 	[82] = { "Amnennar the Coldbringer" },
 	[83] = { "Archaedas" },
@@ -685,11 +697,17 @@ L.CRITERIA_TEXTS = {
 	[173] = { "Onyxia" },
 	[174] = { "The Wild King" },
 	[175] = { "Sonya Darkhallow" },
-	[176] = { "Cinder", "Bolt", "Snowtalon" },
-	[177] = { "Lyn the Ignored" },
 	-- Compétences : nom affiché même tant qu'elle n'est pas apprise
 	[178] = { "Riding" },
 	[179] = { "Riding" },
 	[180] = { "Unarmed" },
 	[184] = { "The Green Hills of Stranglethorn", "Big Game Hunter" },
+	-- Ailes de donjon
+	[198] = { "Bloodmage Thalnos" },
+	[199] = { "Arcanist Doan" },
+	[200] = { "Herod" },
+	[202] = { "Alzzin the Wildshaper" },
+	[203] = { "Immol'thar" },
+	[205] = { "Balnazzar" },
+	[207] = { "Ragefire Chasm or Hall of Thanes" },
 }

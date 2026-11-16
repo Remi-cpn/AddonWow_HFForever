@@ -38,6 +38,14 @@ local WATCHED_EVENTS = {
 	"NEW_RECIPE_LEARNED",       -- recettes de métier
 }
 
+-- Boss vaincu : la victoire est enregistrée (Database:RecordBossKill) avant
+-- l'évaluation. Les deux événements arrivent souvent pour la même victoire ;
+-- l'enregistrer deux fois ne change rien.
+local BOSS_EVENTS = {
+	"ENCOUNTER_END",            -- encounterID, nom, difficulté, taille, success (1 = victoire)
+	"BOSS_KILL",                -- encounterID, nom
+}
+
 local eventFrame = CreateFrame("Frame")
 local loginTime = nil          -- GetTime() à la connexion
 local playerGUID = nil         -- clé du personnage dans la progression
@@ -168,7 +176,38 @@ function Engine:RequestRetroactiveScan()
 	self:RequestEvaluation("rescan")
 end
 
-eventFrame:SetScript("OnEvent", function(_, event)
+-- Une valeur « secrète » (masquée aux addons pendant certains combats) ne
+-- peut pas être lue : la victoire est alors ignorée.
+local function IsReadableNumber(value)
+	if issecretvalue and issecretvalue(value) then
+		return false
+	end
+	return type(value) == "number" and value > 0
+end
+
+local function RecordBossKill(encounterID, encounterName)
+	if not IsReadableNumber(encounterID) then
+		return false
+	end
+	ns.Database:RecordBossKill(encounterID, playerGUID)
+	Log.Debug("Engine: boss vaincu", encounterID, encounterName)
+	return true
+end
+
+eventFrame:SetScript("OnEvent", function(_, event, ...)
+	if event == "ENCOUNTER_END" then
+		local encounterID, encounterName, _, _, success = ...
+		if success == 1 and RecordBossKill(encounterID, encounterName) then
+			Engine:RequestEvaluation(event)
+		end
+		return
+	end
+	if event == "BOSS_KILL" then
+		if RecordBossKill(...) then
+			Engine:RequestEvaluation(event)
+		end
+		return
+	end
 	if event == "PLAYER_REGEN_ENABLED" then
 		eventFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		local reason = pendingReason or "fin du combat"
@@ -186,6 +225,9 @@ function Engine:Start()
 	-- renommé ou change de royaume.
 	playerGUID = UnitGUID("player") or GetCharacterName()
 	for _, event in ipairs(WATCHED_EVENTS) do
+		eventFrame:RegisterEvent(event)
+	end
+	for _, event in ipairs(BOSS_EVENTS) do
 		eventFrame:RegisterEvent(event)
 	end
 	C_Timer.After(INITIAL_DELAY_SECONDS, function()
