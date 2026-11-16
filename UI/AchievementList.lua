@@ -425,8 +425,9 @@ local function CreateObjectivesFrame(parent)
 		mini = CreateFramePool("Frame", frame, "HFFMiniAchievementTemplate"),
 		meta = CreateFramePool("Button", frame, "HFFMetaCriteriaTemplate"),
 	}
-	-- clearOnClose de Blizzard : tout est libéré quand le cadre est caché.
-	frame:SetScript("OnHide", frame.Clear)
+	-- Pas de Clear sur OnHide : fermer la fenêtre cache aussi ce cadre, et la
+	-- ligne dépliée le retrouverait vide à la réouverture. Il est vidé quand
+	-- la ligne se replie (Button:Init) ou est recyclée (SetElementResetter).
 	frame:Clear()
 	frame:Hide()
 	return frame
@@ -799,6 +800,7 @@ function Button:Init(elementData)
 		self.Highlight:Show()
 	else
 		if objectives.id == self.id then
+			objectives:Clear()
 			objectives:Hide()
 		end
 		if not self:IsMouseOver() then
