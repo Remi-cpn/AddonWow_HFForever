@@ -35,6 +35,7 @@ local WATCHED_EVENTS = {
 	"PLAYER_EQUIPMENT_CHANGED", -- tabard, qualité de l'équipement
 	"NEW_PET_ADDED",            -- mascottes
 	"NEW_MOUNT_ADDED",          -- montures
+	"NEW_RECIPE_LEARNED",       -- recettes de métier
 }
 
 local eventFrame = CreateFrame("Frame")
@@ -73,8 +74,8 @@ local function EvaluateAchievement(achievement)
 			Log.Error(L.ENGINE_CRITERIA_ERROR, achievement.id, index, current)
 			current = 0
 		end
-		local total = ns.Database:UpdateProgress(achievement.id, criterion.progressKey,
-			playerGUID, current, criterion.combine)
+		local total = ns.Database:UpdateProgress(criterion.progressKey, playerGUID,
+			current, criterion.combine)
 		if total < criteriaType.goal(criterion) then
 			allDone = false
 		end

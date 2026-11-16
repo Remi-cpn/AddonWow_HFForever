@@ -3,7 +3,7 @@
 -- La liste validée est décrite dans docs/ProposedAchievements.md.
 --
 --   id          : numéro unique et DÉFINITIF, la sauvegarde s'en sert. Un
---                 nouveau haut fait prend le numéro libre suivant (191), quel
+--                 nouveau haut fait prend le numéro libre suivant (198), quel
 --                 que soit l'endroit où il est rangé. Ne jamais changer ni
 --                 réutiliser un numéro.
 --   category    : une constante CAT de Data/Categories.lua
@@ -152,19 +152,19 @@ ns.Data.achievements = {
 	},
 	{
 		id = 188, category = CAT.GENERAL, points = 10,
-		icon = ICONS .. "INV_Box_Birdcage_01",
+		icon = ICONS .. "INV_Box_PetCarrier_01",
 		criteria = { { type = "collection", what = "pets", value = 25 } },
 		previous = 187,
 	},
 	{
 		id = 189, category = CAT.GENERAL, points = 10,
-		icon = ICONS .. "INV_Box_Birdcage_01",
+		icon = ICONS .. "INV_Box_PetCarrier_01",
 		criteria = { { type = "collection", what = "pets", value = 50 } },
 		previous = 188,
 	},
 	{
 		id = 190, category = CAT.GENERAL, points = 10,
-		icon = ICONS .. "Ability_Hunter_BeastCall",
+		icon = ICONS .. "INV_Box_PetCarrier_01",
 		criteria = { { type = "collection", what = "pets", value = 75 } },
 		previous = 189,
 	},
@@ -180,18 +180,18 @@ ns.Data.achievements = {
 	},
 	{
 		id = 179, category = CAT.GENERAL, points = 10,
-		icon = ICONS .. "Ability_Mount_JungleTiger",
+		icon = ICONS .. "Ability_Mount_BlackPanther",
 		criteria = { { type = "skill", id = 762, value = 150 } },
 		previous = 178,
 	},
 	{
 		id = 180, category = CAT.GENERAL, points = 10,
-		icon = ICONS .. "INV_Gauntlets_04",
+		icon = ICONS .. "Ability_Warrior_SecondWind",
 		criteria = { { type = "skill", id = 162, value = 300 } },
 	},
 	{
 		id = 181, category = CAT.GENERAL, points = 25,
-		icon = ICONS .. "INV_Sword_01",
+		icon = ICONS .. "Ability_Warrior_OffensiveStance",
 		criteria = { { type = "weaponSkills", count = 4, value = 300 } },
 	},
 	{
@@ -203,12 +203,12 @@ ns.Data.achievements = {
 	{
 		-- Tous les emplacements en même temps, vu au moins une fois.
 		id = 183, category = CAT.GENERAL, points = 10,
-		icon = ICONS .. "INV_Misc_Gem_Sapphire_02",
+		icon = ICONS .. "Spell_Frost_WizardMark",
 		criteria = { { type = "gearQuality", quality = 3 } },
 	},
 	{
 		id = 185, category = CAT.GENERAL, points = 25,
-		icon = ICONS .. "INV_Misc_Gem_Amethyst_02",
+		icon = ICONS .. "INV_Enchant_VoidCrystal",
 		criteria = { { type = "gearQuality", quality = 4 } },
 		previous = 183,
 	},
@@ -246,11 +246,32 @@ ns.Data.achievements = {
 		previous = 10,
 	},
 	{
-		-- Quête 208 « La chasse au gros gibier », la dernière d'Hemet
-		-- Nesingwary dans la vallée de Strangleronce.
+		id = 191, category = CAT.QUESTS, points = 10,
+		icon = ICONS .. "Achievement_Quests_Completed_06",
+		criteria = { { type = "statistic", id = 98, value = 1500, combine = "sum" } },
+		previous = 11,
+	},
+	{
+		id = 192, category = CAT.QUESTS, points = 10,
+		icon = ICONS .. "Achievement_Quests_Completed_07",
+		criteria = { { type = "statistic", id = 98, value = 2000, combine = "sum" } },
+		previous = 191,
+	},
+	{
+		id = 193, category = CAT.QUESTS, points = 50,
+		icon = ICONS .. "Achievement_Quests_Completed_08",
+		criteria = { { type = "statistic", id = 98, value = 3000, combine = "sum" } },
+		previous = 192,
+	},
+	{
+		-- Quêtes 338 « Les vertes collines de Strangleronce » et 208 « La
+		-- chasse au gros gibier », les dernières d'Hemet Nesingwary.
 		id = 184, category = CAT.QUESTS, points = 10,
-		icon = ICONS .. "INV_Misc_Head_Tiger_01",
-		criteria = { { type = "quest", id = 208 } },
+		icon = ICONS .. "Ability_Mount_WhiteTiger",
+		criteria = {
+			{ type = "quest", id = 338 },
+			{ type = "quest", id = 208 },
+		},
 	},
 
 	---------------------------------------------------------------------------
@@ -799,6 +820,32 @@ ns.Data.achievements = {
 		criteria = { { type = "profession", skillLine = 185, value = 300 } },
 		previous = 136,
 	},
+	-- Recettes de cuisine connues, comptées dans Data/Recipes.lua (la
+	-- statistique 1745 compte chaque recette deux fois sur Forever). Par
+	-- personnage : le meilleur compte.
+	{
+		id = 194, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "INV_Misc_Food_66",
+		criteria = { { type = "recipes", skillLine = 185, value = 25 } },
+	},
+	{
+		id = 195, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "INV_Misc_Food_65",
+		criteria = { { type = "recipes", skillLine = 185, value = 50 } },
+		previous = 194,
+	},
+	{
+		id = 196, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "INV_Misc_Food_60",
+		criteria = { { type = "recipes", skillLine = 185, value = 75 } },
+		previous = 195,
+	},
+	{
+		id = 197, category = CAT.PROFESSIONS, points = 10,
+		icon = ICONS .. "INV_Misc_Food_13",
+		criteria = { { type = "recipes", skillLine = 185, value = 100 } },
+		previous = 196,
+	},
 	{
 		id = 137, category = CAT.PROFESSIONS, points = 10,
 		icon = ICONS .. "Trade_Fishing",
@@ -1172,7 +1219,7 @@ ns.Data.achievements = {
 	---------------------------------------------------------------------------
 	{
 		id = 173, category = CAT.RAIDS, points = 10,
-		icon = ICONS .. "INV_Misc_Head_Dragon_Black",
+		icon = ICONS .. "Achievement_Boss_Onyxia",
 		criteria = { { type = "statistic", id = 1098, value = 1 } }, -- Repaire d'Onyxia
 	},
 	{

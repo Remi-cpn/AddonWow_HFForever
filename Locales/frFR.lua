@@ -120,6 +120,7 @@ L.CRITERIA_PROFESSION_ANY = "Un métier principal : %d"
 L.CRITERIA_QUEST = "Quête %d"
 L.CRITERIA_WEAPON_SKILLS = "Compétences d'armes à %d"
 L.CRITERIA_TABARD = "Tabard équipé"
+L.CRITERIA_RECIPES = "Recettes connues : %s"
 L.CRITERIA_COLLECTION = {
 	pets = "Mascottes",
 	mounts = "Montures",
@@ -163,6 +164,7 @@ L.DATA_ERR_CRITERIA_COMBINE = "haut fait %s, critère %s : combine « %s » inco
 L.DATA_ERR_META_TARGET = "haut fait %s, critère %s : haut fait visé %s inexistant, méta retiré"
 L.DATA_ERR_STATISTIC = "statistique %s introuvable dans le jeu"
 L.DATA_ERR_COLLECTION = "collection « %s » inconnue (pets ou mounts)"
+L.DATA_ERR_RECIPES = "pas de liste de recettes pour le métier %s, voir Data/Recipes.lua"
 L.DATA_ERR_MAP = "carte %s introuvable dans le jeu"
 L.DATA_ERR_EXPLORE_TOTAL = "pas de total d'exploration pour la carte %s (art %s), voir Data/ExplorationTotals.lua"
 
@@ -406,6 +408,15 @@ Override(L.ACHIEVEMENT_NAMES, {
 	[188] = "Pléthore de familiers",
 	[189] = "Les aimer comme ils vous aiment",
 	[190] = "La chasse au p'tit gibier",
+	-- Quêtes
+	[191] = "1 500 quêtes achevées",
+	[192] = "2 000 quêtes achevées",
+	[193] = "3 000 quêtes achevées",
+	-- Métiers : recettes de cuisine
+	[194] = "Commis",
+	[195] = "Cuistot",
+	[196] = "Chef de partie",
+	[197] = "Sous chef",
 })
 
 Override(L.ACHIEVEMENT_DESCRIPTIONS, {
@@ -605,15 +616,22 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[179] = "Apprendre la compétence Compagnon cavalier.",
 	[180] = "Obtenir un score de 300 avec la compétence Mains nues.",
 	[181] = "Obtenir un score de 300 dans 4 compétences d'armes.",
-	[182] = "Équiper un tabard.",
+	[182] = "Equiper un tabard.",
 	[183] = "Équiper un objet de qualité supérieure dans chaque emplacement.",
-	[184] = "Achever les quêtes d'Hemet Nesingwary dans la vallée de Strangleronce, jusqu'à « La chasse au gros gibier ».",
+	[184] = "Achever toutes les quêtes d'Hemet Nesingwary dans la vallée de Strangleronce, y compris « Les vertes collines de Strangleronce » et « La chasse au gros gibier ».",
 	[185] = "Équiper un objet de qualité épique dans chaque emplacement.",
 	[186] = "Obtenir une mascotte.",
 	[187] = "Collecter 15 mascottes différentes.",
 	[188] = "Collecter 25 mascottes différentes.",
 	[189] = "Collecter 50 mascottes différentes.",
 	[190] = "Collecter 75 mascottes différentes.",
+	[191] = "Achever 1 500 quêtes.",
+	[192] = "Achever 2 000 quêtes.",
+	[193] = "Achever 3 000 quêtes.",
+	[194] = "Apprendre 25 recettes de cuisine.",
+	[195] = "Apprendre 50 recettes de cuisine.",
+	[196] = "Apprendre 75 recettes de cuisine.",
+	[197] = "Apprendre 100 recettes de cuisine.",
 })
 
 Override(L.CRITERIA_TEXTS, {
@@ -652,5 +670,5 @@ Override(L.CRITERIA_TEXTS, {
 	[178] = { "Monte" },
 	[179] = { "Monte" },
 	[180] = { "Mains nues" },
-	[184] = { "La chasse au gros gibier" },
+	[184] = { "Les vertes collines de Strangleronce", "La chasse au gros gibier" },
 })

@@ -128,9 +128,10 @@ L.CRITERIA_PROFESSION_ANY = "A primary profession: %d"
 L.CRITERIA_QUEST = "Quest %d"
 L.CRITERIA_WEAPON_SKILLS = "Weapon skills at %d"
 L.CRITERIA_TABARD = "Tabard equipped"
+L.CRITERIA_RECIPES = "%s recipes known"
 -- [what] = texte du critère « collection »
 L.CRITERIA_COLLECTION = {
-	pets = "Vanity pets",
+	pets = "Companion pets",
 	mounts = "Mounts",
 }
 -- [qualité minimale] = texte du critère « gearQuality »
@@ -174,6 +175,7 @@ L.DATA_ERR_CRITERIA_COMBINE = "achievement %s, criteria %s: combine \"%s\" unkno
 L.DATA_ERR_META_TARGET = "achievement %s, criteria %s: target achievement %s does not exist, meta removed"
 L.DATA_ERR_STATISTIC = "statistic %s not found in the game"
 L.DATA_ERR_COLLECTION = "unknown collection \"%s\" (pets or mounts)"
+L.DATA_ERR_RECIPES = "no recipe list for profession %s, see Data/Recipes.lua"
 L.DATA_ERR_MAP = "map %s not found in the game"
 L.DATA_ERR_EXPLORE_TOTAL = "no exploration total for map %s (art %s), see Data/ExplorationTotals.lua"
 
@@ -413,8 +415,17 @@ L.ACHIEVEMENT_NAMES = {
 	[186] = "Can I Keep Him?",
 	[187] = "Plenty of Pets",
 	[188] = "Plethora of Pets",
-	[189] = "Shop Smart, Shop Pet... Smart",
+	[189] = "Shop Smart, Shop Pet...Smart",
 	[190] = "Lil' Game Hunter",
+	-- Quêtes
+	[191] = "1500 Quests Completed",
+	[192] = "2000 Quests Completed",
+	[193] = "3000 Quests Completed",
+	-- Métiers : recettes de cuisine
+	[194] = "Lunch Lady",
+	[195] = "Short Order Cook",
+	[196] = "Chef de Partie",
+	[197] = "Sous Chef",
 }
 
 -- [id de haut fait] = description
@@ -611,19 +622,26 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[175] = "Defeat Sonya Darkhallow in the Barrow Deeps.",
 	[176] = "Defeat Cinder, Bolt and Snowtalon on the Shaper's Terrace.",
 	[177] = "Defeat Lyn the Ignored in the City of Dalaran.",
-	[178] = "Learn the Apprentice riding skill.",
-	[179] = "Learn the Journeyman riding skill.",
+	[178] = "Learn the apprentice riding skill.",
+	[179] = "Learn the journeyman riding skill.",
 	[180] = "Raise your unarmed skill to 300.",
 	[181] = "Raise four weapon skills to 300.",
 	[182] = "Equip a tabard.",
 	[183] = "Equip a superior item in every slot.",
-	[184] = "Complete Hemet Nesingwary's quests in Stranglethorn Vale, up to and including Big Game Hunter.",
+	[184] = "Complete all of Hemet Nesingwary quests in Stranglethorn Vale up to and including The Green Hills of Stranglethorn and Big Game Hunter.",
 	[185] = "Equip an epic item in every slot.",
-	[186] = "Obtain a vanity pet.",
-	[187] = "Collect 15 unique vanity pets.",
-	[188] = "Collect 25 unique vanity pets.",
-	[189] = "Collect 50 unique vanity pets.",
-	[190] = "Collect 75 unique vanity pets.",
+	[186] = "Obtain a companion pet.",
+	[187] = "Collect 15 unique companion pets.",
+	[188] = "Collect 25 unique companion pets.",
+	[189] = "Collect 50 unique companion pets.",
+	[190] = "Collect 75 unique companion pets.",
+	[191] = "Complete 1500 quests.",
+	[192] = "Complete 2000 quests.",
+	[193] = "Complete 3000 quests.",
+	[194] = "Learn 25 cooking recipes.",
+	[195] = "Learn 50 cooking recipes.",
+	[196] = "Learn 75 cooking recipes.",
+	[197] = "Learn 100 cooking recipes.",
 }
 
 -- [id de haut fait] = texte de récompense, purement décoratif (titre, objet...).
@@ -673,5 +691,5 @@ L.CRITERIA_TEXTS = {
 	[178] = { "Riding" },
 	[179] = { "Riding" },
 	[180] = { "Unarmed" },
-	[184] = { "Big Game Hunter" },
+	[184] = { "The Green Hills of Stranglethorn", "Big Game Hunter" },
 }

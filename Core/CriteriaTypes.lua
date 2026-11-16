@@ -224,6 +224,25 @@ end
 
 local COLLECTION_COUNTERS = { pets = CountPets, mounts = CountMounts }
 
+-- Le joueur connaît-il ce sort (une recette apprise en est un) ?
+local function IsSpellKnown(spellID)
+	if C_SpellBook and C_SpellBook.IsSpellKnown and C_SpellBook.IsSpellKnown(spellID) then
+		return true
+	end
+	return IsPlayerSpell ~= nil and IsPlayerSpell(spellID) == true
+end
+
+-- Recettes connues d'un métier, d'après la liste de Data/Recipes.lua.
+local function CountKnownRecipes(skillLine)
+	local count = 0
+	for _, spellID in ipairs(ns.Data.recipes[skillLine] or {}) do
+		if IsSpellKnown(spellID) then
+			count = count + 1
+		end
+	end
+	return count
+end
+
 -- Atteindre un niveau. Exemple : { type = "level", value = 10 }
 CriteriaTypes.level = {
 	fields = { "value" },
@@ -403,6 +422,28 @@ CriteriaTypes.collection = {
 	end,
 	current = function(criterion)
 		return COLLECTION_COUNTERS[criterion.what]()
+	end,
+}
+
+-- Recettes connues d'un métier (liste dans Data/Recipes.lua).
+-- Exemple : { type = "recipes", skillLine = 185, value = 25 }
+CriteriaTypes.recipes = {
+	fields = { "skillLine", "value" },
+	progressBar = true,
+	describe = function(criterion)
+		local name = L.PROFESSION_NAMES[criterion.skillLine] or tostring(criterion.skillLine)
+		return L.CRITERIA_RECIPES:format(name)
+	end,
+	goal = function(criterion)
+		return criterion.value
+	end,
+	validate = function(criterion)
+		if not ns.Data.recipes[criterion.skillLine] then
+			return L.DATA_ERR_RECIPES:format(tostring(criterion.skillLine))
+		end
+	end,
+	current = function(criterion)
+		return CountKnownRecipes(criterion.skillLine)
 	end,
 }
 

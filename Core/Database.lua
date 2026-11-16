@@ -11,7 +11,9 @@ ns.Database = Database
 -- 2 : progression enregistrée par personnage (avant : meilleure valeur seule).
 -- 3 : hauts faits renumérotés de 1 à 96 (avant : 1001, 2001, 3001...).
 -- 4 : progression rangée par ce que mesure le critère (avant : sa position).
-local SCHEMA_VERSION = 4
+-- 5 : progression partagée entre hauts faits : [mesure][personnage] (avant :
+--     [haut fait][mesure][personnage]).
+local SCHEMA_VERSION = 5
 
 -- Schéma 4 : hauts faits dont les critères ont changé avant la v1 (barres
 -- de réputation devenues des métas). Avec l'ancienne progression relue, ils
@@ -65,8 +67,11 @@ local DEFAULTS = {
 	-- vraie date d'obtention n'est pas connue.
 	completed = {},
 	-- Meilleure valeur vue pour chaque personnage (clé : son GUID) :
-	-- [achievementID] = { [progressKey] = { [guid] = quantité } }
-	-- progressKey : "type:cible" du critère, voir Core/Registry.lua.
+	-- [progressKey] = { [guid] = quantité }
+	-- progressKey : "type:cible" du critère, voir Core/Registry.lua. La même
+	-- mesure (ex. "statistic:98", les quêtes) sert à tous les hauts faits qui
+	-- la lisent : un nouveau palier connaît tout de suite les autres
+	-- personnages du compte.
 	-- Les personnages sont combinés à la lecture, voir Database:GetProgress.
 	progress = {},
 }
@@ -104,6 +109,8 @@ end
 --   3 : les hauts faits obtenus passent à leur nouvel id ; un id inconnu
 --       (haut fait retiré avant la v1) est abandonné.
 --   4 : les clés de progression changent ; REDEFINED_IDS sont retirés.
+--   5 : la progression de chaque haut fait est fusionnée par mesure (la
+--       meilleure valeur de chaque personnage est gardée).
 local function Migrate(db)
 	local version = db.schemaVersion or SCHEMA_VERSION
 	if version < 2 then
@@ -127,6 +134,23 @@ local function Migrate(db)
 			end
 		end
 		db.progress = {}
+	end
+	if version < 5 then
+		local merged = {}
+		for _, entry in pairs(type(db.progress) == "table" and db.progress or {}) do
+			for progressKey, perCharacter in pairs(type(entry) == "table" and entry or {}) do
+				if type(progressKey) == "string" and type(perCharacter) == "table" then
+					local target = merged[progressKey] or {}
+					merged[progressKey] = target
+					for guid, quantity in pairs(perCharacter) do
+						if type(quantity) == "number" and quantity > (target[guid] or 0) then
+							target[guid] = quantity
+						end
+					end
+				end
+			end
+		end
+		db.progress = merged
 	end
 	db.schemaVersion = SCHEMA_VERSION
 end
@@ -208,9 +232,8 @@ end
 -- Progression d'un critère, tous personnages confondus. combine vient du
 -- critère (Data/Achievements.lua) : "sum" additionne les personnages, sinon
 -- le meilleur personnage compte. 0 si aucune progression enregistrée.
-function Database:GetProgress(achievementID, progressKey, combine)
-	local entry = data.progress[achievementID]
-	local perCharacter = entry and entry[progressKey]
+function Database:GetProgress(progressKey, combine)
+	local perCharacter = data.progress[progressKey]
 	if type(perCharacter) ~= "table" then
 		return 0
 	end
@@ -229,34 +252,27 @@ end
 
 -- Garde la meilleure valeur vue pour ce personnage, puis renvoie la
 -- progression combinée (voir GetProgress).
-function Database:UpdateProgress(achievementID, progressKey, guid, quantity, combine)
-	local entry = data.progress[achievementID]
-	if not entry then
-		entry = {}
-		data.progress[achievementID] = entry
-	end
-	local perCharacter = entry[progressKey]
+function Database:UpdateProgress(progressKey, guid, quantity, combine)
+	local perCharacter = data.progress[progressKey]
 	if type(perCharacter) ~= "table" then
 		perCharacter = {}
-		entry[progressKey] = perCharacter
+		data.progress[progressKey] = perCharacter
 	end
 	if quantity > (perCharacter[guid] or 0) then
 		perCharacter[guid] = quantity
 	end
-	return self:GetProgress(achievementID, progressKey, combine)
+	return self:GetProgress(progressKey, combine)
 end
 
 -- Nombre de personnages différents vus dans la progression (/hff etat).
 function Database:GetNumCharacters()
 	local seen, count = {}, 0
-	for _, entry in pairs(data.progress) do
-		for _, perCharacter in pairs(entry) do
-			if type(perCharacter) == "table" then
-				for guid in pairs(perCharacter) do
-					if not seen[guid] then
-						seen[guid] = true
-						count = count + 1
-					end
+	for _, perCharacter in pairs(data.progress) do
+		if type(perCharacter) == "table" then
+			for guid in pairs(perCharacter) do
+				if not seen[guid] then
+					seen[guid] = true
+					count = count + 1
 				end
 			end
 		end

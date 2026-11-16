@@ -104,14 +104,14 @@ fenêtre du jeu.
 | 🟢 | 505 | 250 quêtes achevées | Achever 250 quêtes. | 10 |
 | 🟢 | 506 | 500 quêtes achevées | Achever 500 quêtes. | 10 |
 | 🟢 | 507 | 1 000 quêtes achevées | Achever 1 000 quêtes. | 10 |
-|  | 508 | 1 500 quêtes achevées | Achever 1 500 quêtes. | 10 |
+| 🟢 | 508 | 1 500 quêtes achevées | Achever 1 500 quêtes. | 10 |
 |  | 941 | Hemet Nesingwary : l'intégrale | Accomplir les hauts faits « Les vertes collines de Strangleronce », « Paradis perdu » et « Les neiges du Norfendre ». | 10 |
 |  | 973 | 5 quêtes journalières achevées | Achever 5 quêtes journalières. | 10 |
 |  | 974 | 50 quêtes journalières achevées | Achever 50 quêtes journalières. | 10 |
 |  | 975 | 200 quêtes journalières achevées | Achever 200 quêtes journalières. | 10 |
 |  | 976 | 500 quêtes journalières achevées | Achever 500 quêtes journalières. | 10 |
 |  | 977 | 1 000 quêtes journalières achevées | Achever 1 000 quêtes journalières. | 10 |
-|  | 978 | 3 000 quêtes achevées | Achever 3 000 quêtes. Récompense : Titre : chercheur. | 50 |
+| 🟢 | 978 | 3 000 quêtes achevées | Achever 3 000 quêtes. Récompense : Titre : chercheur. | 50 |
 | 🟢 | 1182 | Gagne-pain | Obtenir 10 000 pièces d'or en récompenses de quêtes. | 10 |
 |  | 1576 | De sang et d'angoisse | Achever les quêtes de l'arène de sang à Nagrand et les quêtes de l'amphithéatre de l'Angoisse à Zul'Drak. | 10 |
 |  | 1681 | Maître des traditions (Alliance) | Accomplir les hauts faits de quêtes listés ci-dessous. Récompense : Récompenses : titre et tabard de maître des traditions. | 10 |
@@ -565,10 +565,10 @@ fenêtre du jeu.
 |  | 1783 | Notre pain quotidien (Horde) | Achever chacune des quêtes journalières de cuisine proposées par Awilo Lon'gomba à Dalaran. | 10 |
 |  | 1784 | Gloire au chef (Horde) | Accomplir les hauts faits de cuisine listés ci-dessous. Récompense : Titre : chef. | 10 |
 |  | 1785 | Un dîner presque parfait | Proposez un grand festin dans chacun des champs de bataille listés ci-dessous. | 10 |
-|  | 1795 | Commis | Apprendre 25 recettes de cuisine. | 10 |
-|  | 1796 | Cuistot | Apprendre 50 recettes de cuisine. | 10 |
-|  | 1797 | Chef de partie | Apprendre 75 recettes de cuisine. | 10 |
-|  | 1798 | Sous chef | Apprendre 100 recettes de cuisine. | 10 |
+| 🟢 | 1795 | Commis | Apprendre 25 recettes de cuisine. | 10 |
+| 🟢 | 1796 | Cuistot | Apprendre 50 recettes de cuisine. | 10 |
+| 🟢 | 1797 | Chef de partie | Apprendre 75 recettes de cuisine. | 10 |
+| 🟢 | 1798 | Sous chef | Apprendre 100 recettes de cuisine. | 10 |
 |  | 1799 | Chef de cuisine | Apprendre 160 recettes de cuisine. | 10 |
 |  | 1800 | Gourmet de l'Outreterre | Préparer toutes les recettes de l'Outreterre listées ci-dessous. | 10 |
 |  | 1801 | Auprès de ma brune | Brasser de la brune du capitaine Rumsey. | 10 |
