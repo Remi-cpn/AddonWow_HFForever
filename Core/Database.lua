@@ -183,6 +183,17 @@ function Database:SetDebug(enabled)
 	data.debug = enabled and true or false
 end
 
+-- Dernière version dont les notes ont été ouvertes (onglet « Notes de
+-- version ») : nil tant qu'aucune ne l'a été. Une version plus récente
+-- allume la pastille de l'onglet.
+function Database:GetChangelogSeen()
+	return data.changelogSeen
+end
+
+function Database:SetChangelogSeen(version)
+	data.changelogSeen = version
+end
+
 -- Donnée telle quelle à LibDBIcon, qui y enregistre la position du bouton.
 function Database:GetMinimapSettings()
 	return data.minimap

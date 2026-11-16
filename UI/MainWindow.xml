@@ -874,12 +874,100 @@
 				</Frames>
 			</Frame>
 
-			<!-- Onglet du bas (un seul, « Hauts faits », comme Forever sans
-			     Guilde ni Statistiques). Texte réglé dans UI/MainWindow.lua. -->
+			<!-- Onglet « Notes de version » : colonne des versions, copie de
+			     Categories, remplie par UI/ChangelogCategories.lua. -->
+			<Frame parentKey="ChangelogCategories" inherits="HFFGoldBorderBackdropTemplate" hidden="true">
+				<Size x="175" y="0"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="21" y="-19"/>
+					<Anchor point="BOTTOMLEFT" x="21" y="20"/>
+				</Anchors>
+				<Frames>
+					<Frame parentKey="ScrollBox" inherits="WowScrollBoxList" frameStrata="HIGH">
+						<Anchors>
+							<Anchor point="TOPLEFT" x="0" y="-5"/>
+							<Anchor point="BOTTOMRIGHT" x="0" y="5"/>
+						</Anchors>
+					</Frame>
+					<EventFrame parentKey="ScrollBar" inherits="MinimalScrollBar" frameStrata="HIGH">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" x="6" y="-8"/>
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="6" y="6"/>
+						</Anchors>
+					</EventFrame>
+				</Frames>
+			</Frame>
+
+			<!-- Texte des notes de version, même fond et même place que la
+			     liste des hauts faits. Rempli par UI/Changelog.lua. -->
+			<Frame parentKey="Changelog" hidden="true">
+				<Size x="504" y="440"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.ChangelogCategories" relativePoint="TOPRIGHT" x="22" y="-36"/>
+					<Anchor point="BOTTOM" relativeKey="$parent.ChangelogCategories" relativePoint="BOTTOM"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture parentKey="Background" file="Interface\AchievementFrame\UI-Achievement-AchievementBackground">
+							<Anchors>
+								<Anchor point="TOPLEFT" x="3" y="-3"/>
+								<Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+							</Anchors>
+							<TexCoords left="0" right="1" top="0" bottom="0.5"/>
+						</Texture>
+					</Layer>
+					<Layer level="ARTWORK">
+						<Texture>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeKey="$parent.Background" x="0" y="0"/>
+								<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+							</Anchors>
+							<Color r="0" g="0" b="0" a="0.75"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<ScrollFrame parentKey="Scroll">
+						<Anchors>
+							<Anchor point="TOPLEFT" x="12" y="-10"/>
+							<Anchor point="BOTTOMRIGHT" x="-8" y="10"/>
+						</Anchors>
+						<ScrollChild>
+							<Frame parentKey="Content">
+								<Size x="480" y="1"/>
+							</Frame>
+						</ScrollChild>
+					</ScrollFrame>
+					<EventFrame parentKey="ScrollBar" inherits="MinimalScrollBar" frameStrata="HIGH">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" x="6" y="-8"/>
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="6" y="6"/>
+						</Anchors>
+					</EventFrame>
+					<Frame setAllPoints="true" inherits="HFFGoldBorderBackdropTemplate"/>
+				</Frames>
+			</Frame>
+
+			<!-- Onglets du bas : « Hauts faits » et « Notes de version ».
+			     Textes, clics et pastille réglés dans UI/MainWindow.lua. -->
 			<Button parentKey="Tab1" inherits="HFFTabButtonTemplate" id="1">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" x="17" y="3"/>
 				</Anchors>
+			</Button>
+			<Button parentKey="Tab2" inherits="HFFTabButtonTemplate" id="2">
+				<Anchors>
+					<Anchor point="LEFT" relativeKey="$parent.Tab1" relativePoint="RIGHT" x="-5" y="0"/>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<!-- Pastille « nouvelle version », juste après le texte de
+						     l'onglet (ancrée dans UI/MainWindow.lua). -->
+						<Texture parentKey="NewDot" hidden="true">
+							<Size x="12" y="12"/>
+						</Texture>
+					</Layer>
+				</Layers>
 			</Button>
 		</Frames>
 	</Frame>

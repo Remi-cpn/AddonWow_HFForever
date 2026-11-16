@@ -11,6 +11,12 @@ local MainWindow = {}
 ns.MainWindow = MainWindow
 
 local TAB_PADDING = 30 -- marge du texte d'un onglet, valeur de Blizzard
+local TAB_ACHIEVEMENTS = 1
+local TAB_CHANGELOG = 2
+-- Pastille de la fenêtre Communautés ; repli sur celle du micro-menu. Bleue
+-- sur Forever : passée en gris puis teintée en rouge.
+local NEW_DOT_COLOR = { 1, 0.1, 0.1 }
+local NEW_DOT_ATLASES = { "communities-icon-notification", "hud-microbutton-communities-icon-notification" }
 
 -- Vérifiés au chargement : beaucoup de textures de retail manquent dans le
 -- client Forever, et une texture absente s'affiche en vert sans erreur.
@@ -60,6 +66,8 @@ local REQUIRED_ATLASES = {
 }
 
 local frame = nil -- HFFAchievementFrame
+local currentTab = TAB_ACHIEVEMENTS
+local currentCategory = nil -- dernière catégorie choisie dans l'onglet Hauts faits
 
 -- Certains SOUNDKIT de retail n'existent pas sur Forever, et PlaySound(nil)
 -- lève une erreur.
@@ -87,12 +95,62 @@ local function UpdateHeader()
 end
 
 local function OnCategoryChanged(categoryID)
+	currentCategory = categoryID
+	-- Choisie pendant que l'onglet Notes de version est affiché (Refresh à
+	-- l'ouverture) : affichée au retour sur l'onglet Hauts faits.
+	if currentTab ~= TAB_ACHIEVEMENTS then
+		return
+	end
 	local isSummary = categoryID == ns.CategoryList.SUMMARY_ID
 	frame.Summary:SetShown(isSummary)
 	frame.Achievements:SetShown(not isSummary)
 	if not isSummary then
 		ns.AchievementList:ShowCategory(categoryID)
 	end
+end
+
+local function UpdateNewDot()
+	frame.Tab2.NewDot:SetShown(frame.Tab2.NewDot.hasAtlas and ns.Changelog:HasUnseen())
+end
+
+local function SelectTab(tab)
+	currentTab = tab
+	PanelTemplates_SetTab(frame, tab)
+	local isAchievements = tab == TAB_ACHIEVEMENTS
+	frame.Categories:SetShown(isAchievements)
+	frame.HeaderDetails.SearchBox:SetShown(isAchievements)
+	frame.ChangelogCategories:SetShown(not isAchievements)
+	frame.Changelog:SetShown(not isAchievements)
+	if isAchievements then
+		if currentCategory then
+			OnCategoryChanged(currentCategory)
+		end
+	else
+		frame.Summary:Hide()
+		frame.Achievements:Hide()
+		frame.SearchResults:Hide()
+		ns.Changelog:OnTabShown()
+		UpdateNewDot()
+	end
+end
+
+local function SetupNewDot(dot)
+	-- Le texte de l'onglet n'est créé qu'avec le bouton (ButtonText) :
+	-- ancrage ici plutôt que dans le XML. Une texture sans ancre dans le XML
+	-- couvre tout son parent : ClearAllPoints d'abord, sinon elle s'étire.
+	dot:ClearAllPoints()
+	dot:SetPoint("LEFT", frame.Tab2.Text, "RIGHT", 1, 0)
+	dot:SetSize(12, 12)
+	for _, atlas in ipairs(NEW_DOT_ATLASES) do
+		if C_Texture.GetAtlasInfo(atlas) then
+			dot:SetAtlas(atlas)
+			dot:SetDesaturated(true)
+			dot:SetVertexColor(unpack(NEW_DOT_COLOR))
+			dot.hasAtlas = true
+			return
+		end
+	end
+	Log.Error(L.WINDOW_ATLAS_MISSING, NEW_DOT_ATLASES[1])
 end
 
 -- Appelé une fois à ADDON_LOADED.
@@ -103,11 +161,21 @@ function MainWindow:Init()
 	frame.Header.Title:SetText(L.WINDOW_HEADER_TITLE)
 
 	-- Les fonctions PanelTemplates_* de Blizzard lisent frame.Tabs.
-	frame.Tabs = { frame.Tab1 }
+	frame.Tabs = { frame.Tab1, frame.Tab2 }
 	frame.Tab1:SetText(L.TAB_ACHIEVEMENTS)
-	PanelTemplates_TabResize(frame.Tab1, TAB_PADDING)
+	frame.Tab2:SetText(L.TAB_CHANGELOG)
+	for _, tab in ipairs(frame.Tabs) do
+		PanelTemplates_TabResize(tab, TAB_PADDING)
+		tab:SetScript("OnClick", function(self)
+			if self:GetID() ~= currentTab then
+				SelectTab(self:GetID())
+				PlayUISound(SOUNDKIT.IG_CHARACTER_INFO_TAB)
+			end
+		end)
+	end
 	PanelTemplates_SetNumTabs(frame, #frame.Tabs)
-	PanelTemplates_SetTab(frame, 1)
+	PanelTemplates_SetTab(frame, TAB_ACHIEVEMENTS)
+	SetupNewDot(frame.Tab2.NewDot)
 
 	-- Grisé : il n'y a pas encore d'historique de navigation.
 	frame.HeaderDetails.Back:SetText(L.BACK)
@@ -116,6 +184,7 @@ function MainWindow:Init()
 	ns.AchievementList:Init(frame.Achievements, frame.HeaderDetails.HideCompleted, frame.HeaderDetails.SearchBox)
 	ns.Summary:Init(frame.Summary)
 	ns.CategoryList:Init(frame.Categories, OnCategoryChanged)
+	ns.Changelog:Init(frame)
 
 	frame.Header:RegisterForDrag("LeftButton")
 	frame.Header:SetScript("OnDragStart", function()
@@ -128,6 +197,11 @@ function MainWindow:Init()
 	frame:SetScript("OnShow", function()
 		UpdateHeader()
 		ns.CategoryList:Refresh()
+		-- Rouverte sur les notes de version : retour à « Dernière version ».
+		if currentTab == TAB_CHANGELOG then
+			ns.Changelog:OnTabShown()
+		end
+		UpdateNewDot()
 		PlayUISound(SOUNDKIT.ACHIEVEMENT_MENU_OPEN)
 	end)
 	frame:SetScript("OnHide", function()
@@ -167,6 +241,9 @@ function MainWindow:ShowAchievement(achievementID)
 		return false
 	end
 	frame:Show()
+	if currentTab ~= TAB_ACHIEVEMENTS then
+		SelectTab(TAB_ACHIEVEMENTS)
+	end
 	ns.CategoryList:SelectCategory(categoryID)
 	ns.AchievementList:SelectAchievement(achievementID)
 	Log.Debug("MainWindow: ouverture sur le haut fait", achievementID)

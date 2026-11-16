@@ -1,0 +1,29 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<!--
+		Onglet « Notes de version ». Les cadres sont dans UI/MainWindow.xml
+		(ChangelogCategories, Changelog, Tab2), le comportement dans
+		UI/ChangelogCategories.lua et UI/Changelog.lua.
+	-->
+
+	<!-- Bandeau titre d'une version, même style que les bandeaux du Résumé. -->
+	<Frame name="HFFChangelogHeaderTemplate" virtual="true">
+		<Size x="0" y="20"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Texture" file="Interface\AchievementFrame\UI-Achievement-RecentHeader">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="-20" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="20" y="0"/>
+					</Anchors>
+					<TexCoords left="0" right="1" top="0" bottom="0.71875"/>
+				</Texture>
+				<FontString parentKey="Title" inherits="GameFontNormal">
+					<Size x="0" y="20"/>
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+</Ui>

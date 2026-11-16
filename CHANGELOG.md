@@ -28,6 +28,10 @@
 
 Pets, riding, unarmed and weapon skills, recipes, quests and dungeons are detected from what your characters have already done. Tabard and gear achievements unlock as soon as you wear the items, even once.
 
+### New in the window
+
+- **Patch notes** tab: what changed in each version of HF Forever, right in the game. A red dot on the tab tells you when a new version brings news.
+
 ### Removed
 
 - **Scarlet Halls**: it was a duplicate of the Scarlet Monastery Cathedral.
@@ -43,7 +47,7 @@ Pets, riding, unarmed and weapon skills, recipes, quests and dungeons are detect
 
 ## 1.0.0
 
-First release.
+### First release
 
 - 177 account-wide achievements: General, Quests, Exploration, Player vs. Player, Professions, Reputation, Dungeons and Raids.
 - Progress adds up across all your characters.
