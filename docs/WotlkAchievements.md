@@ -98,7 +98,7 @@ fenêtre du jeu.
 | Statut | id | Nom | Description | Pts |
 | --- | --- | --- | --- | --- |
 |  | 31 | Une simple re-quête | Achever une quête journalière tous les jours pendant cinq jours consécutifs. | 10 |
-|  | 32 | 2 000 quêtes achevées | Achever 2 000 quêtes. | 10 |
+| 🟢 | 32 | 2 000 quêtes achevées | Achever 2 000 quêtes. | 10 |
 | 🟢 | 503 | 50 quêtes achevées | Achever 50 quêtes. | 10 |
 | 🟢 | 504 | 100 quêtes achevées | Achever 100 quêtes. | 10 |
 | 🟢 | 505 | 250 quêtes achevées | Achever 250 quêtes. | 10 |
