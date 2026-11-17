@@ -19,7 +19,15 @@ ns.Data.changelog = {
 	{
 		version = "1.2.0",
 		enUS = [[
-### New achievements (4)
+### New achievements (10)
+
+**Darkspear Islands** (new Player vs. Player category)
+- **Darkspear Islands Victory** and **Darkspear Islands Veteran**: win the Darkspear Islands 1 and 100 times.
+- **Flags Captured**: capture 50 flags in the Darkspear Islands.
+- **Bases Assaulted**: assault 50 bases in the Darkspear Islands.
+- **Darkspear Raider** (Horde) and **Theramore Expeditionary Force** (Alliance): reach exalted with your faction of the battleground.
+
+These read the game's statistics and reputations, so what you have already done counts right away.
 
 **WoW: Forever dungeons**
 - **Excavation Site: Wetlands**: defeat the Relic Guardian.
@@ -30,7 +38,15 @@ ns.Data.changelog = {
 They are detected from WoW: Forever's Spelunker achievements, so dungeons you have already finished count right away. **Forever Raider** now also asks for these four dungeons.
 ]],
 		frFR = [[
-### Nouveaux hauts faits (4)
+### Nouveaux hauts faits (10)
+
+**Îles des Sombrelances** (nouvelle catégorie de Joueur contre Joueur)
+- **Victoire sur les îles des Sombrelances** et **Vétéran des îles des Sombrelances** : gagner 1 et 100 fois sur les îles des Sombrelances.
+- **Drapeaux capturés** : capturer 50 drapeaux sur les îles des Sombrelances.
+- **Bases attaquées** : attaquer 50 bases sur les îles des Sombrelances.
+- **Chevaucheur sombrelance** (Horde) et **Troupe d'intervention de Theramore** (Alliance) : être exalté auprès de sa faction du champ de bataille.
+
+Ils lisent les statistiques et les réputations du jeu : ce que vous avez déjà fait compte tout de suite.
 
 **Donjons de WoW: Forever**
 - **Excavations : les Paluns** : vaincre le Gardien des reliques.

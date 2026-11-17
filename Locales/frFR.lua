@@ -195,6 +195,7 @@ Override(L.CATEGORY_NAMES, {
 	[61] = "Goulet des Chanteguerres",
 	[62] = "Bassin Arathi",
 	[63] = "Vallée d'Alterac",
+	[64] = "Îles des Sombrelances",
 	[4] = "Métiers",
 	[7] = "Réputation",
 	[5] = "Donjons",
@@ -435,6 +436,13 @@ Override(L.ACHIEVEMENT_NAMES, {
 	[210] = "Cité Submergée",
 	[211] = "Bastion Krol'dok",
 	[212] = "Repaire des Noiregueules",
+	-- JcJ : îles des Sombrelances
+	[213] = "Victoire sur les îles des Sombrelances",
+	[214] = "Vétéran des îles des Sombrelances",
+	[215] = "Drapeaux capturés",
+	[216] = "Bases attaquées",
+	[217] = "Chevaucheur sombrelance",
+	[218] = "Troupe d'intervention de Theramore",
 })
 
 Override(L.ACHIEVEMENT_DESCRIPTIONS, {
@@ -661,6 +669,12 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[210] = "Vaincre Min'loth le Serpent dans la cité Submergée.",
 	[211] = "Vaincre le suzerain Mugg dans le bastion Krol'dok.",
 	[212] = "Vaincre Varrox Mornesabot dans le repaire des Noiregueules.",
+	[213] = "Gagner sur les îles des Sombrelances.",
+	[214] = "Obtenir 100 victoires sur les îles des Sombrelances.",
+	[215] = "Capturer 50 drapeaux sur les îles des Sombrelances.",
+	[216] = "Attaquer 50 bases sur les îles des Sombrelances.",
+	[217] = "Être exalté auprès des chevaucheurs sombrelances.",
+	[218] = "Être exalté auprès de la troupe d'intervention de Theramore.",
 })
 
 Override(L.CRITERIA_TEXTS, {

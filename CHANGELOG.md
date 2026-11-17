@@ -2,7 +2,15 @@
 
 ## 1.2.0 (in progress)
 
-### New achievements (4)
+### New achievements (10)
+
+**Darkspear Islands** (new Player vs. Player category)
+- **Darkspear Islands Victory** and **Darkspear Islands Veteran**: win the Darkspear Islands 1 and 100 times.
+- **Flags Captured**: capture 50 flags in the Darkspear Islands.
+- **Bases Assaulted**: assault 50 bases in the Darkspear Islands.
+- **Darkspear Raider** (Horde) and **Theramore Expeditionary Force** (Alliance): reach exalted with your faction of the battleground.
+
+These read the game's statistics and reputations, so what you have already done counts right away.
 
 **WoW: Forever dungeons**
 - **Excavation Site: Wetlands**: defeat the Relic Guardian.

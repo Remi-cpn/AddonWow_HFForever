@@ -3,7 +3,7 @@
 -- La liste validée est décrite dans docs/ProposedAchievements.md.
 --
 --   id          : numéro unique et DÉFINITIF, la sauvegarde s'en sert. Un
---                 nouveau haut fait prend le numéro libre suivant (213), quel
+--                 nouveau haut fait prend le numéro libre suivant (219), quel
 --                 que soit l'endroit où il est rangé. Ne jamais changer ni
 --                 réutiliser un numéro. Numéros retirés, à ne jamais
 --                 réutiliser : 76, 80, 176, 177.
@@ -740,6 +740,43 @@ ns.Data.achievements = {
 		id = 146, category = CAT.ALTERAC_VALLEY, points = 10, faction = "Alliance",
 		icon = ICONS .. "INV_Jewelry_StormPikeTrinket_05",
 		criteria = { { type = "reputation", factionID = 730 } }, -- Garde Foudrepique
+	},
+
+	---------------------------------------------------------------------------
+	-- JcJ : îles des Sombrelances (champ de bataille de Forever)
+	-- 64176 victoires, 64352 drapeaux capturés, 64350 bases attaquées.
+	-- Réputations : celles du haut fait natif 62049, dont l'icône sert au 213.
+	---------------------------------------------------------------------------
+	{
+		id = 213, category = CAT.DARKSPEAR_ISLANDS, points = 10,
+		icon = ICONS .. "Trade_Archaeology_Troll_Tablet",
+		criteria = { { type = "statistic", id = 64176, value = 1, combine = "sum" } },
+	},
+	{
+		id = 214, category = CAT.DARKSPEAR_ISLANDS, points = 10,
+		icon = ICONS .. "INV_Misc_Head_Troll_01",
+		criteria = { { type = "statistic", id = 64176, value = 100, combine = "sum" } },
+		previous = 213,
+	},
+	{
+		id = 215, category = CAT.DARKSPEAR_ISLANDS, points = 10,
+		icon = ICONS .. "Achievement_BG_captureflag_EOS",
+		criteria = { { type = "statistic", id = 64352, value = 50, combine = "sum" } },
+	},
+	{
+		id = 216, category = CAT.DARKSPEAR_ISLANDS, points = 10,
+		icon = ICONS .. "Ability_Warrior_Charge",
+		criteria = { { type = "statistic", id = 64350, value = 50, combine = "sum" } },
+	},
+	{
+		id = 217, category = CAT.DARKSPEAR_ISLANDS, points = 10, faction = "Horde",
+		icon = ICONS .. "Achievement_Character_Troll_Male",
+		criteria = { { type = "reputation", factionID = 2798 } }, -- Chevaucheurs sombrelances
+	},
+	{
+		id = 218, category = CAT.DARKSPEAR_ISLANDS, points = 10, faction = "Alliance",
+		icon = ICONS .. "Spell_Arcane_TeleportTheramore",
+		criteria = { { type = "reputation", factionID = 2799 } }, -- Troupe d'intervention de Theramore
 	},
 
 	---------------------------------------------------------------------------

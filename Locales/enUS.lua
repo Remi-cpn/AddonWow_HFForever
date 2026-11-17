@@ -204,6 +204,7 @@ L.CATEGORY_NAMES = {
 	[61] = "Warsong Gulch",
 	[62] = "Arathi Basin",
 	[63] = "Alterac Valley",
+	[64] = "Darkspear Islands",
 	[4] = "Professions",
 	[7] = "Reputation",
 	[5] = "Dungeons",
@@ -444,6 +445,13 @@ L.ACHIEVEMENT_NAMES = {
 	[210] = "Drowned City",
 	[211] = "Krol'dok Stronghold",
 	[212] = "Blackmaw Hold",
+	-- JcJ : îles des Sombrelances
+	[213] = "Darkspear Islands Victory",
+	[214] = "Darkspear Islands Veteran",
+	[215] = "Flags Captured",
+	[216] = "Bases Assaulted",
+	[217] = "Darkspear Raider",
+	[218] = "Theramore Expeditionary Force",
 }
 
 -- [id de haut fait] = description
@@ -671,6 +679,12 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[210] = "Defeat Min'loth the Serpent in the Drowned City.",
 	[211] = "Defeat Overlord Mugg in Krol'dok Stronghold.",
 	[212] = "Defeat Varrox Bleakhoof in Blackmaw Hold.",
+	[213] = "Win the Darkspear Islands.",
+	[214] = "Complete 100 victories in the Darkspear Islands.",
+	[215] = "Capture 50 flags in the Darkspear Islands.",
+	[216] = "Assault 50 bases in the Darkspear Islands.",
+	[217] = "Gain exalted reputation with the Darkspear Raiders.",
+	[218] = "Gain exalted reputation with the Theramore Expeditionary Force.",
 }
 
 -- [id de haut fait] = texte de récompense, purement décoratif (titre, objet...).
