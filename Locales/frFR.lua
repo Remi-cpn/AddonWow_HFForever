@@ -430,6 +430,11 @@ Override(L.ACHIEVEMENT_NAMES, {
 	[206] = "Stratholme",
 	[207] = "Gouffre de Ragefeu ou salle des Thanes",
 	[208] = "L'écumeur pour toujours",
+	-- Donjons de Forever (suite)
+	[209] = "Excavations : les Paluns",
+	[210] = "Cité Submergée",
+	[211] = "Bastion Krol'dok",
+	[212] = "Repaire des Noiregueules",
 })
 
 Override(L.ACHIEVEMENT_DESCRIPTIONS, {
@@ -652,6 +657,10 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[206] = "Triompher des pièges maléfiques qui hantent Stratholme.",
 	[207] = "Vaincre le dernier boss du gouffre de Ragefeu ou de la salle des Thanes.",
 	[208] = "Accomplir les hauts faits de donjon listés ci-dessous.",
+	[209] = "Vaincre le Gardien des reliques dans les excavations des Paluns.",
+	[210] = "Vaincre Min'loth le Serpent dans la cité Submergée.",
+	[211] = "Vaincre le suzerain Mugg dans le bastion Krol'dok.",
+	[212] = "Vaincre Varrox Mornesabot dans le repaire des Noiregueules.",
 })
 
 Override(L.CRITERIA_TEXTS, {
@@ -679,6 +688,10 @@ Override(L.CRITERIA_TEXTS, {
 	[94] = { "Ombre de l'archimage" },
 	[95] = { "Rugiflamme" },
 	[96] = { "Nanaya" },
+	[209] = { "Gardien des reliques" },
+	[210] = { "Min'loth le Serpent" },
+	[211] = { "Suzerain Mugg" },
+	[212] = { "Varrox Mornesabot" },
 	[154] = { "Une réputation exaltée" },
 	[173] = { "Onyxia" },
 	[174] = { "Roi sauvage" },

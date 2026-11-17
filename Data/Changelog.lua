@@ -17,6 +17,31 @@ local _, ns = ...
 
 ns.Data.changelog = {
 	{
+		version = "1.2.0",
+		enUS = [[
+### New achievements (4)
+
+**WoW: Forever dungeons**
+- **Excavation Site: Wetlands**: defeat the Relic Guardian.
+- **Drowned City**: defeat Min'loth the Serpent.
+- **Krol'dok Stronghold**: defeat Overlord Mugg.
+- **Blackmaw Hold**: defeat Varrox Bleakhoof.
+
+They are detected from WoW: Forever's Spelunker achievements, so dungeons you have already finished count right away. **Forever Raider** now also asks for these four dungeons.
+]],
+		frFR = [[
+### Nouveaux hauts faits (4)
+
+**Donjons de WoW: Forever**
+- **Excavations : les Paluns** : vaincre le Gardien des reliques.
+- **Cité Submergée** : vaincre Min'loth le Serpent.
+- **Bastion Krol'dok** : vaincre le suzerain Mugg.
+- **Repaire des Noiregueules** : vaincre Varrox Mornesabot.
+
+Ils sont repris des hauts faits Spéléologue de WoW: Forever : les donjons déjà terminés comptent tout de suite. **L'écumeur pour toujours** demande aussi ces quatre donjons.
+]],
+	},
+	{
 		version = "1.1.0",
 		enUS = [[
 ### New achievements (31)

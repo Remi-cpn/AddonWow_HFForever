@@ -3,7 +3,7 @@
 -- La liste validée est décrite dans docs/ProposedAchievements.md.
 --
 --   id          : numéro unique et DÉFINITIF, la sauvegarde s'en sert. Un
---                 nouveau haut fait prend le numéro libre suivant (209), quel
+--                 nouveau haut fait prend le numéro libre suivant (213), quel
 --                 que soit l'endroit où il est rangé. Ne jamais changer ni
 --                 réutiliser un numéro. Numéros retirés, à ne jamais
 --                 réutiliser : 76, 80, 176, 177.
@@ -1283,11 +1283,33 @@ ns.Data.achievements = {
 		criteria = { { type = "boss", encounters = { 3354 }, statistic = 63571,
 			native = { achievement = SPELEO_NOVICE, asset = 250657 } } }, -- Ruines de Lordaeron
 	},
+	-- 209 à 212 : pas de statistique de victoires dans le jeu, critère natif
+	-- et rencontre seuls. Icônes : celles de ForeverDungeonJournal.
+	{
+		id = 209, category = CAT.DUNGEONS_FOREVER, points = 10,
+		icon = ICONS .. "INV_Pick_02",
+		criteria = { { type = "boss", encounters = { 3482 },
+			native = { achievement = SPELEO_NOVICE, asset = 260326 } } }, -- Excavations : les Paluns
+	},
 	{
 		id = 94, category = CAT.DUNGEONS_FOREVER, points = 10,
 		icon = ICONS .. "Spell_Arcane_PortalDalaran",
 		criteria = { { type = "boss", encounters = { 3303 }, statistic = 63572,
 			native = { achievement = SPELEO_EXPERIENCED, asset = 246020 } } }, -- Cité de Dalaran
+	},
+	{
+		-- Min'loth a deux créatures (260243 pour le natif, 260274) ; une
+		-- seule rencontre.
+		id = 210, category = CAT.DUNGEONS_FOREVER, points = 10,
+		icon = ICONS .. "Spell_Frost_SummonWaterElemental",
+		criteria = { { type = "boss", encounters = { 3479 },
+			native = { achievement = SPELEO_EXPERIENCED, asset = 260243 } } }, -- Cité Submergée
+	},
+	{
+		id = 211, category = CAT.DUNGEONS_FOREVER, points = 10,
+		icon = ICONS .. "INV_Misc_Key_13",
+		criteria = { { type = "boss", encounters = { 3451 },
+			native = { achievement = SPELEO_EXPERIENCED, asset = 258968 } } }, -- Bastion Krol'dok
 	},
 	{
 		id = 95, category = CAT.DUNGEONS_FOREVER, points = 10,
@@ -1300,6 +1322,12 @@ ns.Data.achievements = {
 		icon = ICONS .. "INV_Misc_Gem_Variety_02",
 		criteria = { { type = "boss", encounters = { 3502 }, statistic = 63574,
 			native = { achievement = SPELEO_EXPERT, asset = 261809 } } }, -- Terrasse du Façonneur
+	},
+	{
+		id = 212, category = CAT.DUNGEONS_FOREVER, points = 10,
+		icon = ICONS .. "INV_Misc_MonsterClaw_04",
+		criteria = { { type = "boss", encounters = { 3334 },
+			native = { achievement = SPELEO_EXPERT, asset = 247234 } } }, -- Repaire des Noiregueules
 	},
 	{
 		-- Méta de tous les donjons, classiques et de Forever : rangé dans la
@@ -1317,8 +1345,10 @@ ns.Data.achievements = {
 			{ type = "achievement", id = 204 }, { type = "achievement", id = 89 },
 			{ type = "achievement", id = 90 }, { type = "achievement", id = 91 },
 			{ type = "achievement", id = 206 }, { type = "achievement", id = 93 },
-			{ type = "achievement", id = 94 }, { type = "achievement", id = 95 },
-			{ type = "achievement", id = 96 },
+			{ type = "achievement", id = 209 }, { type = "achievement", id = 94 },
+			{ type = "achievement", id = 210 }, { type = "achievement", id = 211 },
+			{ type = "achievement", id = 95 }, { type = "achievement", id = 96 },
+			{ type = "achievement", id = 212 },
 		},
 	},
 

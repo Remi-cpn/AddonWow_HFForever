@@ -1,5 +1,17 @@
 # HF Forever changelog
 
+## 1.2.0 (in progress)
+
+### New achievements (4)
+
+**WoW: Forever dungeons**
+- **Excavation Site: Wetlands**: defeat the Relic Guardian.
+- **Drowned City**: defeat Min'loth the Serpent.
+- **Krol'dok Stronghold**: defeat Overlord Mugg.
+- **Blackmaw Hold**: defeat Varrox Bleakhoof.
+
+They are detected from WoW: Forever's Spelunker achievements, so dungeons you have already finished count right away. **Forever Raider** now also asks for these four dungeons.
+
 ## 1.1.0
 
 ### New achievements (31)

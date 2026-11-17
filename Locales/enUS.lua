@@ -439,6 +439,11 @@ L.ACHIEVEMENT_NAMES = {
 	[206] = "Stratholme",
 	[207] = "Ragefire Chasm or Hall of Thanes",
 	[208] = "Forever Raider",
+	-- Donjons de Forever (suite)
+	[209] = "Excavation Site: Wetlands",
+	[210] = "Drowned City",
+	[211] = "Krol'dok Stronghold",
+	[212] = "Blackmaw Hold",
 }
 
 -- [id de haut fait] = description
@@ -662,6 +667,10 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[206] = "Defeat the evil masterminds inhabiting Stratholme.",
 	[207] = "Defeat the final boss of Ragefire Chasm or the Hall of Thanes.",
 	[208] = "Complete the dungeon achievements listed below.",
+	[209] = "Defeat the Relic Guardian in the Excavation Site: Wetlands.",
+	[210] = "Defeat Min'loth the Serpent in the Drowned City.",
+	[211] = "Defeat Overlord Mugg in Krol'dok Stronghold.",
+	[212] = "Defeat Varrox Bleakhoof in Blackmaw Hold.",
 }
 
 -- [id de haut fait] = texte de récompense, purement décoratif (titre, objet...).
@@ -696,6 +705,10 @@ L.CRITERIA_TEXTS = {
 	[94] = { "Shade of the Archmage" },
 	[95] = { "Blazeroar" },
 	[96] = { "Nanaya" },
+	[209] = { "Relic Guardian" },
+	[210] = { "Min'loth the Serpent" },
+	[211] = { "Overlord Mugg" },
+	[212] = { "Varrox Bleakhoof" },
 	-- Sans barre (seuil 1) : le nom de la statistique 377 serait affiché
 	[154] = { "One Exalted reputation" },
 	[173] = { "Onyxia" },
