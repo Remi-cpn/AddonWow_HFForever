@@ -47,12 +47,12 @@ fenêtre du jeu.
 | 🟢 | 11 | Niveau 60 | Atteindre le niveau 60. | 10 |
 | 🟢 | 15 | De nombreux familiers | Collecter 15 mascottes différentes. | 10 |
 |  | 16 | Qui a commandé une salade de phalanges ? | Obtenir un score de 400 avec la compétence Mains nues. | 10 |
-|  | 545 | Coupe et brushing | Aller dans un salon de coiffure et changer de coupe. | 10 |
+| 🟢 | 545 | Coupe et brushing | Aller dans un salon de coiffure et changer de coupe. | 10 |
 | 🟢 | 546 | Chambre forte | Acheter 7 emplacements de sac supplémentaires. | 10 |
 |  | 556 | Qualité épique | Équiper un objet de niveau 213 et de qualité épique dans chaque emplacement. | 25 |
 |  | 557 | Qualité supérieure | Équiper un objet de niveau 187 et de qualité supérieure dans chaque emplacement. | 10 |
-|  | 558 | Cupide | Gagner un jet de cupidité sur un objet supérieur au niveau 185 et de qualité supérieure ou mieux en obtenant 100. | 10 |
-|  | 559 | Nécessiteux | Gagner un jet de besoin sur un objet supérieur au niveau 185 et de qualité supérieure ou mieux en obtenant 100. | 10 |
+| 🟢 | 558 | Cupide | Gagner un jet de cupidité sur un objet supérieur au niveau 185 et de qualité supérieure ou mieux en obtenant 100. | 10 |
+| 🟢 | 559 | Nécessiteux | Gagner un jet de besoin sur un objet supérieur au niveau 185 et de qualité supérieure ou mieux en obtenant 100. | 10 |
 |  | 621 | Représentant | Equiper un tabard. | 10 |
 |  | 705 | Maître d'armes | Obtenir un score de 400 dans 4 compétences d'armes. | 25 |
 |  | 889 | L'équipée sauvage | Apprendre la compétence Compagnon cavalier. | 10 |
@@ -61,8 +61,8 @@ fenêtre du jeu.
 |  | 892 | L'étoffe des héros | Apprendre la compétence Artisan cavalier. | 10 |
 |  | 964 | On descend ? | Faire une chute de 65 mètres sans mourir. | 10 |
 | 🟢 | 1017 | Je peux le garder ? | Obtenir une mascotte. | 10 |
-|  | 1020 | Dix tabards | Equiper 10 tabards différents. | 10 |
-|  | 1021 | Timbré de tabards | Equiper 25 tabards différents. Récompense : Récompense : tabard des hauts faits. | 10 |
+| 🟢 | 1020 | Dix tabards | Equiper 10 tabards différents. | 10 |
+| 🟢 | 1021 | Timbré de tabards | Equiper 25 tabards différents. Récompense : Récompense : tabard des hauts faits. | 10 |
 |  | 1165 | Ma réserve est gigantesque ! | Équiper le Sac "gigantesque" de Haris Pilton. | 10 |
 | 🟢 | 1176 | Le fric, c'est chic | Ramasser 100 pièces d'or en butin. | 10 |
 | 🟢 | 1177 | Le fric, c'est chic | Ramasser 1 000 pièces d'or en butin. | 10 |
@@ -1567,6 +1567,10 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 - 889 / 891 Monte (178 / 179) : rangs 75 et 150 ; Expert et Artisan cavalier n'existent pas sur Forever.
 - 940 Les vertes collines de Strangleronce (184) : quête 208 « La chasse au gros gibier » terminée.
 - 684 Le repaire d'Onyxia : notre 173, dans Donjons > Raids.
+- 545 Coupe et brushing (219) : statistique 1147 « Argent dépensé chez le coiffeur » non nulle, quel que soit le montant.
+- 1020 / 1021 Dix tabards / Timbré de tabards (220 / 221) : tabards notés quand ils sont portés avec l'addon installé (pas rétroactif), tous personnages du compte. Les 5 tabards que Forever a recréés sous un second numéro ne comptent qu'une fois (`Data/Tabards.lua`). Le tabard des hauts faits donné en récompense n'existe pas.
+- 558 / 559 Cupide / Nécessiteux (222 / 223) : jet de 100 du joueur lu dans l'historique du butin (`C_LootHistory`), pas rétroactif. Sans le niveau d'objet 185 ; objet de qualité supérieure ou mieux ; un 100 suffit (égalité possible avec un autre 100).
+- Îles des Sombrelances (213 à 218) : champ de bataille propre à Forever, sans équivalent WotLK ; même modèle que le goulet et le bassin Arathi.
 - Correspondance des id WotLK avec les nôtres : voir [WotlkFaisables.md](WotlkFaisables.md) et les commentaires de `Data/Achievements.lua`.
 - Statistiques : 🟢 sur celles que nos HF lisent et qui existent aussi en WotLK. Nos HF lisent aussi 64348 et 64349 (bassin Arathi), propres à Forever.
 

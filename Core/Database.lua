@@ -79,6 +79,14 @@ local DEFAULTS = {
 	-- [encounterID] = { [guid] = date de la première victoire vue }
 	-- Seule trace de ces victoires : jamais effacée par /hff reset.
 	bossKills = {},
+	-- Tabards vus équipés (Engine, à chaque évaluation) :
+	-- [itemID] = { [guid] = date de la première fois vu }
+	-- Seule trace, comme bossKills : jamais effacée par /hff reset.
+	tabards = {},
+	-- Jets de 100 vus en direct (historique du butin, Engine) sur un objet
+	-- de qualité supérieure ou mieux : [« need » ou « greed »] = { [guid] =
+	-- date du premier }. Seule trace : jamais effacée par /hff reset.
+	perfectRolls = {},
 }
 
 -- Ajoute récursivement les clés manquantes, sans écraser les valeurs présentes.
@@ -315,8 +323,51 @@ function Database:HasBossKill(encounterID)
 	return type(kills) == "table" and next(kills) ~= nil
 end
 
--- Efface hauts faits et progression ; les réglages et les boss vaincus vus
--- en direct (bossKills, introuvables autrement) sont conservés.
+-- Enregistre un tabard vu équipé (la première date est gardée).
+function Database:RecordTabard(itemID, guid)
+	local seen = data.tabards[itemID]
+	if type(seen) ~= "table" then
+		seen = {}
+		data.tabards[itemID] = seen
+	end
+	if not seen[guid] then
+		seen[guid] = time()
+	end
+end
+
+-- Nombre de tabards différents vus équipés, tous personnages du compte.
+function Database:CountTabards()
+	local count = 0
+	for _, seen in pairs(data.tabards) do
+		if type(seen) == "table" and next(seen) ~= nil then
+			count = count + 1
+		end
+	end
+	return count
+end
+
+-- Enregistre un jet de 100 (kind : « need » ou « greed ») ; la première
+-- date est gardée.
+function Database:RecordPerfectRoll(kind, guid)
+	local rolls = data.perfectRolls[kind]
+	if type(rolls) ~= "table" then
+		rolls = {}
+		data.perfectRolls[kind] = rolls
+	end
+	if not rolls[guid] then
+		rolls[guid] = time()
+	end
+end
+
+-- true si un personnage du compte a déjà fait 100 sur ce type de jet.
+function Database:HasPerfectRoll(kind)
+	local rolls = data.perfectRolls[kind]
+	return type(rolls) == "table" and next(rolls) ~= nil
+end
+
+-- Efface hauts faits et progression ; les réglages, les boss vaincus vus
+-- en direct (bossKills), les tabards vus (tabards) et les jets de 100
+-- (perfectRolls), introuvables autrement, sont conservés.
 function Database:ResetAchievements()
 	data.completed = {}
 	data.progress = {}

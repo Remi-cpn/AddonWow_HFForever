@@ -2,7 +2,12 @@
 
 ## 1.2.0 (in progress)
 
-### New achievements (10)
+### New achievements (15)
+
+**General**
+- **Shave and a Haircut**: get your hair cut at a Barber Shop.
+- **Ten Tabards** and **Twenty-Five Tabards**: equip 10 and 25 unique tabards. A tabard counts once you have worn it with HF Forever installed: put your old tabards back on to add them.
+- **Greedy** and **Needy**: roll 100 on a greed or need roll for a superior or better item. Only rolls made with HF Forever installed count.
 
 **Darkspear Islands** (new Player vs. Player category)
 - **Darkspear Islands Victory** and **Darkspear Islands Veteran**: win the Darkspear Islands 1 and 100 times.

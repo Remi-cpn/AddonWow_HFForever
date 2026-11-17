@@ -132,6 +132,11 @@ L.CRITERIA_PROFESSION_ANY = "A primary profession: %d"
 L.CRITERIA_QUEST = "Quest %d"
 L.CRITERIA_WEAPON_SKILLS = "Weapon skills at %d"
 L.CRITERIA_TABARD = "Tabard equipped"
+L.CRITERIA_TABARDS = "Unique tabards equipped"
+L.CRITERIA_PERFECT_ROLL = {
+	greed = "Roll 100 on a greed roll",
+	need = "Roll 100 on a need roll",
+}
 L.CRITERIA_RECIPES = "%s recipes known"
 -- [what] = texte du critère « collection »
 L.CRITERIA_COLLECTION = {
@@ -182,6 +187,7 @@ L.DATA_ERR_COLLECTION = "unknown collection \"%s\" (pets or mounts)"
 L.DATA_ERR_RECIPES = "no recipe list for profession %s, see Data/Recipes.lua"
 L.DATA_ERR_ENCOUNTERS = "encounters must list at least one encounter ID"
 L.DATA_ERR_NATIVE = "native must be { achievement = ID, asset = ID }"
+L.DATA_ERR_PERFECT_ROLL = "unknown roll \"%s\" (need or greed)"
 L.DATA_ERR_MAP = "map %s not found in the game"
 L.DATA_ERR_EXPLORE_TOTAL = "no exploration total for map %s (art %s), see Data/ExplorationTotals.lua"
 
@@ -452,6 +458,13 @@ L.ACHIEVEMENT_NAMES = {
 	[216] = "Bases Assaulted",
 	[217] = "Darkspear Raider",
 	[218] = "Theramore Expeditionary Force",
+	-- Général : coiffeur, tabards
+	[219] = "Shave and a Haircut",
+	[220] = "Ten Tabards",
+	[221] = "Twenty-Five Tabards",
+	-- Général : jets de dés
+	[222] = "Greedy",
+	[223] = "Needy",
 }
 
 -- [id de haut fait] = description
@@ -685,6 +698,11 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[216] = "Assault 50 bases in the Darkspear Islands.",
 	[217] = "Gain exalted reputation with the Darkspear Raiders.",
 	[218] = "Gain exalted reputation with the Theramore Expeditionary Force.",
+	[219] = "Visit a Barber Shop and get your hair cut.",
+	[220] = "Equip 10 unique tabards.",
+	[221] = "Equip 25 unique tabards.",
+	[222] = "Win a greed roll on a superior or better item by rolling 100.",
+	[223] = "Win a need roll on a superior or better item by rolling 100.",
 }
 
 -- [id de haut fait] = texte de récompense, purement décoratif (titre, objet...).

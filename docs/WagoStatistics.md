@@ -159,16 +159,16 @@ Une victoire suffit pour un haut fait de donjon : `max` (ou `sum` pour « tuer N
 | 52 | Batailles pour le goulet des Chanteguerres | Warsong Gulch battles | `sum` |
 | 105 | Victoires dans le goulet des Chanteguerres | Warsong Gulch victories | `sum` |
 | 64179 | Combats sur les îles des Sombrelances | Darkspear Islands battles | `sum` |
-| 64176 | Victoires sur les îles des Sombrelances | Darkspear Islands victories | `sum` |
+| 64176 | Victoires sur les îles des Sombrelances | Darkspear Islands victories | `utilisé` (213, 214) |
 | 393 | Tours de la vallée d'Alterac défendues | Alterac Valley towers defended | `sum` |
 | 394 | Tours de la vallée d'Alterac capturées | Alterac Valley towers captured | `sum` |
 | 395 | Drapeaux du goulet des Chanteguerres capturés | Warsong Gulch flags captured | `sum` |
 | 586 | Drapeaux du goulet des Chanteguerres ramenés | Warsong Gulch flags returned | `sum` |
 | 64348 | Bases du bassin Arathi attaquées | Arathi Basin bases assaulted | `sum` |
 | 64349 | Bases du bassin Arathi défendues | Arathi Basin bases defended | `sum` |
-| 64350 | Bases des îles des Sombrelances attaquées | Darkspear Islands bases assaulted | `sum` |
+| 64350 | Bases des îles des Sombrelances attaquées | Darkspear Islands bases assaulted | `utilisé` (216) |
 | 64351 | Bases des îles des Sombrelances défendues | Darkspear Islands bases defended | `sum` |
-| 64352 | Drapeaux des îles des Sombrelances capturés | Darkspear Islands flags captured | `sum` |
+| 64352 | Drapeaux des îles des Sombrelances capturés | Darkspear Islands flags captured | `utilisé` (215) |
 
 ### En extérieur (154)
 
@@ -261,7 +261,7 @@ Une victoire suffit pour un haut fait de donjon : `max` (ou `sum` pour « tuer N
 | 332 | Plus grosse vente à l'hôtel des ventes | Most expensive auction sold | `argent` (`max`) |
 | 921 | Argent obtenu par les marchands | Gold from vendors | `argent` (`sum`) |
 | 1146 | Argent dépensé en voyages | Gold spent on travel | `argent` (`sum`) |
-| 1147 | Argent dépensé chez le coiffeur | Gold spent at barber shops | `argent` (`sum`) |
+| 1147 | Argent dépensé chez le coiffeur | Gold spent at barber shops | `utilisé` (219, montant non nul) |
 | 1148 | Argent dépensé en envoi de courriers | Gold spent on postage | `argent` (`sum`) |
 | 1150 | Argent dépensé en respécialisations de talents | Gold spent on talent tree respecs | `argent` (`sum`) |
 | 334 | Plus grande quantité d'argent possédée | Most gold ever owned | `argent` (`max`) |

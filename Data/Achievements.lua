@@ -3,7 +3,7 @@
 -- La liste validée est décrite dans docs/ProposedAchievements.md.
 --
 --   id          : numéro unique et DÉFINITIF, la sauvegarde s'en sert. Un
---                 nouveau haut fait prend le numéro libre suivant (219), quel
+--                 nouveau haut fait prend le numéro libre suivant (224), quel
 --                 que soit l'endroit où il est rangé. Ne jamais changer ni
 --                 réutiliser un numéro. Numéros retirés, à ne jamais
 --                 réutiliser : 76, 80, 176, 177.
@@ -204,6 +204,35 @@ ns.Data.achievements = {
 		id = 182, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "INV_Shirt_GuildTabard_01",
 		criteria = { { type = "tabard" } },
+	},
+	{
+		-- Tabards différents, notés quand ils sont portés (critère tabards).
+		id = 220, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Shirt_GuildTabard_01",
+		criteria = { { type = "tabards", value = 10 } },
+	},
+	{
+		id = 221, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Chest_Cloth_30",
+		criteria = { { type = "tabards", value = 25 } },
+		previous = 220,
+	},
+	{
+		-- Statistique 1147 « Argent dépensé chez le coiffeur » non nulle.
+		id = 219, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Misc_Comb_02",
+		criteria = { { type = "moneyAny", id = 1147 } },
+	},
+	{
+		-- Jets de 100 sur un objet supérieur ou mieux (critère perfectRoll).
+		id = 222, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Misc_Coin_04",
+		criteria = { { type = "perfectRoll", what = "greed" } },
+	},
+	{
+		id = 223, category = CAT.GENERAL, points = 10,
+		icon = ICONS .. "INV_Misc_Coin_01",
+		criteria = { { type = "perfectRoll", what = "need" } },
 	},
 	{
 		-- Tous les emplacements en même temps, vu au moins une fois.

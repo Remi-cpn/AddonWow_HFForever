@@ -298,6 +298,27 @@ CriteriaTypes.money = {
 	end,
 }
 
+-- Statistique d'argent différente de zéro, quel que soit le montant (pièces
+-- d'or, d'argent ou de cuivre). Exemple : { type = "moneyAny", id = 1147 }
+-- (argent dépensé chez le coiffeur). Les icônes de pièces (|T...|t) sont
+-- retirées avant de chercher un chiffre non nul : leurs chemins en contiennent.
+CriteriaTypes.moneyAny = {
+	fields = { "id" },
+	progressBar = false,
+	describe = CriteriaTypes.statistic.describe,
+	goal = function()
+		return 1
+	end,
+	validate = CriteriaTypes.statistic.validate,
+	current = function(criterion)
+		local text = GetStatistic(criterion.id)
+		if type(text) ~= "string" then
+			return 0
+		end
+		return text:gsub("|T.-|t", ""):find("[1-9]") and 1 or 0
+	end,
+}
+
 -- Explorer entièrement une zone. Exemple : { type = "explore", mapID = 1429 }
 CriteriaTypes.explore = {
 	fields = { "mapID" },
@@ -535,6 +556,47 @@ CriteriaTypes.tabard = {
 	end,
 	current = function()
 		return GetInventoryItemID("player", TABARD_SLOT) and 1 or 0
+	end,
+}
+
+-- Nombre de tabards différents équipés par les personnages du compte, notés
+-- par Engine à chaque évaluation (Database:RecordTabard). Seul le tabard
+-- porté se lit : ceux portés avant l'installation de l'addon ne comptent
+-- qu'une fois remis. Exemple : { type = "tabards", value = 10 }
+CriteriaTypes.tabards = {
+	fields = { "value" },
+	progressBar = true,
+	describe = function()
+		return L.CRITERIA_TABARDS
+	end,
+	goal = function(criterion)
+		return criterion.value
+	end,
+	current = function()
+		return ns.Database:CountTabards()
+	end,
+}
+
+-- Un jet de 100 sur un objet de qualité supérieure ou mieux, noté par
+-- Engine depuis l'historique du butin (Database:RecordPerfectRoll). Pas
+-- rétroactif. Exemple : { type = "perfectRoll", what = "greed" }
+-- what : « need » (besoin) ou « greed » (cupidité).
+CriteriaTypes.perfectRoll = {
+	fields = { "what" },
+	progressBar = false,
+	describe = function(criterion)
+		return L.CRITERIA_PERFECT_ROLL[criterion.what] or tostring(criterion.what)
+	end,
+	goal = function()
+		return 1
+	end,
+	validate = function(criterion)
+		if criterion.what ~= "need" and criterion.what ~= "greed" then
+			return L.DATA_ERR_PERFECT_ROLL:format(tostring(criterion.what))
+		end
+	end,
+	current = function(criterion)
+		return ns.Database:HasPerfectRoll(criterion.what) and 1 or 0
 	end,
 }
 

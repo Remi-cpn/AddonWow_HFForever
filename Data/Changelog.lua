@@ -19,7 +19,12 @@ ns.Data.changelog = {
 	{
 		version = "1.2.0",
 		enUS = [[
-### New achievements (10)
+### New achievements (15)
+
+**General**
+- **Shave and a Haircut**: get your hair cut at a Barber Shop.
+- **Ten Tabards** and **Twenty-Five Tabards**: equip 10 and 25 unique tabards. A tabard counts once you have worn it with HF Forever installed: put your old tabards back on to add them.
+- **Greedy** and **Needy**: roll 100 on a greed or need roll for a superior or better item. Only rolls made with HF Forever installed count.
 
 **Darkspear Islands** (new Player vs. Player category)
 - **Darkspear Islands Victory** and **Darkspear Islands Veteran**: win the Darkspear Islands 1 and 100 times.
@@ -38,7 +43,12 @@ These read the game's statistics and reputations, so what you have already done 
 They are detected from WoW: Forever's Spelunker achievements, so dungeons you have already finished count right away. **Forever Raider** now also asks for these four dungeons.
 ]],
 		frFR = [[
-### Nouveaux hauts faits (10)
+### Nouveaux hauts faits (15)
+
+**Général**
+- **Coupe et brushing** : changer de coupe dans un salon de coiffure.
+- **Dix tabards** et **Timbré de tabards** : équiper 10 et 25 tabards différents. Un tabard compte dès que vous l'avez porté avec HF Forever installé : remettez vos anciens tabards pour les ajouter.
+- **Cupide** et **Nécessiteux** : obtenir 100 sur un jet de cupidité ou de besoin pour un objet de qualité supérieure ou mieux. Seuls les jets faits avec HF Forever installé comptent.
 
 **Îles des Sombrelances** (nouvelle catégorie de Joueur contre Joueur)
 - **Victoire sur les îles des Sombrelances** et **Vétéran des îles des Sombrelances** : gagner 1 et 100 fois sur les îles des Sombrelances.

@@ -124,6 +124,11 @@ L.CRITERIA_PROFESSION_ANY = "Un métier principal : %d"
 L.CRITERIA_QUEST = "Quête %d"
 L.CRITERIA_WEAPON_SKILLS = "Compétences d'armes à %d"
 L.CRITERIA_TABARD = "Tabard équipé"
+L.CRITERIA_TABARDS = "Tabards différents équipés"
+L.CRITERIA_PERFECT_ROLL = {
+	greed = "Obtenir 100 sur un jet de cupidité",
+	need = "Obtenir 100 sur un jet de besoin",
+}
 L.CRITERIA_RECIPES = "Recettes connues : %s"
 L.CRITERIA_COLLECTION = {
 	pets = "Mascottes",
@@ -171,6 +176,7 @@ L.DATA_ERR_COLLECTION = "collection « %s » inconnue (pets ou mounts)"
 L.DATA_ERR_RECIPES = "pas de liste de recettes pour le métier %s, voir Data/Recipes.lua"
 L.DATA_ERR_ENCOUNTERS = "encounters doit contenir au moins un id de rencontre"
 L.DATA_ERR_NATIVE = "native doit être { achievement = id, asset = id }"
+L.DATA_ERR_PERFECT_ROLL = "jet « %s » inconnu (need ou greed)"
 L.DATA_ERR_MAP = "carte %s introuvable dans le jeu"
 L.DATA_ERR_EXPLORE_TOTAL = "pas de total d'exploration pour la carte %s (art %s), voir Data/ExplorationTotals.lua"
 
@@ -443,6 +449,13 @@ Override(L.ACHIEVEMENT_NAMES, {
 	[216] = "Bases attaquées",
 	[217] = "Chevaucheur sombrelance",
 	[218] = "Troupe d'intervention de Theramore",
+	-- Général : coiffeur, tabards
+	[219] = "Coupe et brushing",
+	[220] = "Dix tabards",
+	[221] = "Timbré de tabards",
+	-- Général : jets de dés
+	[222] = "Cupide",
+	[223] = "Nécessiteux",
 })
 
 Override(L.ACHIEVEMENT_DESCRIPTIONS, {
@@ -675,6 +688,11 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[216] = "Attaquer 50 bases sur les îles des Sombrelances.",
 	[217] = "Être exalté auprès des chevaucheurs sombrelances.",
 	[218] = "Être exalté auprès de la troupe d'intervention de Theramore.",
+	[219] = "Aller dans un salon de coiffure et changer de coupe.",
+	[220] = "Équiper 10 tabards différents.",
+	[221] = "Équiper 25 tabards différents.",
+	[222] = "Gagner un jet de cupidité sur un objet de qualité supérieure ou mieux en obtenant 100.",
+	[223] = "Gagner un jet de besoin sur un objet de qualité supérieure ou mieux en obtenant 100.",
 })
 
 Override(L.CRITERIA_TEXTS, {
