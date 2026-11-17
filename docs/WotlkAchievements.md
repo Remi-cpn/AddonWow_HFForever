@@ -494,11 +494,11 @@ fenêtre du jeu.
 | Statut | id | Nom | Description | Pts |
 | --- | --- | --- | --- | --- |
 | 🟢 | 628 | Mortemines | Vaincre Edwin VanCleef. | 10 |
-|  | 629 | Gouffre de Ragefeu | Vaincre Taragaman l'Affameur. | 10 |
+| 🟢 | 629 | Gouffre de Ragefeu | Vaincre Taragaman l'Affameur. | 10 |
 | 🟢 | 630 | Cavernes des Lamentations | Vaincre Mutanus le Dévoreur. | 10 |
 | 🟢 | 631 | Donjon d’Ombrecroc | Vaincre l’archimage Arugal. | 10 |
 | 🟢 | 632 | Profondeurs de Brassenoire | Vaincre Aku’mai. | 10 |
-| 🟢 | 633 | Prison de Hurlevent | Vaincre Bazil Thredd. | 10 |
+|  | 633 | Prison de Hurlevent | Vaincre Bazil Thredd. | 10 |
 | 🟢 | 634 | Gnomeregan | Vaincre le mekgénieur Thermojoncteur. | 10 |
 | 🟢 | 635 | Kraal de Tranchebauge | Vaincre Charlga Trancheflanc. | 10 |
 | 🟢 | 636 | Souilles de Tranchebauge | Vaincre Amnennar le Porte-Froid. | 10 |
@@ -1551,8 +1551,12 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 
 - 46 Grand explorateur : notre « Explorateur » (57) ne demande que les Royaumes de l'Est et Kalimdor (pas d'Outreterre ni de Norfendre sur Forever).
 - 42 / 43 : nos métas de continent n'ont pas les zones de Burning Crusade (Terres fantômes, Chants éternels, Quel'Danas, Brume-azur, Brume-sang) ni Reflet-de-Lune, mais ont les zones de Forever.
-- 637 Monastère écarlate : couvert par nos deux HF (Salles Écarlates, Mograine).
-- 644 Roi de Haches-Tripes : chez nous (« Hache-Tripes », 88), seul le roi Gordok est demandé.
+- 629 Gouffre de Ragefeu : notre 207 « Gouffre de Ragefeu ou salle des Thanes », commun aux deux donjons comme le critère du Spéléologue novice (vérifié en jeu le 2026-11-16).
+- 633 Prison de Hurlevent : retirée en 1.1.0 (notre 76), la Horde ne peut pas y entrer.
+- 637 Monastère écarlate : notre méta 201, sur nos 4 HF d'aile (198 cimetière, 199 bibliothèque, 200 armurerie, 81 cathédrale). Les Salles Écarlates (80) sont retirées.
+- 644 Roi de Haches-Tripes : notre méta 204, sur nos 3 HF d'aile (202 Est, 203 Ouest, 88 Nord).
+- 646 Stratholme : notre méta 206, sur nos 2 HF de côté (205 Grande porte, 92 Entrée de service).
+- 1283 Maître des vieux donjons : équivalent possible de notre 208 « L'écumeur pour toujours » (tous nos HF de donjon, classiques et Forever). Pas de 🟢 tant qu'il n'a pas été obtenu en jeu.
 - Nos « Artisan X » (300 dans un métier principal, 61 à 69) n'ont pas d'équivalent : en WotLK, les HF par métier sont à 450 (grand maître). Seuls Artisan cuisinier, Artisan pêcheur et Artisan secouriste (300) correspondent.
 - 2536 / 2537 Une montagne de montures : un seul HF chez nous (107), pour les deux camps.
 - 948 / 762 Ambassadeur de l'Alliance / de la Horde (163 / 164) : 4 races par camp sur Forever au lieu de 5 (pas d'Exodar ni de Lune-d'argent). Méta de 4 HF « exalté auprès de <capitale> » (165 à 172), qui n'existent pas dans WotLK.

@@ -113,3 +113,24 @@ les deux copies sont donc sans objet.
 
 Ce document reste une source de noms, d'icônes (`IconFileID`) et d'id de
 PNJ pour nos propres hauts faits.
+
+## Révision (2026-11-16, version 1.1.0)
+
+La décision ci-dessus est assouplie pour les donjons. Les statistiques de
+victoires ne sont pas toujours tenues à jour sur Forever (prison, salle des
+Thanes...), alors que les trois Spéléologue (62031 à 62033) cochent bien
+chaque donjon terminé, rétroactivement.
+
+Le critère `boss` lit donc en premier le critère du Spéléologue qui
+correspond au donjon (champ `native = { achievement, asset }`), puis la
+statistique, puis le boss vu mourir en direct (`ENCOUNTER_END`). Ce ne sont
+pas des métas appuyés sur les hauts faits Blizzard : seul le critère du
+donjon est lu, et nos hauts faits restent un par donjon ou par aile.
+
+- L'asset est l'id du PNJ affiché par le jeu (8e retour de
+  `GetAchievementCriteriaInfo`). Relevé en jeu le 2026-11-16 : identique aux
+  tables (build 70938), sauf Stratholme côté vivant (478 en jeu, 10813 dans
+  la table) et Ragefeu ou salle des Thanes (critère de type 78, asset 0).
+- Depuis la 1.2.0, les quatre donjons de Forever sans statistique
+  (Excavations 260326, Cité Submergée 260243, Krol'dok 258968, Noiregueules
+  247234) sont détectés de la même façon.

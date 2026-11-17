@@ -108,6 +108,12 @@ D'après les guides, le maximum est bien 300 sur Forever (rangs 75 / 150 / 225 /
 
 ## 5. Donjons (26 HF) 🟢
 
+> **État actuel (1.2.0), à lire avant le reste de la section.** Les tableaux ci-dessous sont la proposition de la v1, avec ses anciens id (5001...), devenus 73 à 96 dans `Data/Achievements.lua`. Depuis :
+> - 1.1.0 : chaque boss est détecté d'abord par le critère du haut fait natif Spéléologue, puis par la statistique, puis en direct (`ENCOUNTER_END`), voir [WagoAchievements.md](WagoAchievements.md) ;
+> - 1.1.0 : un haut fait par aile pour le Monastère écarlate (198 à 200, 81 et le méta 201), Hache-Tripes (202, 203, 88 et le méta 204) et Stratholme (205, 92 et le méta 206) ; Ragefeu et Thanes en un seul (207) ; méta de tous les donjons « L'écumeur pour toujours » (208) ;
+> - 1.1.0 : retirés, id à ne jamais réutiliser : 76 Prison de Hurlevent (fermée à la Horde), 80 Salles Écarlates (doublon de la cathédrale), 176 et 177 (boss facultatifs) ;
+> - 1.2.0 : les quatre donjons « sans statistique » ci-dessous sont faits (209 à 212).
+
 Détection : statistiques de Forever, catégorie « Boss » (14821), « Morts de <boss> » ≥ 1. Vérifié en jeu : Bazzalan (Ragefeu) vaut 1, donc rétroactif.
 Le registre vérifiera au chargement que chaque id de statistique existe encore (ligne rouge sinon).
 Un HF à 10 points par donjon. Sous-catégories : Classiques, Forever.
@@ -152,7 +158,7 @@ Le Monastère écarlate n'a que 2 statistiques côté Forever (Salles Écarlates
 
 Cité de Dalaran : l'Ombre de l'archimage est le boss final (sommet de la Citadelle pourpre). Lyn l'Ignoré (63589) est un boss **optionnel**, invoqué avec le *Tome of Dalaran* : pas de HF en v1.
 
-### 🔴 Sans statistique : reportés après la v1
+### 🔴 Sans statistique : reportés après la v1 (faits en 1.2.0, 209 à 212)
 
 Excavation Site: Wetlands, The Drowned City, Krol'dok Stronghold, Blackmaw Hold n'ont **aucune** statistique de boss sur Forever. Seule solution : l'événement `ENCOUNTER_END`, qui ne détecte que les **prochains** boss tués (pas rétroactif) et doit encore être vérifié avec les restrictions Midnight. Proposition : les ajouter dans une version suivante avec un type de critère `encounter`.
 
@@ -382,6 +388,8 @@ Les statistiques d'or ne sont pas un simple nombre (voir le test en bas). Nouvea
 
 | id | Nom | Description | Stat | Pts |
 |---|---|---|---|---|
+Ces deux hauts faits (176 et 177 dans `Data/Achievements.lua`) ont été retirés en 1.1.0 : boss facultatifs, pas assez fiables.
+
 | 5106 | Les gardiens de la terrasse | Vaincre Braise, Fulguro et Serre-neigeuse sur la terrasse du Façonneur. | 63590, 63592, 63593 | 10 |
 | 5107 | L'ignoré | Vaincre Lyn l'Ignoré dans la cité de Dalaran. | 63589 | 10 |
 

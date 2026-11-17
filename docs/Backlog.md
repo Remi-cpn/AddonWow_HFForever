@@ -1,22 +1,27 @@
 # Idées et travaux reportés
 
-Ce qui a été décidé pour « plus tard » pendant le développement de la v1.
+Ce qui a été décidé pour « plus tard ». Mis à jour le 2026-11-17, après la
+publication de la 1.1.0.
 
 ## Entre joueurs
 Base commune : messages d'addon (`C_ChatInfo.SendAddonMessage`), avec un protocole versionné, un cache, le respect de la limite d'envoi et une option « partager mes hauts faits » (activée par défaut). À vérifier d'abord en jeu : les restrictions de Midnight sur les messages d'addon en combat et en instance.
-- v1.1 : points de hauts faits du joueur survolé dans son infobulle (`TooltipDataProcessor`), seulement s'il a l'addon.
-- v1.2 : « Voir les hauts faits » dans le menu du clic droit sur un joueur (`Menu.ModifyMenu`), avec un mode consultation de la fenêtre en lecture seule (ou une comparaison à deux colonnes, comme Blizzard).
+- Points de hauts faits du joueur survolé dans son infobulle (`TooltipDataProcessor`), seulement s'il a l'addon.
+- « Voir les hauts faits » dans le menu du clic droit sur un joueur (`Menu.ModifyMenu`), avec un mode consultation de la fenêtre en lecture seule (ou une comparaison à deux colonnes, comme Blizzard).
 
 ## Interface
-- Logo à retravailler (`docs/HFForever_Logo.png`, `Media/HFForever_Icon.tga`) : acceptable pour la v1, pas parfait.
+- Nom affiché de l'addon : « HF » ne parle qu'aux francophones. Piste : « Hall of Fame Forever » (garde les initiales HF). Le nom « Achievements Forever » est déjà pris par un autre addon.
+- Logo à retravailler (`docs/HFForever_Logo.png`, `Media/HFForever_Icon.tga`) : acceptable, pas parfait.
 - Toasts déplaçables (position sauvegardée), en plus de la position par défaut au-dessus des alertes Blizzard.
-- Autres langues que le français et l'anglais : un `Locales/xxXX.lua` sur le modèle de `frFR.lua`, avec l'interface et les dictionnaires par id (`L.ACHIEVEMENT_NAMES`, etc.) passés à `Override`.
+- Autres langues que le français et l'anglais : un `Locales/xxXX.lua` sur le modèle de `frFR.lua`, avec l'interface et les dictionnaires par id (`L.ACHIEVEMENT_NAMES`, etc.) passés à `Override`, et le texte de chaque version dans `Data/Changelog.lua`.
 
 ## Hauts faits
-- Avant tout haut fait « à nous » (détecté par un événement en direct, pas par une statistique) : export / import de la sauvegarde par un texte à copier (`/hff export`, `/hff import`), et un indicateur dans la fenêtre pour ces hauts faits. La sauvegarde (`WTF/Account/<compte>/SavedVariables/HFForever.lua`) serait leur seule trace : elle se perd en supprimant `WTF`, sur un autre PC ou un autre compte WoW. Les hauts faits actuels, eux, se redétectent.
-- Donjons Forever sans statistique (Excavation Site, The Drowned City, Krol'dok Stronghold, Blackmaw Hold) : type de critère `encounter` sur l'événement `ENCOUNTER_END`, non rétroactif, à vérifier avec les restrictions Midnight.
-- Gouffre de Ragefeu et Salle des Thanes : à remettre si Blizzard corrige les statistiques 15027 / 63573.
+- Export / import de la sauvegarde par un texte à copier (`/hff export`, `/hff import`). Les boss vus mourir en direct (`bossKills`, depuis la 1.1.0) et les hauts faits de tabard et d'équipement n'ont pas d'autre trace que la sauvegarde (`WTF/Account/<compte>/SavedVariables/HFForever.lua`) : elle se perd en supprimant `WTF`, sur un autre PC ou un autre compte WoW. Les donjons, eux, se redétectent par les hauts faits Spéléologue.
+- Scholomance : le haut fait d'origine demande Gandling **et** Ras Murmegivre ; le nôtre (91) ne demande que Gandling. À décider.
+- Raids : la catégorie existe (Onyxia 173, Sommet d'Hyjal 174, Profondeurs des Saisons 175, par statistique). À reprendre quand les raids seront ouverts sur Forever ; les hauts faits natifs 684, 62034 et 62035 listent leurs boss, comme les Spéléologue pour les donjons.
 - Explorer Reflet-de-Lune : piste `C_MapExplorationInfo.GetExploredAreaIDsAtPosition`.
-- Catégorie Raids : statistiques déjà repérées (Onyxia 1098, roi sauvage 63580, Sonya Sanctombre 63581).
-- HF bonus (ex. Lyn l'Ignoré, statistique 63589).
-- Autres catégories prévues : Tours de force, Combat (victimes, morts). JcJ et Réputation sont faites.
+- Autres catégories prévues : Tours de force, Combat (victimes, morts).
+
+## Fait depuis la v1
+- Donjons sans statistique (Excavations, Cité Submergée, Krol'dok, Noiregueules) : 1.2.0, par les critères natifs Spéléologue et `ENCOUNTER_END`.
+- Gouffre de Ragefeu et salle des Thanes : un haut fait commun (207) en 1.1.0, par le critère natif commun aux deux.
+- Boss facultatifs (Lyn l'Ignoré, gardiens de la terrasse) : abandonnés en 1.1.0, pas assez fiables.

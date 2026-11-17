@@ -108,7 +108,7 @@ Une victoire suffit pour un haut fait de donjon : `max` (ou `sum` pour « tuer N
 | 63572 | Morts de l'Ombre de l'archimage (cité de Dalaran) | Shade of the Archmage Kills (City of Dalaran) | `utilisé` (5103) |
 | 1097 | Morts du baron Vaillefendre (Stratholme) | Baron Rivendare kills (Stratholme) | `max`, flag 0x100000 (doublon de 15031 ?) |
 | 63589 | Morts de Lyn l'Ignoré (cité de Dalaran) | Lyn the Ignored Kills (City of Dalaran) | `max` (boss optionnel) |
-| 63573 | Morts de Durgen Mornemartel (salle des Thanes) | Durgen Dirgehammer Kills (Hall of Thanes) | cassée (reste à 0, voir ProposedAchievements) |
+| 63573 | Morts de Durgen Mornemartel (salle des Thanes) | Durgen Dirgehammer Kills (Hall of Thanes) | cassée (reste à 0, voir ProposedAchievements) ; la salle des Thanes est détectée par le Spéléologue novice (HF 207) |
 | 63574 | Morts de Nanaya (terrasse du Façonneur) | Nanaya Kills (Shaper's Terrace) | `utilisé` (5105) |
 | 63590 | Morts de Braise (terrasse du Façonneur) | Cinder Kills (Shaper's Terrace) | `max`, flag 0x100000 |
 | 63592 | Morts de Fulguro (terrasse du Façonneur) | Bolt Kills (Shaper's Terrace) | `max`, flag 0x100000 |
@@ -119,12 +119,12 @@ Une victoire suffit pour un haut fait de donjon : `max` (ou `sum` pour « tuer N
 | 15027 | Morts de Bazzalan (gouffre de Ragefeu) | Bazzalan kills (Ragefire Chasm) | cassée (compte la salle des Thanes) |
 | 15028 | Morts de Mutanus le Dévoreur (cavernes des Lamentations) | Mutanus the Devourer kills (Wailing Caverns) | `utilisé` (5003) |
 | 1092 | Morts de l'archimage Arugal (donjon d'Ombrecroc) | Archmage Arugal kills (Shadowfang Keep) | `utilisé` (5004) |
-| 15029 | Morts de Bazil Thredd (prison de Hurlevent) | Bazil Thredd kills (Stormwind Stockade) | `utilisé` (5005) |
+| 15029 | Morts de Bazil Thredd (prison de Hurlevent) | Bazil Thredd kills (Stormwind Stockade) | `max` (plus utilisée : HF 76 retiré en 1.1.0) |
 | 6137 | Morts d'Aku'mai (profondeurs de Brassenoire) | Aku'mai kills (Blackfathom Deeps) | `utilisé` (5006) |
 | 6139 | Morts de Charlga Trancheflanc (Kraal de Tranchebauge) | Charlga Razorflank kills (Razorfen Kraul) | `utilisé` (5008) |
 | 6140 | Morts du mekgénieur Thermojoncteur (Gnomeregan) | Mekgineer Thermaplugg kills (Gnomeregan) | `utilisé` (5007) |
 | 6141 | Morts d'Amnennar le Porte-Froid (souilles de Tranchebauge) | Amnennar the Coldbringer kills (Razorfen Downs) | `utilisé` (5011) |
-| 6786 | Morts du tisseur de flammes Koegler (salles Écarlates) | High Inquisitor Whitemane kills (Scarlet Monastery) | `utilisé` (5009, libellé enUS périmé) |
+| 6786 | Morts du tisseur de flammes Koegler (salles Écarlates) | High Inquisitor Whitemane kills (Scarlet Monastery) | `max` (plus utilisée : HF 80 retiré en 1.1.0 ; libellé enUS périmé) |
 | 6142 | Morts d'Archaedas (Uldaman) | Archaedas kills (Uldaman) | `utilisé` (5012) |
 | 1094 | Morts du chef Ukorz Scalpessable (Zul'Farrak) | Chief Ukorz Sandscalp kills (Zul'Farrak) | `utilisé` (5013) |
 | 6143 | Morts de la princesse Theradras (Maraudon) | Princess Theradras kills (Maraudon) | `utilisé` (5014) |
