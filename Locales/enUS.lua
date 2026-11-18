@@ -133,6 +133,9 @@ L.CRITERIA_QUEST = "Quest %d"
 L.CRITERIA_WEAPON_SKILLS = "Weapon skills at %d"
 L.CRITERIA_TABARD = "Tabard equipped"
 L.CRITERIA_TABARDS = "Unique tabards equipped"
+L.CRITERIA_QUEST_LISTS = {
+	libraryBooks = "Library books turned in",
+}
 L.CRITERIA_PERFECT_ROLL = {
 	greed = "Roll 100 on a greed roll",
 	need = "Roll 100 on a need roll",
@@ -188,6 +191,7 @@ L.DATA_ERR_RECIPES = "no recipe list for profession %s, see Data/Recipes.lua"
 L.DATA_ERR_ENCOUNTERS = "encounters must list at least one encounter ID"
 L.DATA_ERR_NATIVE = "native must be { achievement = ID, asset = ID }"
 L.DATA_ERR_PERFECT_ROLL = "unknown roll \"%s\" (need or greed)"
+L.DATA_ERR_QUEST_LIST = "unknown quest list \"%s\", see Data/Books.lua"
 L.DATA_ERR_MAP = "map %s not found in the game"
 L.DATA_ERR_EXPLORE_TOTAL = "no exploration total for map %s (art %s), see Data/ExplorationTotals.lua"
 
@@ -465,6 +469,12 @@ L.ACHIEVEMENT_NAMES = {
 	-- Général : jets de dés
 	[222] = "Greedy",
 	[223] = "Needy",
+	-- Exploration : livres de bibliothèque
+	[224] = "Friend of the Library",
+	[225] = "Greater Friend of the Library",
+	[226] = "Bookworm",
+	[227] = "Master Librarian",
+	[228] = "Good Night, Sleep Tight",
 }
 
 -- [id de haut fait] = description
@@ -703,6 +713,11 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[221] = "Equip 25 unique tabards.",
 	[222] = "Win a greed roll on a superior or better item by rolling 100.",
 	[223] = "Win a need roll on a superior or better item by rolling 100.",
+	[224] = "Turn in 10 library books.",
+	[225] = "Turn in 20 library books.",
+	[226] = "Turn in 25 library books.",
+	[227] = "Turn in 30 library books.",
+	[228] = "Follow the trail of hidden notes to the Cozy Sleeping Bag.",
 }
 
 -- [id de haut fait] = texte de récompense, purement décoratif (titre, objet...).
@@ -751,6 +766,7 @@ L.CRITERIA_TEXTS = {
 	[179] = { "Riding" },
 	[180] = { "Unarmed" },
 	[184] = { "The Green Hills of Stranglethorn", "Big Game Hunter" },
+	[228] = { "This Must Be The Place" },
 	-- Ailes de donjon
 	[198] = { "Bloodmage Thalnos" },
 	[199] = { "Arcanist Doan" },

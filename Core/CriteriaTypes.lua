@@ -559,6 +559,35 @@ CriteriaTypes.tabard = {
 	end,
 }
 
+-- Nombre de quêtes terminées dans une liste de Data/Books.lua (ns.Data.
+-- questLists), par personnage : le meilleur compte (combine max), une même
+-- quête faite par deux personnages ne compte qu'une fois.
+-- Exemple : { type = "questCount", what = "libraryBooks", value = 10 }
+CriteriaTypes.questCount = {
+	fields = { "what", "value" },
+	progressBar = true,
+	describe = function(criterion)
+		return L.CRITERIA_QUEST_LISTS[criterion.what] or tostring(criterion.what)
+	end,
+	goal = function(criterion)
+		return criterion.value
+	end,
+	validate = function(criterion)
+		if type(ns.Data.questLists[criterion.what]) ~= "table" then
+			return L.DATA_ERR_QUEST_LIST:format(tostring(criterion.what))
+		end
+	end,
+	current = function(criterion)
+		local count = 0
+		for _, questID in ipairs(ns.Data.questLists[criterion.what]) do
+			if IsQuestDone(questID) then
+				count = count + 1
+			end
+		end
+		return count
+	end,
+}
+
 -- Nombre de tabards différents équipés par les personnages du compte, notés
 -- par Engine à chaque évaluation (Database:RecordTabard). Seul le tabard
 -- porté se lit : ceux portés avant l'installation de l'addon ne comptent

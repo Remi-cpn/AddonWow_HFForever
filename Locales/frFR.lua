@@ -125,6 +125,9 @@ L.CRITERIA_QUEST = "Quête %d"
 L.CRITERIA_WEAPON_SKILLS = "Compétences d'armes à %d"
 L.CRITERIA_TABARD = "Tabard équipé"
 L.CRITERIA_TABARDS = "Tabards différents équipés"
+L.CRITERIA_QUEST_LISTS = {
+	libraryBooks = "Livres de bibliothèque rendus",
+}
 L.CRITERIA_PERFECT_ROLL = {
 	greed = "Obtenir 100 sur un jet de cupidité",
 	need = "Obtenir 100 sur un jet de besoin",
@@ -177,6 +180,7 @@ L.DATA_ERR_RECIPES = "pas de liste de recettes pour le métier %s, voir Data/Rec
 L.DATA_ERR_ENCOUNTERS = "encounters doit contenir au moins un id de rencontre"
 L.DATA_ERR_NATIVE = "native doit être { achievement = id, asset = id }"
 L.DATA_ERR_PERFECT_ROLL = "jet « %s » inconnu (need ou greed)"
+L.DATA_ERR_QUEST_LIST = "liste de quêtes « %s » inconnue, voir Data/Books.lua"
 L.DATA_ERR_MAP = "carte %s introuvable dans le jeu"
 L.DATA_ERR_EXPLORE_TOTAL = "pas de total d'exploration pour la carte %s (art %s), voir Data/ExplorationTotals.lua"
 
@@ -456,6 +460,12 @@ Override(L.ACHIEVEMENT_NAMES, {
 	-- Général : jets de dés
 	[222] = "Cupide",
 	[223] = "Nécessiteux",
+	-- Exploration : livres de bibliothèque
+	[224] = "Ami de la bibliothèque",
+	[225] = "Mécène de la bibliothèque",
+	[226] = "Rat de bibliothèque",
+	[227] = "Bibliothécaire émérite",
+	[228] = "Bonne nuit les petits",
 })
 
 Override(L.ACHIEVEMENT_DESCRIPTIONS, {
@@ -693,6 +703,11 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[221] = "Équiper 25 tabards différents.",
 	[222] = "Gagner un jet de cupidité sur un objet de qualité supérieure ou mieux en obtenant 100.",
 	[223] = "Gagner un jet de besoin sur un objet de qualité supérieure ou mieux en obtenant 100.",
+	[224] = "Rendre 10 livres de bibliothèque.",
+	[225] = "Rendre 20 livres de bibliothèque.",
+	[226] = "Rendre 25 livres de bibliothèque.",
+	[227] = "Rendre 30 livres de bibliothèque.",
+	[228] = "Suivre la piste des notes cachées jusqu'au sac de couchage douillet.",
 })
 
 Override(L.CRITERIA_TEXTS, {
@@ -732,6 +747,7 @@ Override(L.CRITERIA_TEXTS, {
 	[179] = { "Monte" },
 	[180] = { "Mains nues" },
 	[184] = { "Les vertes collines de Strangleronce", "La chasse au gros gibier" },
+	[228] = { "Ça doit être ici" },
 	-- Ailes de donjon
 	[198] = { "Mage de sang Thalnos" },
 	[199] = { "Arcaniste Doan" },

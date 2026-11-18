@@ -19,7 +19,11 @@ ns.Data.changelog = {
 	{
 		version = "1.2.0",
 		enUS = [[
-### New achievements (15)
+### New achievements (20)
+
+**Exploration**
+- **Friend of the Library**, **Greater Friend of the Library**, **Bookworm** and **Master Librarian**: turn in 10, 20, 25 and 30 library books. Books already turned in count right away; your best character counts.
+- **Good Night, Sleep Tight**: follow the trail of hidden notes to the Cozy Sleeping Bag.
 
 **General**
 - **Shave and a Haircut**: get your hair cut at a Barber Shop.
@@ -43,7 +47,11 @@ These read the game's statistics and reputations, so what you have already done 
 They are detected from WoW: Forever's Spelunker achievements, so dungeons you have already finished count right away. **Forever Raider** now also asks for these four dungeons.
 ]],
 		frFR = [[
-### Nouveaux hauts faits (15)
+### Nouveaux hauts faits (20)
+
+**Exploration**
+- **Ami de la bibliothèque**, **Mécène de la bibliothèque**, **Rat de bibliothèque** et **Bibliothécaire émérite** : rendre 10, 20, 25 et 30 livres de bibliothèque. Les livres déjà rendus comptent tout de suite ; le meilleur personnage compte.
+- **Bonne nuit les petits** : suivre la piste des notes cachées jusqu'au sac de couchage douillet.
 
 **Général**
 - **Coupe et brushing** : changer de coupe dans un salon de coiffure.

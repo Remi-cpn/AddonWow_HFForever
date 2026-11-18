@@ -40,6 +40,7 @@ Data\Categories.lua
 Data\Achievements.lua
 Data\Recipes.lua
 Data\Tabards.lua
+Data\Books.lua
 Data\ExplorationTotals.lua
 Data\Changelog.lua
 Core\CriteriaTypes.lua

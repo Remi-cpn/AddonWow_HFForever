@@ -3,7 +3,7 @@
 -- La liste validée est décrite dans docs/ProposedAchievements.md.
 --
 --   id          : numéro unique et DÉFINITIF, la sauvegarde s'en sert. Un
---                 nouveau haut fait prend le numéro libre suivant (224), quel
+--                 nouveau haut fait prend le numéro libre suivant (229), quel
 --                 que soit l'endroit où il est rangé. Ne jamais changer ni
 --                 réutiliser un numéro. Numéros retirés, à ne jamais
 --                 réutiliser : 76, 80, 176, 177.
@@ -582,6 +582,43 @@ ns.Data.achievements = {
 			{ type = "achievement", id = 35 },
 			{ type = "achievement", id = 55 },
 		},
+	},
+
+	---------------------------------------------------------------------------
+	-- Exploration : livres de bibliothèque (liste dans Data/Books.lua). Paliers
+	-- des quêtes 78150 (10), 79536 (20), 82208 (25) et 84394 (30). Le
+	-- meilleur personnage compte : les livres sont liés au personnage.
+	---------------------------------------------------------------------------
+	{
+		id = 224, category = CAT.EXPLORATION, points = 10,
+		icon = ICONS .. "INV_Misc_Book_07",
+		criteria = { { type = "questCount", what = "libraryBooks", value = 10 } },
+	},
+	{
+		id = 225, category = CAT.EXPLORATION, points = 10,
+		icon = ICONS .. "INV_Misc_Book_06",
+		criteria = { { type = "questCount", what = "libraryBooks", value = 20 } },
+		previous = 224,
+	},
+	{
+		id = 226, category = CAT.EXPLORATION, points = 10,
+		icon = ICONS .. "INV_Misc_Book_08",
+		criteria = { { type = "questCount", what = "libraryBooks", value = 25 } },
+		previous = 225,
+	},
+	{
+		id = 227, category = CAT.EXPLORATION, points = 25,
+		icon = ICONS .. "INV_Misc_Book_17",
+		criteria = { { type = "questCount", what = "libraryBooks", value = 30 } },
+		previous = 226,
+	},
+	{
+		-- Sac de couchage douillet (objet 211527) : quête cachée 79976 « Ça
+		-- doit être ici », dernière étape de la piste des notes. Icône de
+		-- l'objet.
+		id = 228, category = CAT.EXPLORATION, points = 10,
+		icon = ICONS .. "INV_Misc_Bag_BigBagofEnchantments",
+		criteria = { { type = "quest", id = 79976 } },
 	},
 
 	---------------------------------------------------------------------------

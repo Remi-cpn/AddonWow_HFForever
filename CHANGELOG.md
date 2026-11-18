@@ -2,7 +2,11 @@
 
 ## 1.2.0 (in progress)
 
-### New achievements (15)
+### New achievements (20)
+
+**Exploration**
+- **Friend of the Library**, **Greater Friend of the Library**, **Bookworm** and **Master Librarian**: turn in 10, 20, 25 and 30 library books. Books already turned in count right away; your best character counts.
+- **Good Night, Sleep Tight**: follow the trail of hidden notes to the Cozy Sleeping Bag.
 
 **General**
 - **Shave and a Haircut**: get your hair cut at a Barber Shop.

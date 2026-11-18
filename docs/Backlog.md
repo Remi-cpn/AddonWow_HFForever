@@ -19,6 +19,8 @@ Base commune : messages d'addon (`C_ChatInfo.SendAddonMessage`), avec un protoco
 - Scholomance : le haut fait d'origine demande Gandling **et** Ras Murmegivre ; le nôtre (91) ne demande que Gandling. À décider.
 - Raids : la catégorie existe (Onyxia 173, Sommet d'Hyjal 174, Profondeurs des Saisons 175, par statistique). À reprendre quand les raids seront ouverts sur Forever ; les hauts faits natifs 684, 62034 et 62035 listent leurs boss, comme les Spéléologue pour les donjons.
 - Explorer Reflet-de-Lune : piste `C_MapExplorationInfo.GetExploredAreaIDsAtPosition`.
+- Autres séries de quêtes de Forever : le critère `questCount` (1.2.0) compte les quêtes terminées d'une liste de `Data/Books.lua` ; une nouvelle liste suffit (pistes : onglets « Accès », « Carnet de terrain » et « Rares » de NaowhForever_Discovery).
+- Livre « The Liminal and the Arcane » (quête 81951) : emplacement encore inconnu ; il est déjà dans la liste des livres et comptera dès qu'il sera rendu.
 - Autres catégories prévues : Tours de force, Combat (victimes, morts).
 
 ## Fait depuis la v1
