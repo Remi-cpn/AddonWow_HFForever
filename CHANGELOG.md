@@ -1,6 +1,6 @@
 # HF Forever changelog
 
-## 1.2.0 (in progress)
+## 1.2.0
 
 ### New achievements (20)
 
