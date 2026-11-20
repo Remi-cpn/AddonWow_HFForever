@@ -133,6 +133,8 @@ L.CRITERIA_QUEST = "Quest %d"
 L.CRITERIA_WEAPON_SKILLS = "Weapon skills at %d"
 L.CRITERIA_TABARD = "Tabard equipped"
 L.CRITERIA_TABARDS = "Unique tabards equipped"
+L.CRITERIA_BANK_SLOTS = "Bank slots purchased"
+L.CRITERIA_HAIRCUT = "New haircut at a Barber Shop"
 L.CRITERIA_QUEST_LISTS = {
 	libraryBooks = "Library books turned in",
 }
@@ -582,7 +584,7 @@ L.ACHIEVEMENT_DESCRIPTIONS = {
 	[95] = "Defeat Blazeroar in Alcaz Prison.",
 	[96] = "Defeat Nanaya on the Shaper's Terrace.",
 	-- Général : banque, argent, montures
-	[97] = "Buy 7 additional bank slots.",
+	[97] = "Buy all 8 bank bag slots.",
 	[98] = "Loot 100 gold.",
 	[99] = "Loot 1,000 gold.",
 	[100] = "Loot 5,000 gold.",

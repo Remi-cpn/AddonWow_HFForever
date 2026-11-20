@@ -54,6 +54,14 @@ local LOOT_EVENTS = {
 	"LOOT_HISTORY_ONE_HUNDRED_ROLL", -- encounterID, lootListKey
 }
 
+-- Coiffeur : nouvelle apparence validée. La coupe est enregistrée
+-- (Database:RecordHaircut) avant l'évaluation. Les deux événements peuvent
+-- arriver pour la même coupe ; l'enregistrer deux fois ne change rien.
+local BARBER_EVENTS = {
+	"BARBER_SHOP_APPEARANCE_APPLIED",
+	"BARBER_SHOP_RESULT",           -- success
+}
+
 -- Types de jet (Enum.EncounterLootDropRollState) : besoin (spé principale
 -- ou secondaire) et cupidité. Valeurs de repli : celles de la documentation
 -- de l'API de Forever.
@@ -281,6 +289,16 @@ eventFrame:SetScript("OnEvent", function(_, event, ...)
 		end
 		return
 	end
+	if event == "BARBER_SHOP_APPEARANCE_APPLIED" or event == "BARBER_SHOP_RESULT" then
+		local success = ...
+		if event == "BARBER_SHOP_RESULT" and success ~= true then
+			return
+		end
+		ns.Database:RecordHaircut(playerGUID)
+		Log.Debug("Engine: nouvelle coupe", event)
+		Engine:RequestEvaluation(event)
+		return
+	end
 	if event == "ENCOUNTER_END" then
 		local encounterID, encounterName, _, _, success = ...
 		if success == 1 and RecordBossKill(encounterID, encounterName) then
@@ -318,6 +336,11 @@ function Engine:Start()
 	end
 	-- pcall : un événement absent du client lèverait une erreur.
 	for _, event in ipairs(LOOT_EVENTS) do
+		if not pcall(eventFrame.RegisterEvent, eventFrame, event) then
+			Log.Debug("Engine: événement absent", event)
+		end
+	end
+	for _, event in ipairs(BARBER_EVENTS) do
 		if not pcall(eventFrame.RegisterEvent, eventFrame, event) then
 			Log.Debug("Engine: événement absent", event)
 		end

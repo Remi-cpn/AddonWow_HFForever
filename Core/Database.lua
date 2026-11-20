@@ -87,6 +87,10 @@ local DEFAULTS = {
 	-- de qualité supérieure ou mieux : [« need » ou « greed »] = { [guid] =
 	-- date du premier }. Seule trace : jamais effacée par /hff reset.
 	perfectRolls = {},
+	-- Nouvelles coupes validées chez le coiffeur, vues en direct (Engine) :
+	-- [guid] = date de la première. Seule trace : jamais effacée par
+	-- /hff reset.
+	haircuts = {},
 }
 
 -- Ajoute récursivement les clés manquantes, sans écraser les valeurs présentes.
@@ -365,9 +369,23 @@ function Database:HasPerfectRoll(kind)
 	return type(rolls) == "table" and next(rolls) ~= nil
 end
 
+-- Enregistre une nouvelle coupe chez le coiffeur (la première date est
+-- gardée).
+function Database:RecordHaircut(guid)
+	if not data.haircuts[guid] then
+		data.haircuts[guid] = time()
+	end
+end
+
+-- true si un personnage du compte a déjà été vu changer de coupe.
+function Database:HasHaircut()
+	return next(data.haircuts) ~= nil
+end
+
 -- Efface hauts faits et progression ; les réglages, les boss vaincus vus
--- en direct (bossKills), les tabards vus (tabards) et les jets de 100
--- (perfectRolls), introuvables autrement, sont conservés.
+-- en direct (bossKills), les tabards vus (tabards), les jets de 100
+-- (perfectRolls) et les coupes (haircuts), introuvables autrement, sont
+-- conservés.
 function Database:ResetAchievements()
 	data.completed = {}
 	data.progress = {}

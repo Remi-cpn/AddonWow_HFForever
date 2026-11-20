@@ -76,10 +76,11 @@ ns.Data.achievements = {
 	-- Général : banque, argent, montures
 	---------------------------------------------------------------------------
 	{
-		-- Statistique 928 « Emplacements en banque supplémentaires achetés »
+		-- Les 8 emplacements de banque achetables (C_Bank). La statistique 928
+		-- n'est pas tenue à jour sur Forever.
 		id = 97, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "INV_Box_01",
-		criteria = { { type = "statistic", id = 928, value = 7 } },
+		criteria = { { type = "bankSlots", value = 8 } },
 	},
 	{
 		-- Statistique 333 « Argent ramassé », en pièces d'or
@@ -218,10 +219,12 @@ ns.Data.achievements = {
 		previous = 220,
 	},
 	{
-		-- Statistique 1147 « Argent dépensé chez le coiffeur » non nulle.
+		-- Nouvelle coupe validée chez le coiffeur, vue en direct, ou
+		-- statistique 1147 « Argent dépensé chez le coiffeur » non nulle (vide
+		-- sur Forever pour l'instant).
 		id = 219, category = CAT.GENERAL, points = 10,
 		icon = ICONS .. "INV_Misc_Comb_02",
-		criteria = { { type = "moneyAny", id = 1147 } },
+		criteria = { { type = "haircut", id = 1147 } },
 	},
 	{
 		-- Jets de 100 sur un objet supérieur ou mieux (critère perfectRoll).

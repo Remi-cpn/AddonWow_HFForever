@@ -33,7 +33,7 @@ avec son nom officiel.
 
 | id | Nom | Description | Pts | Stat | Seuil | 9b |
 | --- | --- | --- | --- | --- | --- | --- |
-| 546 | Chambre forte | Acheter 7 emplacements de sac supplémentaires. | 10 | 928 | 7 | |
+| 546 | Chambre forte | Acheter 7 emplacements de sac supplémentaires. | 10 | 928 | 7 | fait (97) : 8 emplacements via `C_Bank`, la statistique est vide sur Forever |
 | 1176 | Le fric, c'est chic | Ramasser 100 pièces d'or en butin. | 10 | 333 (or) | 100 po | 1111 |
 | 1177 | Le fric, c'est chic | Ramasser 1 000 pièces d'or en butin. | 10 | 333 (or) | 1 000 po | 1112 |
 | 1178 | Le fric, c'est chic | Ramasser 5 000 pièces d'or en butin. | 10 | 333 (or) | 5 000 po | |

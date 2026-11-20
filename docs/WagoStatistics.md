@@ -261,7 +261,7 @@ Une victoire suffit pour un haut fait de donjon : `max` (ou `sum` pour « tuer N
 | 332 | Plus grosse vente à l'hôtel des ventes | Most expensive auction sold | `argent` (`max`) |
 | 921 | Argent obtenu par les marchands | Gold from vendors | `argent` (`sum`) |
 | 1146 | Argent dépensé en voyages | Gold spent on travel | `argent` (`sum`) |
-| 1147 | Argent dépensé chez le coiffeur | Gold spent at barber shops | `utilisé` (219, montant non nul) |
+| 1147 | Argent dépensé chez le coiffeur | Gold spent at barber shops | `utilisé` (219, en secours : vide sur Forever, la coupe est vue en direct depuis la 1.2.1) |
 | 1148 | Argent dépensé en envoi de courriers | Gold spent on postage | `argent` (`sum`) |
 | 1150 | Argent dépensé en respécialisations de talents | Gold spent on talent tree respecs | `argent` (`sum`) |
 | 334 | Plus grande quantité d'argent possédée | Most gold ever owned | `argent` (`max`) |
@@ -290,7 +290,7 @@ même faction compteraient deux fois.
 | 336 | Objets légendaires obtenus | Legendary items acquired | `sum` |
 | 339 | Montures possédées | Mounts owned | `max` |
 | 338 | Mascottes possédées | Vanity pets owned | `max` |
-| 928 | Emplacements en banque supplémentaires achetés | Extra bank slots purchased | `max` |
+| 928 | Emplacements en banque supplémentaires achetés | Extra bank slots purchased | `max` (vide sur Forever ; plus utilisée : le HF 97 lit `C_Bank` depuis la 1.2.1) |
 | 1043 | Nombre de jets de cupidité sur du butin | Greed rolls made on loot | `sum` |
 | 1044 | Nombre de jets de besoin sur du butin | Need rolls made on loot | `sum` |
 

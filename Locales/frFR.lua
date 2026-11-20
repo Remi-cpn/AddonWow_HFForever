@@ -125,6 +125,8 @@ L.CRITERIA_QUEST = "Quête %d"
 L.CRITERIA_WEAPON_SKILLS = "Compétences d'armes à %d"
 L.CRITERIA_TABARD = "Tabard équipé"
 L.CRITERIA_TABARDS = "Tabards différents équipés"
+L.CRITERIA_BANK_SLOTS = "Emplacements de banque achetés"
+L.CRITERIA_HAIRCUT = "Nouvelle coupe chez le coiffeur"
 L.CRITERIA_QUEST_LISTS = {
 	libraryBooks = "Livres de bibliothèque rendus",
 }
@@ -572,7 +574,7 @@ Override(L.ACHIEVEMENT_DESCRIPTIONS, {
 	[95] = "Vaincre Rugiflamme dans la prison d'Alcaz.",
 	[96] = "Vaincre Nanaya sur la terrasse du Façonneur.",
 	-- Général : banque, argent, montures
-	[97] = "Acheter 7 emplacements de sac supplémentaires.",
+	[97] = "Acheter les 8 emplacements de sac de banque.",
 	[98] = "Ramasser 100 pièces d'or en butin.",
 	[99] = "Ramasser 1 000 pièces d'or en butin.",
 	[100] = "Ramasser 5 000 pièces d'or en butin.",

@@ -319,6 +319,52 @@ CriteriaTypes.moneyAny = {
 	end,
 }
 
+-- Nouvelle coupe chez le coiffeur : vue en direct par Engine
+-- (Database:RecordHaircut), ou statistique id d'argent dépensé chez le
+-- coiffeur non nulle, au cas où le jeu la tiendrait à jour.
+-- Exemple : { type = "haircut", id = 1147 }
+CriteriaTypes.haircut = {
+	fields = { "id" },
+	progressBar = false,
+	describe = function()
+		return L.CRITERIA_HAIRCUT
+	end,
+	goal = function()
+		return 1
+	end,
+	validate = CriteriaTypes.statistic.validate,
+	current = function(criterion)
+		if ns.Database:HasHaircut() then
+			return 1
+		end
+		return CriteriaTypes.moneyAny.current(criterion)
+	end,
+}
+
+-- Emplacements de sac de banque achetés par le personnage (le meilleur
+-- compte). L'API compte aussi l'emplacement de base, offert : il est retiré.
+-- Exemple : { type = "bankSlots", value = 8 }
+CriteriaTypes.bankSlots = {
+	fields = { "value" },
+	progressBar = true,
+	describe = function()
+		return L.CRITERIA_BANK_SLOTS
+	end,
+	goal = function(criterion)
+		return criterion.value
+	end,
+	current = function()
+		if not (C_Bank and C_Bank.FetchNumPurchasedBankTabs and Enum.BankType) then
+			return 0
+		end
+		local count = C_Bank.FetchNumPurchasedBankTabs(Enum.BankType.Character)
+		if type(count) ~= "number" then
+			return 0
+		end
+		return math.max(0, count - 1)
+	end,
+}
+
 -- Explorer entièrement une zone. Exemple : { type = "explore", mapID = 1429 }
 CriteriaTypes.explore = {
 	fields = { "mapID" },

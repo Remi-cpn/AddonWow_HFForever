@@ -1,5 +1,12 @@
 # HF Forever changelog
 
+## 1.2.1
+
+### Fixes
+
+- **Safe Deposit** now reads the bank slots you have bought, so slots bought before count right away. WoW: Forever has 8 bank bag slots to buy, so the achievement now asks for all 8 instead of 7. The game statistic it used before is not kept up to date on WoW: Forever.
+- **Shave and a Haircut** now sees you change your hair at a Barber Shop. The game statistic it used is not kept up to date on WoW: Forever: go back to a Barber Shop with HF Forever installed and accept a new haircut.
+
 ## 1.2.0
 
 ### New achievements (20)

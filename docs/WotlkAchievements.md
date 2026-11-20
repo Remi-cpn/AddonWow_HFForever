@@ -1167,7 +1167,7 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 |  | 341 | Objets épiques ramassés | Objets épiques ramassés |
 |  | 342 | Objets épiques obtenus | Objets épiques obtenus |
 |  | 927 | Objets épiques équipés dans des emplacements d'objets | Objets épiques équipés dans des emplacements d'objets |
-| 🟢 | 928 | Emplacements en banque supplémentaires achetés | Emplacements en banque supplémentaires achetés |
+|  | 928 | Emplacements en banque supplémentaires achetés | Emplacements en banque supplémentaires achetés |
 |  | 1043 | Nombre de jets de cupidité sur du butin | Nombre de jets de cupidité sur du butin |
 |  | 1044 | Nombre de jets de besoin sur du butin | Nombre de jets de besoin sur du butin |
 |  | 4778 | Nombre de jets de désenchantement sur du butin | Nombre de jets de désenchantement sur du butin |
@@ -1567,7 +1567,8 @@ Onglet Statistiques de la fenêtre : 0 point, une valeur affichée au lieu d'une
 - 889 / 891 Monte (178 / 179) : rangs 75 et 150 ; Expert et Artisan cavalier n'existent pas sur Forever.
 - 940 Les vertes collines de Strangleronce (184) : quête 208 « La chasse au gros gibier » terminée.
 - 684 Le repaire d'Onyxia : notre 173, dans Donjons > Raids.
-- 545 Coupe et brushing (219) : statistique 1147 « Argent dépensé chez le coiffeur » non nulle, quel que soit le montant.
+- 545 Coupe et brushing (219) : nouvelle coupe validée chez le coiffeur, vue en direct (`BARBER_SHOP_APPEARANCE_APPLIED`, `BARBER_SHOP_RESULT`) depuis la 1.2.1, pas rétroactif. La statistique 1147 « Argent dépensé chez le coiffeur » reste en secours, mais elle est vide sur Forever.
+- 546 Chambre forte (97) : 8 emplacements de sac de banque au lieu de 7, le maximum à acheter sur Forever. Lu par `C_Bank.FetchNumPurchasedBankTabs` depuis la 1.2.1 (l'emplacement de base, compté par l'API, est retiré) ; la statistique 928 est vide sur Forever.
 - 1020 / 1021 Dix tabards / Timbré de tabards (220 / 221) : tabards notés quand ils sont portés avec l'addon installé (pas rétroactif), tous personnages du compte. Les 5 tabards que Forever a recréés sous un second numéro ne comptent qu'une fois (`Data/Tabards.lua`). Le tabard des hauts faits donné en récompense n'existe pas.
 - 558 / 559 Cupide / Nécessiteux (222 / 223) : jet de 100 du joueur lu dans l'historique du butin (`C_LootHistory`), pas rétroactif. Sans le niveau d'objet 185 ; objet de qualité supérieure ou mieux ; un 100 suffit (égalité possible avec un autre 100).
 - Livres de bibliothèque (224 à 227) et sac de couchage douillet (228) : contenus de Forever (repris de la Saison de la Découverte), sans équivalent WotLK. Livres : quêtes de livres terminées, comptées par `questCount` sur la liste de `Data/Books.lua` (reprise de NaowhForever) ; paliers et noms des quêtes 78150 « Ami de la bibliothèque » et 79536 / 82208 / 84394 « Mécène de la bibliothèque », confirmés sur wowhead Classic. Sac : quête cachée 79976 « Ça doit être ici ».
