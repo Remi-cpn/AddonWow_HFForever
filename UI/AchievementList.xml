@@ -452,6 +452,32 @@
 					</Layer>
 				</Layers>
 			</Button>
+			<!-- Case « Suivre » (UI/Tracker.lua), sous l'icône comme chez
+			     Blizzard (AchievementCheckButtonTemplate). Visible si la ligne est
+			     dépliée sur un haut fait non obtenu, ou s'il est suivi. -->
+			<CheckButton parentKey="Tracked" hidden="true">
+				<Size x="15" y="15"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="12" y="-66"/>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString parentKey="Label" inherits="GameFontNormalSmall">
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT"/>
+							</Anchors>
+							<Color r="0.75" g="0.75" b="0.75"/>
+						</FontString>
+					</Layer>
+				</Layers>
+				<HitRectInsets>
+					<AbsInset left="0" right="-100" top="0" bottom="0"/>
+				</HitRectInsets>
+				<NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-CheckBox-Down"/>
+				<HighlightTexture file="Interface\Buttons\UI-CheckBox-Highlight" alphaMode="ADD"/>
+				<CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
+			</CheckButton>
 		</Frames>
 	</EventButton>
 </Ui>

@@ -47,6 +47,7 @@ Core\CriteriaTypes.lua
 Core\Registry.lua
 Core\API.lua
 Core\Engine.lua
+Core\Comm.lua
 UI\AchievementList.xml
 UI\Summary.xml
 UI\Search.xml
@@ -63,5 +64,9 @@ UI\MinimapButton.lua
 UI\Toasts.xml
 UI\Toasts.lua
 UI\Options.lua
+UI\PlayerTooltip.lua
+UI\Inspect.lua
+UI\Tracker.lua
+UI\Tracker.xml
 Core\Commands.lua
 Core\Bootstrap.lua

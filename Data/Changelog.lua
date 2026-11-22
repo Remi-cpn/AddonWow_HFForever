@@ -17,6 +17,49 @@ local _, ns = ...
 
 ns.Data.changelog = {
 	{
+		version = "1.3.0",
+		enUS = [[
+### New achievements (66)
+
+**Rares (new category)**
+- **Headhunter**: kill every rare of a zone, of the capitals or of a dungeon. One achievement each, plus continent and dungeon meta achievements, and **Terminator**.
+- Only rares killed with HF Forever installed count: the game keeps no record of them.
+
+**Quests**
+- **Lord Valthalak Laid to Rest**: finish the Valthalak questline.
+
+### New features
+
+- **Tracking**: check **Track** on an achievement (or Shift-click it) to follow it in the objective tracker.
+- **Tooltip**: the achievement points of players who have HF Forever.
+- **Right-click a player**, then **Inspect Achievements** to see theirs. Both players need HF Forever and the same faction.
+
+### Changes
+
+- **Explorer** now also asks for Zephras Isle.
+]],
+		frFR = [[
+### Nouveaux hauts faits (66)
+
+**Rares (nouvelle catégorie)**
+- **Chasseur de têtes** : tuer tous les rares d'une zone, des capitales ou d'un donjon. Un haut fait pour chacun, plus les métas des continents et des donjons, et **Terminator**.
+- Seuls les rares tués avec HF Forever installé comptent : le jeu n'en garde aucune trace.
+
+**Quêtes**
+- **Seigneur Valthalak tué** : terminer la suite de quêtes de Valthalak.
+
+### Nouveautés
+
+- **Suivi** : cochez **Suivre** sur un haut fait (ou Maj + clic) pour le suivre dans le suivi des objectifs.
+- **Infobulle** : les points de hauts faits des joueurs qui ont HF Forever.
+- **Clic droit sur un joueur**, puis **Inspecter les hauts faits** pour voir les siens. Il faut HF Forever des deux côtés et le même camp.
+
+### Changements
+
+- **Explorateur** demande aussi l'île de Zéphras.
+]],
+	},
+	{
 		version = "1.2.1",
 		enUS = [[
 ### Fixes
@@ -45,7 +88,7 @@ ns.Data.changelog = {
 - **Ten Tabards** and **Twenty-Five Tabards**: equip 10 and 25 unique tabards. A tabard counts once you have worn it with HF Forever installed: put your old tabards back on to add them.
 - **Greedy** and **Needy**: roll 100 on a greed or need roll for a superior or better item. Only rolls made with HF Forever installed count.
 
-**Darkspear Islands** (new Player vs. Player category)
+**Darkspear Islands (new Player vs. Player category)**
 - **Darkspear Islands Victory** and **Darkspear Islands Veteran**: win the Darkspear Islands 1 and 100 times.
 - **Flags Captured**: capture 50 flags in the Darkspear Islands.
 - **Bases Assaulted**: assault 50 bases in the Darkspear Islands.
@@ -73,7 +116,7 @@ They are detected from WoW: Forever's Spelunker achievements, so dungeons you ha
 - **Dix tabards** et **Timbré de tabards** : équiper 10 et 25 tabards différents. Un tabard compte dès que vous l'avez porté avec HF Forever installé : remettez vos anciens tabards pour les ajouter.
 - **Cupide** et **Nécessiteux** : obtenir 100 sur un jet de cupidité ou de besoin pour un objet de qualité supérieure ou mieux. Seuls les jets faits avec HF Forever installé comptent.
 
-**Îles des Sombrelances** (nouvelle catégorie de Joueur contre Joueur)
+**Îles des Sombrelances (nouvelle catégorie de Joueur contre Joueur)**
 - **Victoire sur les îles des Sombrelances** et **Vétéran des îles des Sombrelances** : gagner 1 et 100 fois sur les îles des Sombrelances.
 - **Drapeaux capturés** : capturer 50 drapeaux sur les îles des Sombrelances.
 - **Bases attaquées** : attaquer 50 bases sur les îles des Sombrelances.

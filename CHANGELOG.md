@@ -1,5 +1,26 @@
 # HF Forever changelog
 
+## 1.3.0
+
+### New achievements (66)
+
+**Rares (new category)**
+- **Headhunter**: kill every rare of a zone, of the capitals or of a dungeon. One achievement each, plus continent and dungeon meta achievements, and **Terminator**.
+- Only rares killed with HF Forever installed count: the game keeps no record of them.
+
+**Quests**
+- **Lord Valthalak Laid to Rest**: finish the Valthalak questline.
+
+### New features
+
+- **Tracking**: check **Track** on an achievement (or Shift-click it) to follow it in the objective tracker.
+- **Tooltip**: the achievement points of players who have HF Forever.
+- **Right-click a player**, then **Inspect Achievements** to see theirs. Both players need HF Forever and the same faction.
+
+### Changes
+
+- **Explorer** now also asks for Zephras Isle.
+
 ## 1.2.1
 
 ### Fixes
@@ -20,7 +41,7 @@
 - **Ten Tabards** and **Twenty-Five Tabards**: equip 10 and 25 unique tabards. A tabard counts once you have worn it with HF Forever installed: put your old tabards back on to add them.
 - **Greedy** and **Needy**: roll 100 on a greed or need roll for a superior or better item. Only rolls made with HF Forever installed count.
 
-**Darkspear Islands** (new Player vs. Player category)
+**Darkspear Islands (new Player vs. Player category)**
 - **Darkspear Islands Victory** and **Darkspear Islands Veteran**: win the Darkspear Islands 1 and 100 times.
 - **Flags Captured**: capture 50 flags in the Darkspear Islands.
 - **Bases Assaulted**: assault 50 bases in the Darkspear Islands.

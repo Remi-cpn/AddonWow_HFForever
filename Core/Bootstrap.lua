@@ -18,12 +18,16 @@ local function OnAddonLoaded(loadedName)
 	ns.Toasts:Init()
 	ns.MainWindow:Init()
 	ns.Options:Init()
+	ns.Tracker:Init()
 end
 
 local function OnPlayerLogin()
 	Log.Info(L.LOADED, ns.version)
 	Log.Debug("Bootstrap: PLAYER_LOGIN reçu")
 	ns.Engine:Start()
+	ns.Comm:Init()
+	ns.PlayerTooltip:Init()
+	ns.Inspect:Init()
 end
 
 eventFrame:SetScript("OnEvent", function(_, event, ...)

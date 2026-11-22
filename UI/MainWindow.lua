@@ -94,6 +94,18 @@ local function UpdateHeader()
 	frame.Header.Points:SetText(ns.API.GetTotalAchievementPoints())
 end
 
+-- Après un changement de source (inspection d'un joueur, retour à soi).
+local function RefreshAll()
+	UpdateHeader()
+	ns.CategoryList:Refresh()
+	if frame.Achievements:IsShown() then
+		ns.AchievementList:Refresh()
+	end
+	if frame.Summary:IsShown() then
+		ns.Summary:Refresh()
+	end
+end
+
 local function OnCategoryChanged(categoryID)
 	currentCategory = categoryID
 	-- Choisie pendant que l'onglet Notes de version est affiché (Refresh à
@@ -195,8 +207,8 @@ function MainWindow:Init()
 	end)
 
 	frame:SetScript("OnShow", function()
-		UpdateHeader()
-		ns.CategoryList:Refresh()
+		-- Tout : la source a pu changer depuis la fermeture (inspection).
+		RefreshAll()
 		-- Rouverte sur les notes de version : retour à « Dernière version ».
 		if currentTab == TAB_CHANGELOG then
 			ns.Changelog:OnTabShown()
@@ -206,6 +218,12 @@ function MainWindow:Init()
 	end)
 	frame:SetScript("OnHide", function()
 		PlayUISound(SOUNDKIT.ACHIEVEMENT_MENU_CLOSE)
+		-- Fin d'une inspection : la fenêtre se rouvrira sur ses propres
+		-- hauts faits.
+		if ns.API.GetInspectedName() then
+			ns.API.SetInspected(nil)
+			frame.Header.Title:SetText(L.WINDOW_HEADER_TITLE)
+		end
 	end)
 	-- Après le SetScript("OnHide") : Search s'y accroche avec HookScript.
 	ns.Search:Init(frame)
@@ -231,6 +249,32 @@ function MainWindow:Show()
 	if frame then
 		frame:Show()
 	end
+end
+
+function MainWindow:Hide()
+	if frame then
+		frame:Hide()
+	end
+end
+
+-- Ouvre la fenêtre en consultation sur les hauts faits d'un autre joueur
+-- (UI/Inspect.lua). name : « Nom-Royaume » ; completed : { [id] = { date } }.
+-- Fermer la fenêtre revient à ses propres hauts faits.
+function MainWindow:ShowInspection(name, completed)
+	if not frame then
+		return
+	end
+	ns.API.SetInspected({ name = name, completed = completed })
+	frame.Header.Title:SetText(L.WINDOW_INSPECT_TITLE:format(name:match("^[^-]+") or name))
+	if currentTab ~= TAB_ACHIEVEMENTS then
+		SelectTab(TAB_ACHIEVEMENTS)
+	end
+	if frame:IsShown() then
+		RefreshAll()
+	else
+		frame:Show() -- OnShow rafraîchit tout
+	end
+	Log.Debug("MainWindow: inspection de", name)
 end
 
 -- Ouvre la fenêtre, sélectionne la catégorie du haut fait, puis déplie sa

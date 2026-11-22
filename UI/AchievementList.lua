@@ -566,11 +566,57 @@ function Button:OnLoad()
 	self.Shield:SetScript("OnEnter", OnShieldEnter)
 	self.Shield:SetScript("OnLeave", OnShieldLeave)
 
+	self.Tracked.Label:SetText(L.TRACK)
+	self.Tracked:SetScript("OnClick", function()
+		self:ToggleTracking()
+	end)
+	self.Tracked:SetScript("OnEnter", function(check)
+		GameTooltip:SetOwner(check, "ANCHOR_RIGHT")
+		GameTooltip:SetText(check:GetChecked() and L.UNTRACK_TOOLTIP or L.TRACK_TOOLTIP, nil, nil, nil, nil, true)
+	end)
+	self.Tracked:SetScript("OnLeave", GameTooltip_Hide)
+
 	self:Collapse()
 end
 
+-- Maj + clic : suivre ou ne plus suivre, comme chez Blizzard.
 function Button:OnClick()
+	if IsModifiedClick("QUESTWATCHTOGGLE") and self:CanTrack() then
+		self:ToggleTracking()
+		return
+	end
 	selectionBehavior:ToggleSelect(self)
+end
+
+-- Suivi possible : haut fait non obtenu, et ses propres hauts faits (pas
+-- pendant une inspection).
+function Button:CanTrack()
+	return self.id ~= nil and not self.completed and not API.GetInspectedName()
+end
+
+function Button:ToggleTracking()
+	if not self:CanTrack() and not ns.Tracker:IsTracked(self.id) then
+		return
+	end
+	local tracked = ns.Tracker:Toggle(self.id)
+	-- Certains SOUNDKIT de retail manquent sur Forever : PlaySound(nil) échoue.
+	local sound = tracked and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF
+	if sound then
+		PlaySound(sound)
+	end
+	self:UpdateTracked()
+end
+
+-- Case « Suivre » : cochée si suivi ; visible si suivi, ou si la ligne est
+-- dépliée sur un haut fait qu'on peut suivre.
+function Button:UpdateTracked()
+	if not self.id or API.GetInspectedName() then
+		self.Tracked:Hide()
+		return
+	end
+	local tracked = ns.Tracker:IsTracked(self.id)
+	self.Tracked:SetChecked(tracked)
+	self.Tracked:SetShown(tracked or (not self.collapsed and self:CanTrack()))
 end
 
 function Button:OnEnter()
@@ -808,6 +854,7 @@ function Button:Init(elementData)
 		end
 		self:Collapse()
 	end
+	self:UpdateTracked()
 end
 
 -- [[ Liste ]]

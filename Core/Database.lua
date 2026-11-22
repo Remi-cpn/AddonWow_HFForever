@@ -91,6 +91,12 @@ local DEFAULTS = {
 	-- [guid] = date de la première. Seule trace : jamais effacée par
 	-- /hff reset.
 	haircuts = {},
+	-- Rares tués, vus en direct (Engine) : [npcID] = { [guid] = date du
+	-- premier }. Seule trace : jamais effacée par /hff reset.
+	rareKills = {},
+	-- Hauts faits suivis (UI/Tracker.lua), par personnage, dans l'ordre où
+	-- ils ont été ajoutés : [guid] = { achievementID, ... }.
+	tracked = {},
 }
 
 -- Ajoute récursivement les clés manquantes, sans écraser les valeurs présentes.
@@ -382,10 +388,71 @@ function Database:HasHaircut()
 	return next(data.haircuts) ~= nil
 end
 
+-- Liste des hauts faits suivis par le personnage connecté (à ne pas
+-- modifier : passer par SetTracked).
+function Database:GetTracked()
+	local guid = UnitGUID("player")
+	local list = guid and data.tracked[guid]
+	if type(list) ~= "table" then
+		list = {}
+		if guid then
+			data.tracked[guid] = list
+		end
+	end
+	return list
+end
+
+function Database:IsTracked(achievementID)
+	return tContains(self:GetTracked(), achievementID)
+end
+
+-- Ajoute ou retire un haut fait de la liste du personnage connecté.
+function Database:SetTracked(achievementID, tracked)
+	local list = self:GetTracked()
+	if tracked then
+		if not tContains(list, achievementID) then
+			table.insert(list, achievementID)
+		end
+	else
+		tDeleteItem(list, achievementID)
+	end
+end
+
+-- Retire un haut fait obtenu des listes de tous les personnages : obtenu
+-- pour le compte, il n'a plus rien à suivre.
+function Database:UntrackEverywhere(achievementID)
+	for _, list in pairs(data.tracked) do
+		if type(list) == "table" then
+			tDeleteItem(list, achievementID)
+		end
+	end
+end
+
+-- Enregistre un rare tué par ce personnage (la première date est gardée).
+-- true si c'est le premier pour ce personnage.
+function Database:RecordRareKill(npcID, guid)
+	local kills = data.rareKills[npcID]
+	if type(kills) ~= "table" then
+		kills = {}
+		data.rareKills[npcID] = kills
+	end
+	if kills[guid] then
+		return false
+	end
+	kills[guid] = time()
+	return true
+end
+
+-- true si un personnage du compte a déjà été vu tuer ce rare.
+function Database:HasRareKill(npcID)
+	local kills = data.rareKills[npcID]
+	return type(kills) == "table" and next(kills) ~= nil
+end
+
 -- Efface hauts faits et progression ; les réglages, les boss vaincus vus
 -- en direct (bossKills), les tabards vus (tabards), les jets de 100
--- (perfectRolls) et les coupes (haircuts), introuvables autrement, sont
--- conservés.
+-- (perfectRolls), les coupes (haircuts) et les rares tués (rareKills),
+-- introuvables autrement, sont conservés.
 function Database:ResetAchievements()
 	data.completed = {}
 	data.progress = {}

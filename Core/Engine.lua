@@ -81,11 +81,18 @@ local playerGUID = nil         -- clé du personnage dans la progression
 local pendingReason = nil      -- évaluation programmée, avec sa raison
 local forceRetroactive = false -- demandé par /hff reset
 local listeners = {}
+local evaluationListeners = {}
 
 -- callback(achievementIDs, retroactive) est appelé une fois par évaluation
 -- qui a obtenu au moins un haut fait (toasts, fenêtre).
 function Engine:RegisterListener(callback)
 	listeners[#listeners + 1] = callback
+end
+
+-- callback() est appelé après chaque évaluation, même sans haut fait obtenu :
+-- la progression a pu changer (suivi des objectifs).
+function Engine:RegisterEvaluationListener(callback)
+	evaluationListeners[#evaluationListeners + 1] = callback
 end
 
 local function GetCharacterName()
@@ -194,6 +201,13 @@ local function RunEvaluation(reason)
 		NotifyListeners(ids, retroactive)
 	end
 
+	for _, callback in ipairs(evaluationListeners) do
+		local ok, message = pcall(callback)
+		if not ok then
+			Log.Error(L.ENGINE_LISTENER_ERROR, message)
+		end
+	end
+
 	forceRetroactive = false
 	Log.Debug(("Engine: évaluation (%s) en %.1f ms, %d nouveau(x)"):format(
 		reason, debugprofilestop() - startTime, #earned))
@@ -282,7 +296,114 @@ local function RecordPerfectRolls(encounterID, lootListKey)
 	return recorded
 end
 
+-- Rares tués (critère « rare »). Le jeu n'en garde aucune trace : un rare
+-- compte quand il meurt en cible sans être pris par un autre joueur
+-- (UnitIsTapDenied), ou quand on fouille son cadavre. Chaque créature
+-- (GUID) n'est comptée qu'une fois par session.
+local rareNpcs = {}      -- [npcID] = true : les rares des critères « rare »
+local countedRares = {}  -- [GUID] = true : créatures déjà comptées
+local watchedRare = nil  -- GUID de la cible rare vivante surveillée
+
+-- Numéro de créature d'un GUID « Creature-0-serveur-instance-zone-npcID-... ».
+local function GetNpcID(guid)
+	if type(guid) ~= "string" or IsSecret(guid) then
+		return nil
+	end
+	local kind, _, _, _, _, npcID = strsplit("-", guid)
+	if kind == "Creature" or kind == "Vehicle" then
+		return tonumber(npcID)
+	end
+	return nil
+end
+
+local function CountRare(guid)
+	local npcID = GetNpcID(guid)
+	if not npcID or not rareNpcs[npcID] or countedRares[guid] then
+		return
+	end
+	countedRares[guid] = true
+	if ns.Database:RecordRareKill(npcID, playerGUID) then
+		Log.Debug("Engine: rare tué", npcID)
+		Engine:RequestEvaluation("rare")
+	end
+end
+
+-- Mort de la cible et prise par un autre joueur ; nil si illisible.
+local function ReadTargetDeath()
+	local dead, denied = UnitIsDead("target"), UnitIsTapDenied("target")
+	if IsSecret(dead) or IsSecret(denied) then
+		return nil
+	end
+	return dead, denied
+end
+
+local function StopWatchingRare()
+	watchedRare = nil
+	eventFrame:UnregisterEvent("UNIT_HEALTH")
+end
+
+-- Nouvelle cible : un rare déjà mort est compté tout de suite, un rare
+-- vivant est surveillé jusqu'à sa mort (UNIT_HEALTH).
+local function OnTargetChanged()
+	StopWatchingRare()
+	local guid = UnitGUID("target")
+	local npcID = GetNpcID(guid)
+	if not npcID or not rareNpcs[npcID] or countedRares[guid] then
+		return
+	end
+	local dead, denied = ReadTargetDeath()
+	if dead == nil then
+		return
+	end
+	if dead then
+		if not denied then
+			CountRare(guid)
+		end
+		return
+	end
+	watchedRare = guid
+	eventFrame:RegisterUnitEvent("UNIT_HEALTH", "target")
+end
+
+local function OnTargetHealth()
+	local guid = UnitGUID("target")
+	if IsSecret(guid) or guid ~= watchedRare then
+		return
+	end
+	local dead, denied = ReadTargetDeath()
+	if not dead then
+		return
+	end
+	if not denied then
+		CountRare(guid)
+	end
+	StopWatchingRare()
+end
+
+-- Fenêtre de butin : chaque créature fouillée compte. GetLootSourceInfo
+-- renvoie GUID, quantité, GUID, quantité... pour chaque emplacement.
+local function OnLootReady()
+	for slot = 1, GetNumLootItems() do
+		local sources = { GetLootSourceInfo(slot) }
+		for index = 1, #sources, 2 do
+			CountRare(sources[index])
+		end
+	end
+end
+
 eventFrame:SetScript("OnEvent", function(_, event, ...)
+	if event == "PLAYER_TARGET_CHANGED" then
+		OnTargetChanged()
+		return
+	end
+	if event == "UNIT_HEALTH" then
+		OnTargetHealth()
+		return
+	end
+	if event == "LOOT_READY" then
+		OnLootReady()
+		return
+	end
 	if event == "LOOT_HISTORY_UPDATE_DROP" or event == "LOOT_HISTORY_ONE_HUNDRED_ROLL" then
 		if RecordPerfectRolls(...) then
 			Engine:RequestEvaluation(event)
@@ -334,6 +455,16 @@ function Engine:Start()
 	for _, event in ipairs(BOSS_EVENTS) do
 		eventFrame:RegisterEvent(event)
 	end
+	-- Rares : ceux des critères « rare » chargés par le registre.
+	for _, achievement in ns.Registry:Iterate() do
+		for _, criterion in ipairs(achievement.criteria) do
+			if criterion.type == "rare" then
+				rareNpcs[criterion.id] = true
+			end
+		end
+	end
+	eventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+	eventFrame:RegisterEvent("LOOT_READY")
 	-- pcall : un événement absent du client lèverait une erreur.
 	for _, event in ipairs(LOOT_EVENTS) do
 		if not pcall(eventFrame.RegisterEvent, eventFrame, event) then

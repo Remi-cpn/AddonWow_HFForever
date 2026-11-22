@@ -1,0 +1,6 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\..\FrameXML\UI.xsd">
+	<!-- Module du suivi des objectifs (UI/Tracker.lua), sur le modèle de
+	     AchievementObjectiveTracker de Blizzard. Nom global : le gestionnaire
+	     du suivi le manipule comme ses propres modules. -->
+	<Frame name="HFFAchievementTracker" mixin="HFFAchievementTrackerMixin" inherits="ObjectiveTrackerModuleTemplate"/>
+</Ui>

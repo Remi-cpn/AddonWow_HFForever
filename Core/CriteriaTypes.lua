@@ -652,6 +652,23 @@ CriteriaTypes.tabards = {
 	end,
 }
 
+-- Un rare tué par un personnage du compte, vu en direct par Engine
+-- (Database:RecordRareKill). Pas rétroactif. id = numéro de la créature.
+-- Exemple : { type = "rare", id = 79 }
+CriteriaTypes.rare = {
+	fields = { "id" },
+	progressBar = false,
+	describe = function(criterion)
+		return L.RARE_NAMES[criterion.id] or tostring(criterion.id)
+	end,
+	goal = function()
+		return 1
+	end,
+	current = function(criterion)
+		return ns.Database:HasRareKill(criterion.id) and 1 or 0
+	end,
+}
+
 -- Un jet de 100 sur un objet de qualité supérieure ou mieux, noté par
 -- Engine depuis l'historique du butin (Database:RecordPerfectRoll). Pas
 -- rétroactif. Exemple : { type = "perfectRoll", what = "greed" }
