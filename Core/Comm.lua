@@ -63,24 +63,49 @@ local function IsSecret(value)
 	return issecretvalue ~= nil and issecretvalue(value)
 end
 
--- « Nom-Royaume », la forme de l'expéditeur dans CHAT_MSG_ADDON : royaume
--- normalisé (sans espaces ni tirets, comme GetNormalizedRealmName). Un nom
--- sans royaume est du royaume du joueur.
-function Comm.FullName(name, realm)
-	if type(name) ~= "string" or name == "" or IsSecret(name) then
+-- WoW: Forever (interface 16xxx) n'a pas de royaume dans les noms : chaque
+-- personnage a un prénom et un nom de famille, écrits « Prénom Nom » par le
+-- jeu. Un chuchotement doit viser « Prénom-Nom » ; un nom suivi du royaume
+-- n'atteint personne.
+local IS_FOREVER = (function()
+	local toc = tonumber((select(4, GetBuildInfo())))
+	return toc ~= nil and toc >= 16000 and toc < 20000
+end)()
+Comm.IS_FOREVER = IS_FOREVER
+
+-- Nom à qui chuchoter, sous une forme unique pour comparer les joueurs :
+--   Forever   : « Prénom-Nom » (depuis « Prénom Nom », « Prénom-Nom », ou le
+--               prénom et le nom de famille séparés, comme UnitFullName et
+--               les menus les donnent) ; un prénom seul reste seul ;
+--   ailleurs  : « Nom-Royaume », royaume sans espaces ni tirets (forme de
+--               GetNormalizedRealmName), celui du joueur s'il manque.
+-- second : nom de famille sur Forever, royaume ailleurs (facultatif).
+function Comm.FullName(name, second)
+	if type(name) ~= "string" or IsSecret(name) then
 		return nil
 	end
-	local base, nameRealm = name:match("^([^-]+)-(.+)$")
-	if base then
-		name, realm = base, nameRealm
-	end
-	if type(realm) ~= "string" or realm == "" or IsSecret(realm) then
-		realm = GetNormalizedRealmName()
-	end
-	if type(realm) ~= "string" or realm == "" then
+	name = strtrim(name)
+	if name == "" then
 		return nil
 	end
-	return name .. "-" .. (realm:gsub("[%s%-]", ""))
+	local first, rest = name:match("^(%S+)%s+(%S+)$")
+	if first then
+		return first .. "-" .. rest
+	end
+	if name:find("-", 1, true) then
+		return name
+	end
+	if type(second) ~= "string" or IsSecret(second) or strtrim(second) == "" then
+		second = nil
+	end
+	if IS_FOREVER then
+		return second and (name .. "-" .. (second:gsub("[%s%-]", ""))) or name
+	end
+	second = second or GetNormalizedRealmName()
+	if type(second) ~= "string" or second == "" then
+		return nil
+	end
+	return name .. "-" .. (second:gsub("[%s%-]", ""))
 end
 
 local function IsLockedDown()

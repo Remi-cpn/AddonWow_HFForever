@@ -1,5 +1,11 @@
 # HF Forever changelog
 
+## 1.3.1
+
+### Fixes
+
+- **Tooltip** and **Inspect Achievements** now work between players: WoW: Forever names (first name and surname) are handled.
+
 ## 1.3.0
 
 ### New achievements (66)

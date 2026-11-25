@@ -17,6 +17,19 @@ local _, ns = ...
 
 ns.Data.changelog = {
 	{
+		version = "1.3.1",
+		enUS = [[
+### Fixes
+
+- **Tooltip** and **Inspect Achievements** now work between players: WoW: Forever names (first name and surname) are handled.
+]],
+		frFR = [[
+### Corrections
+
+- **Infobulle** et **Inspecter les hauts faits** fonctionnent entre joueurs : les noms de WoW: Forever (prénom et nom de famille) sont pris en compte.
+]],
+	},
+	{
 		version = "1.3.0",
 		enUS = [[
 ### New achievements (66)

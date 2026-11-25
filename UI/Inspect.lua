@@ -63,6 +63,11 @@ local function GetMenuPlayerName(contextData)
 		end
 		return ns.PlayerTooltip.GetPlayerName(unit)
 	end
+	-- Sur Forever, le nom de famille ; jamais le royaume (aucun chuchotement
+	-- n'atteint « Prénom-Royaume »).
+	if ns.Comm.IS_FOREVER then
+		return ns.Comm.FullName(contextData.name, contextData.surname)
+	end
 	return ns.Comm.FullName(contextData.name, contextData.server or contextData.surname)
 end
 
